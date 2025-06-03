@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\dell\RyzenAI-SW\RyzenAI-SW\tutorial\yolov8\yolov8_cpp\implement\build\CMakeFiles\ab4590c5967cdb8109918f270a273c0d\INSTALL_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{2D8314C2-426D-32E0-BB86-2330557544F2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
