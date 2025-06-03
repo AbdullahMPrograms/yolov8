@@ -722,6 +722,8 @@ using _Check_string = std::string;
         google::logging::internal::CheckOpString(std::move(_result)))          \
         .stream()
 #else
+// In optimized mode, use CheckOpString to hint to compiler that
+// the while condition is unlikely.
 #  define CHECK_OP_LOG(name, op, val1, val2, log)                          \
     while (google::logging::internal::CheckOpString _result =              \
                google::logging::internal::Check##name##Impl(               \

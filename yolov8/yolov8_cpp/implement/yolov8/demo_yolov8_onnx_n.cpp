@@ -51,19 +51,8 @@ static cv::Mat process_result(cv::Mat& image, const Yolov8OnnxResult& result, bo
 }
 
 int main(int argc, char* argv[]) {
-  bool use_optimized = false;
-  for (int i = 1; i < argc; i++) {
-    if (std::string(argv[i]) == "-O") {
-      use_optimized = true;
-      break;
-    }
-  }
+  return vitis::ai::main_for_video_demo(
+      argc, argv, [&] {return  Yolov8Onnx::create("DetectionModel_int.onnx", 0.3);}, process_result);
 
-  if (use_optimized) {
-    return vitis::ai::main_for_video_demo_optimized(
-        argc, argv, [&] {return  Yolov8Onnx::create("DetectionModel_int.onnx", 0.3);}, process_result);
-  } else {
-    return vitis::ai::main_for_video_demo(
-        argc, argv, [&] {return  Yolov8Onnx::create("DetectionModel_int.onnx", 0.3);}, process_result);
-  }
+  return 0;
 }

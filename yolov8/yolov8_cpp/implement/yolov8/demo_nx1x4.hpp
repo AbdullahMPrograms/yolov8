@@ -197,7 +197,7 @@ struct MyThread {
   bool stop_;
   std::unique_ptr<std::thread> thread_;
 };
-
+//
 // std::vector<MyThread *> MyThread::all_threads_;
 struct DecodeThread : public MyThread {
   DecodeThread(int channel_id, const std::string& video_file, queue_t* queue)
@@ -216,6 +216,7 @@ struct DecodeThread : public MyThread {
   }
 
   virtual ~DecodeThread() {}
+
   virtual int run() override {
     auto& cap = *video_stream_.get();
     cv::Mat image;
@@ -228,20 +229,13 @@ struct DecodeThread : public MyThread {
     }
     LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO))
         << "decode queue size " << queue_->size();
-    
-    if (queue_->size() >= 3 && is_camera_ == true) {
+    if (queue_->size() > 0 && is_camera_ == true) {
       return 0;
     }
-    
     while (!queue_->push(FrameInfo{channel_id_, ++frame_id_, image},
-                         std::chrono::milliseconds(50))) {
+                         std::chrono::milliseconds(500))) {
       if (is_stopped()) {
         return -1;
-      }
-      // If we can't push after timeout, drop this frame for camera input
-      if (is_camera_) {
-        LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO)) << "Dropping frame due to full queue";
-        return 0;
       }
     }
     return 0;
@@ -307,12 +301,13 @@ struct GuiThread : public MyThread {
       frames_[frame_info.channel_id].frame_info = frame_info;
       frames_[frame_info.channel_id].dirty = true;
     }
-  }  virtual int run() override {
+  }
+  virtual int run() override {
     FrameInfo frame_info;
-    if (!queue_->pop(frame_info, std::chrono::milliseconds(100))) {
+    if (!queue_->pop(frame_info, std::chrono::milliseconds(500))) {
       inactive_counter_++;
-      if (inactive_counter_ > 20) {
-        // inactive for 2 second, stop (reduced from 5 seconds)
+      if (inactive_counter_ > 10) {
+        // inactive for 5 second, stop
         LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO)) << "no frame_info to show";
         return 1;
       } else {
@@ -412,10 +407,10 @@ struct DpuThread : public MyThread {
     LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO)) << "INIT DPU";
   }
   virtual ~DpuThread() {}
+
   virtual int run() override {
     FrameInfo frame;
-    // Reduced timeout for faster processing
-    if (!queue_in_->pop(frame, std::chrono::milliseconds(100))) {
+    if (!queue_in_->pop(frame, std::chrono::milliseconds(500))) {
       return 0;
     }
     if (filter_) {
@@ -423,15 +418,9 @@ struct DpuThread : public MyThread {
     }
     LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO))
         << "dpu queue size " << queue_out_->size();
-    
-    while (!queue_out_->push(frame, std::chrono::milliseconds(100))) {
+    while (!queue_out_->push(frame, std::chrono::milliseconds(500))) {
       if (is_stopped()) {
         return -1;
-      }
-      // If output queue is consistently full, drop older frames
-      if (queue_out_->size() >= queue_out_->capacity() * 0.9) {
-        LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO)) << "Output queue nearly full, dropping frame";
-        return 0;
       }
     }
     return 0;
@@ -597,7 +586,7 @@ inline void parse_opt(int argc, char* argv[], int start_pos = 1) {
   optind = start_pos;
   std::vector<std::string> sp;
   std::vector<std::string> spd;
-  while ((opt = getopt(argc, argv, "s:y:x:c:T:R:r:DhLZO")) != -1) {
+  while ((opt = getopt(argc, argv, "s:y:x:c:T:R:r:DhLZ")) != -1) {
     // LOG(INFO) << *argv;
     switch (opt) {
       case 'c':
@@ -675,12 +664,12 @@ int main_for_video_demo(int argc, char* argv[],
   parse_opt(argc, argv);
   {
     auto channel_id = 0;
-    auto decode_queue = std::unique_ptr<queue_t>{new queue_t{10}};
+    auto decode_queue = std::unique_ptr<queue_t>{new queue_t{5}};
     auto decode_thread = std::unique_ptr<DecodeThread>(
-    new DecodeThread{channel_id, g_avi_file[0], decode_queue.get()});
+        new DecodeThread{channel_id, g_avi_file[0], decode_queue.get()});
     auto dpu_thread = std::vector<std::unique_ptr<DpuThread>>{};
     auto sorting_queue =
-        std::unique_ptr<queue_t>(new queue_t(15 * g_num_of_threads[0]));
+        std::unique_ptr<queue_t>(new queue_t(5 * g_num_of_threads[0]));
     auto gui_thread = GuiThread::instance();
     auto gui_queue = gui_thread->getQueue();
     for (int i = 0; i < g_num_of_threads[0]; ++i) {
@@ -690,61 +679,6 @@ int main_for_video_demo(int argc, char* argv[],
     }
     auto sorting_thread = std::unique_ptr<SortingThread>(
         new SortingThread(sorting_queue.get(), gui_queue, std::to_string(0)));
-    // start everything
-    MyThread::start_all();
-    gui_thread->wait();
-    MyThread::stop_all();
-    MyThread::wait_all();
-  }
-  LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO)) << "BYEBYE";
-  return 0;
-}
-
-template <typename FactoryMethod, typename ProcessResult>
-int main_for_video_demo_optimized(int argc, char* argv[],
-                                  const FactoryMethod& factory_method,
-                                  const ProcessResult& process_result) {
-  signal(SIGINT, MyThread::signal_handler);
-  parse_opt(argc, argv);
-  {
-    auto channel_id = 0;
-    // High-performance configuration with larger queues
-    auto decode_queue = std::unique_ptr<queue_t>{new queue_t{20}};
-    auto decode_thread = std::unique_ptr<DecodeThread>(
-        new DecodeThread{channel_id, g_avi_file[0], decode_queue.get()});
-    
-    auto dpu_thread = std::vector<std::unique_ptr<DpuThread>>{};
-    
-    // Create multiple sorting queues to reduce bottleneck
-    auto sorting_queue1 = std::unique_ptr<queue_t>(new queue_t(25 * std::max(1, g_num_of_threads[0] / 2)));
-    auto sorting_queue2 = std::unique_ptr<queue_t>(new queue_t(25 * std::max(1, g_num_of_threads[0] / 2)));
-    
-    auto gui_thread = GuiThread::instance();
-    auto gui_queue = gui_thread->getQueue();
-    
-    // Split DPU threads between two sorting queues for better load balancing
-    int half_threads = std::max(1, g_num_of_threads[0] / 2);
-    
-    // First half of DPU threads -> sorting_queue1
-    for (int i = 0; i < half_threads; ++i) {
-      dpu_thread.emplace_back(new DpuThread(
-          create_dpu_filter(factory_method, process_result), decode_queue.get(),
-          sorting_queue1.get(), std::to_string(i)));
-    }
-    
-    // Second half of DPU threads -> sorting_queue2
-    for (int i = half_threads; i < g_num_of_threads[0]; ++i) {
-      dpu_thread.emplace_back(new DpuThread(
-          create_dpu_filter(factory_method, process_result), decode_queue.get(),
-          sorting_queue2.get(), std::to_string(i)));
-    }
-    
-    // Create two sorting threads for parallel sorting
-    auto sorting_thread1 = std::unique_ptr<SortingThread>(
-        new SortingThread(sorting_queue1.get(), gui_queue, std::string("1")));
-    auto sorting_thread2 = std::unique_ptr<SortingThread>(
-        new SortingThread(sorting_queue2.get(), gui_queue, std::string("2")));
-    
     // start everything
     MyThread::start_all();
     gui_thread->wait();
