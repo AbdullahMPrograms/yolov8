@@ -287,26 +287,26 @@
             "ports": [
               {
                 "direction": "in",
-                "id": "(input.39_vaip_320)@subgraph_(blob.60_vaip_342)",
-                "name": "(input.39_vaip_320)",
-                "properties": []
-              },
-              {
-                "direction": "in",
                 "id": "(onnx::Conv_308_pre_q_vaip_293)_FixShifter@subgraph_(blob.60_vaip_342)",
                 "name": "(onnx::Conv_308_pre_q_vaip_293)_FixShifter",
                 "properties": []
               },
               {
                 "direction": "in",
-                "id": "(onnx::Concat_303_pre_q_vaip_290)_FixShifter@subgraph_(blob.60_vaip_342)",
-                "name": "(onnx::Concat_303_pre_q_vaip_290)_FixShifter",
+                "id": "(input.39_vaip_320)@subgraph_(blob.60_vaip_342)",
+                "name": "(input.39_vaip_320)",
                 "properties": []
               },
               {
                 "direction": "in",
                 "id": "(onnx::Concat_484_vaip_341)_inserted_fix_5@subgraph_(blob.60_vaip_342)",
                 "name": "(onnx::Concat_484_vaip_341)_inserted_fix_5",
+                "properties": []
+              },
+              {
+                "direction": "in",
+                "id": "(onnx::Concat_303_pre_q_vaip_290)_FixShifter@subgraph_(blob.60_vaip_342)",
+                "name": "(onnx::Concat_303_pre_q_vaip_290)_FixShifter",
                 "properties": []
               },
               {
@@ -577,14 +577,14 @@
             "ports": [
               {
                 "direction": "in",
-                "id": "(onnx::Add_893_vaip_446)@subgraph_(blob.144_vaip_447)",
-                "name": "(onnx::Add_893_vaip_446)",
+                "id": "(input.111_vaip_426)@subgraph_(blob.144_vaip_447)",
+                "name": "(input.111_vaip_426)",
                 "properties": []
               },
               {
                 "direction": "in",
-                "id": "(input.111_vaip_426)@subgraph_(blob.144_vaip_447)",
-                "name": "(input.111_vaip_426)",
+                "id": "(onnx::Add_893_vaip_446)@subgraph_(blob.144_vaip_447)",
+                "name": "(onnx::Add_893_vaip_446)",
                 "properties": []
               },
               {
@@ -643,14 +643,14 @@
             "ports": [
               {
                 "direction": "in",
-                "id": "(input.127_vaip_452)@subgraph_(onnx::Concat_985_vaip_473)",
-                "name": "(input.127_vaip_452)",
+                "id": "(onnx::Add_984_vaip_472)@subgraph_(onnx::Concat_985_vaip_473)",
+                "name": "(onnx::Add_984_vaip_472)",
                 "properties": []
               },
               {
                 "direction": "in",
-                "id": "(onnx::Add_984_vaip_472)@subgraph_(onnx::Concat_985_vaip_473)",
-                "name": "(onnx::Add_984_vaip_472)",
+                "id": "(input.127_vaip_452)@subgraph_(onnx::Concat_985_vaip_473)",
+                "name": "(input.127_vaip_452)",
                 "properties": []
               },
               {
@@ -939,14 +939,14 @@
             "ports": [
               {
                 "direction": "in",
-                "id": "(onnx::Add_1212_vaip_532)@subgraph_(blob.208_vaip_533)",
-                "name": "(onnx::Add_1212_vaip_532)",
+                "id": "(onnx::Conv_1128_post_dq_vaip_512)@subgraph_(blob.208_vaip_533)",
+                "name": "(onnx::Conv_1128_post_dq_vaip_512)",
                 "properties": []
               },
               {
                 "direction": "in",
-                "id": "(onnx::Conv_1128_post_dq_vaip_512)@subgraph_(blob.208_vaip_533)",
-                "name": "(onnx::Conv_1128_post_dq_vaip_512)",
+                "id": "(onnx::Add_1212_vaip_532)@subgraph_(blob.208_vaip_533)",
+                "name": "(onnx::Add_1212_vaip_532)",
                 "properties": []
               },
               {
@@ -1005,14 +1005,14 @@
             "ports": [
               {
                 "direction": "in",
-                "id": "(onnx::Add_1303_vaip_555)@subgraph_(blob.228_vaip_556)",
-                "name": "(onnx::Add_1303_vaip_555)",
+                "id": "(input.183_vaip_535)@subgraph_(blob.228_vaip_556)",
+                "name": "(input.183_vaip_535)",
                 "properties": []
               },
               {
                 "direction": "in",
-                "id": "(input.183_vaip_535)@subgraph_(blob.228_vaip_556)",
-                "name": "(input.183_vaip_535)",
+                "id": "(onnx::Add_1303_vaip_555)@subgraph_(blob.228_vaip_556)",
+                "name": "(onnx::Add_1303_vaip_555)",
                 "properties": []
               },
               {
@@ -1263,8 +1263,14 @@
             "ports": [
               {
                 "direction": "in",
-                "id": "(onnx::Conv_1128_pre_q_vaip_509)_FixShifter@subgraph_(blob.268_vaip_606)",
-                "name": "(onnx::Conv_1128_pre_q_vaip_509)_FixShifter",
+                "id": "(blob.248_vaip_579)_FixShifter@subgraph_(blob.268_vaip_606)",
+                "name": "(blob.248_vaip_579)_FixShifter",
+                "properties": []
+              },
+              {
+                "direction": "in",
+                "id": "(blob.228_vaip_556)_FixShifter@subgraph_(blob.268_vaip_606)",
+                "name": "(blob.228_vaip_556)_FixShifter",
                 "properties": []
               },
               {
@@ -1275,14 +1281,8 @@
               },
               {
                 "direction": "in",
-                "id": "(blob.248_vaip_579)_FixShifter@subgraph_(blob.268_vaip_606)",
-                "name": "(blob.248_vaip_579)_FixShifter",
-                "properties": []
-              },
-              {
-                "direction": "in",
-                "id": "(blob.228_vaip_556)_FixShifter@subgraph_(blob.268_vaip_606)",
-                "name": "(blob.228_vaip_556)_FixShifter",
+                "id": "(onnx::Conv_1128_pre_q_vaip_509)_FixShifter@subgraph_(blob.268_vaip_606)",
+                "name": "(onnx::Conv_1128_pre_q_vaip_509)_FixShifter",
                 "properties": []
               },
               {
@@ -1433,14 +1433,14 @@
             "ports": [
               {
                 "direction": "in",
-                "id": "(onnx::Add_1713_vaip_664)@subgraph_(blob.312_vaip_665)",
-                "name": "(onnx::Add_1713_vaip_664)",
+                "id": "(onnx::Conv_1629_post_dq_vaip_644)@subgraph_(blob.312_vaip_665)",
+                "name": "(onnx::Conv_1629_post_dq_vaip_644)",
                 "properties": []
               },
               {
                 "direction": "in",
-                "id": "(onnx::Conv_1629_post_dq_vaip_644)@subgraph_(blob.312_vaip_665)",
-                "name": "(onnx::Conv_1629_post_dq_vaip_644)",
+                "id": "(onnx::Add_1713_vaip_664)@subgraph_(blob.312_vaip_665)",
+                "name": "(onnx::Add_1713_vaip_664)",
                 "properties": []
               },
               {
@@ -1597,14 +1597,14 @@
               },
               {
                 "direction": "in",
-                "id": "(onnx::Concat_1624_pre_q_vaip_638)_FixShifter@subgraph_(blob.332_vaip_690)",
-                "name": "(onnx::Concat_1624_pre_q_vaip_638)_FixShifter",
+                "id": "(onnx::Concat_1805_vaip_689)_inserted_fix_8@subgraph_(blob.332_vaip_690)",
+                "name": "(onnx::Concat_1805_vaip_689)_inserted_fix_8",
                 "properties": []
               },
               {
                 "direction": "in",
-                "id": "(onnx::Concat_1805_vaip_689)_inserted_fix_8@subgraph_(blob.332_vaip_690)",
-                "name": "(onnx::Concat_1805_vaip_689)_inserted_fix_8",
+                "id": "(onnx::Concat_1624_pre_q_vaip_638)_FixShifter@subgraph_(blob.332_vaip_690)",
+                "name": "(onnx::Concat_1624_pre_q_vaip_638)_FixShifter",
                 "properties": []
               },
               {
@@ -1783,14 +1783,8 @@
             "ports": [
               {
                 "direction": "in",
-                "id": "(onnx::MaxPool_1903/duplicated_vaip_716)_FixShifter@subgraph_(blob.360_vaip_718)",
-                "name": "(onnx::MaxPool_1903/duplicated_vaip_716)_FixShifter",
-                "properties": []
-              },
-              {
-                "direction": "in",
-                "id": "(onnx::MaxPool_1910/duplicated_vaip_715)_FixShifter@subgraph_(blob.360_vaip_718)",
-                "name": "(onnx::MaxPool_1910/duplicated_vaip_715)_FixShifter",
+                "id": "(onnx::MaxPool_1896/duplicated_vaip_717)@subgraph_(blob.360_vaip_718)",
+                "name": "(onnx::MaxPool_1896/duplicated_vaip_717)",
                 "properties": []
               },
               {
@@ -1801,8 +1795,14 @@
               },
               {
                 "direction": "in",
-                "id": "(onnx::MaxPool_1896/duplicated_vaip_717)@subgraph_(blob.360_vaip_718)",
-                "name": "(onnx::MaxPool_1896/duplicated_vaip_717)",
+                "id": "(onnx::MaxPool_1903/duplicated_vaip_716)_FixShifter@subgraph_(blob.360_vaip_718)",
+                "name": "(onnx::MaxPool_1903/duplicated_vaip_716)_FixShifter",
+                "properties": []
+              },
+              {
+                "direction": "in",
+                "id": "(onnx::MaxPool_1910/duplicated_vaip_715)_FixShifter@subgraph_(blob.360_vaip_718)",
+                "name": "(onnx::MaxPool_1910/duplicated_vaip_715)_FixShifter",
                 "properties": []
               },
               {
@@ -2027,12 +2027,6 @@
             "ports": [
               {
                 "direction": "in",
-                "id": "(input.339_vaip_770)@subgraph_(blob.416_vaip_791)",
-                "name": "(input.339_vaip_770)",
-                "properties": []
-              },
-              {
-                "direction": "in",
                 "id": "(onnx::Concat_2192_vaip_790)@subgraph_(blob.416_vaip_791)",
                 "name": "(onnx::Concat_2192_vaip_790)",
                 "properties": []
@@ -2041,6 +2035,12 @@
                 "direction": "in",
                 "id": "(onnx::Conv_2024_post_dq_vaip_749)@subgraph_(blob.416_vaip_791)",
                 "name": "(onnx::Conv_2024_post_dq_vaip_749)",
+                "properties": []
+              },
+              {
+                "direction": "in",
+                "id": "(input.339_vaip_770)@subgraph_(blob.416_vaip_791)",
+                "name": "(input.339_vaip_770)",
                 "properties": []
               },
               {
@@ -2105,14 +2105,14 @@
             "ports": [
               {
                 "direction": "in",
-                "id": "(input.151_vaip_485)@subgraph_(blob.428_vaip_805)",
-                "name": "(input.151_vaip_485)",
+                "id": "(onnx::Concat_2246_vaip_145)_inserted_fix_4@subgraph_(blob.428_vaip_805)",
+                "name": "(onnx::Concat_2246_vaip_145)_inserted_fix_4",
                 "properties": []
               },
               {
                 "direction": "in",
-                "id": "(onnx::Concat_2246_vaip_145)_inserted_fix_4@subgraph_(blob.428_vaip_805)",
-                "name": "(onnx::Concat_2246_vaip_145)_inserted_fix_4",
+                "id": "(input.151_vaip_485)@subgraph_(blob.428_vaip_805)",
+                "name": "(input.151_vaip_485)",
                 "properties": []
               },
               {
@@ -2291,8 +2291,8 @@
             "ports": [
               {
                 "direction": "in",
-                "id": "(onnx::Concat_2473_vaip_863)@subgraph_(blob.472_vaip_864)",
-                "name": "(onnx::Concat_2473_vaip_863)",
+                "id": "(onnx::Concat_2300_pre_q_vaip_817)_FixShifter@subgraph_(blob.472_vaip_864)",
+                "name": "(onnx::Concat_2300_pre_q_vaip_817)_FixShifter",
                 "properties": []
               },
               {
@@ -2303,8 +2303,8 @@
               },
               {
                 "direction": "in",
-                "id": "(onnx::Concat_2300_pre_q_vaip_817)_FixShifter@subgraph_(blob.472_vaip_864)",
-                "name": "(onnx::Concat_2300_pre_q_vaip_817)_FixShifter",
+                "id": "(onnx::Concat_2473_vaip_863)@subgraph_(blob.472_vaip_864)",
+                "name": "(onnx::Concat_2473_vaip_863)",
                 "properties": []
               },
               {
@@ -2681,6 +2681,12 @@
             "ports": [
               {
                 "direction": "in",
+                "id": "(onnx::Conv_2623_post_dq_vaip_903)@subgraph_(blob.536_vaip_945)",
+                "name": "(onnx::Conv_2623_post_dq_vaip_903)",
+                "properties": []
+              },
+              {
+                "direction": "in",
                 "id": "(input.447_vaip_924)@subgraph_(blob.536_vaip_945)",
                 "name": "(input.447_vaip_924)",
                 "properties": []
@@ -2689,12 +2695,6 @@
                 "direction": "in",
                 "id": "(onnx::Concat_2791_vaip_944)@subgraph_(blob.536_vaip_945)",
                 "name": "(onnx::Concat_2791_vaip_944)",
-                "properties": []
-              },
-              {
-                "direction": "in",
-                "id": "(onnx::Conv_2623_post_dq_vaip_903)@subgraph_(blob.536_vaip_945)",
-                "name": "(onnx::Conv_2623_post_dq_vaip_903)",
                 "properties": []
               },
               {
@@ -3091,12 +3091,6 @@
             "ports": [
               {
                 "direction": "in",
-                "id": "(input.503_vaip_1005)@subgraph_(blob.600_vaip_1026)",
-                "name": "(input.503_vaip_1005)",
-                "properties": []
-              },
-              {
-                "direction": "in",
                 "id": "(onnx::Conv_2941_post_dq_vaip_984)@subgraph_(blob.600_vaip_1026)",
                 "name": "(onnx::Conv_2941_post_dq_vaip_984)",
                 "properties": []
@@ -3111,6 +3105,12 @@
                 "direction": "in",
                 "id": "(onnx::Concat_3109_vaip_1025)@subgraph_(blob.600_vaip_1026)",
                 "name": "(onnx::Concat_3109_vaip_1025)",
+                "properties": []
+              },
+              {
+                "direction": "in",
+                "id": "(input.503_vaip_1005)@subgraph_(blob.600_vaip_1026)",
+                "name": "(input.503_vaip_1005)",
                 "properties": []
               },
               {
@@ -3405,28 +3405,28 @@
         "to_port_id": "(onnx::Concat_303_post_dq_vaip_291)@subgraph_(onnx::Concat_303_pre_q_vaip_290)_FixShifter"
       },
       {
-        "from_port_id": "(input.39_vaip_320)@subgraph_(blob.40_vaip_317)",
-        "id": "C_15",
-        "properties": [],
-        "to_port_id": "(input.39_vaip_320)@subgraph_(blob.60_vaip_342)"
-      },
-      {
         "from_port_id": "(onnx::Conv_308_pre_q_vaip_293)_FixShifter@subgraph_(onnx::Conv_308_pre_q_vaip_293)_FixShifter",
-        "id": "C_16",
+        "id": "C_15",
         "properties": [],
         "to_port_id": "(onnx::Conv_308_pre_q_vaip_293)_FixShifter@subgraph_(blob.60_vaip_342)"
       },
       {
-        "from_port_id": "(onnx::Concat_303_pre_q_vaip_290)_FixShifter@subgraph_(onnx::Concat_303_pre_q_vaip_290)_FixShifter",
-        "id": "C_17",
+        "from_port_id": "(input.39_vaip_320)@subgraph_(blob.40_vaip_317)",
+        "id": "C_16",
         "properties": [],
-        "to_port_id": "(onnx::Concat_303_pre_q_vaip_290)_FixShifter@subgraph_(blob.60_vaip_342)"
+        "to_port_id": "(input.39_vaip_320)@subgraph_(blob.60_vaip_342)"
       },
       {
         "from_port_id": "(onnx::Concat_484_vaip_341)_inserted_fix_5@subgraph_(onnx::Concat_484_vaip_341)",
-        "id": "C_18",
+        "id": "C_17",
         "properties": [],
         "to_port_id": "(onnx::Concat_484_vaip_341)_inserted_fix_5@subgraph_(blob.60_vaip_342)"
+      },
+      {
+        "from_port_id": "(onnx::Concat_303_pre_q_vaip_290)_FixShifter@subgraph_(onnx::Concat_303_pre_q_vaip_290)_FixShifter",
+        "id": "C_18",
+        "properties": [],
+        "to_port_id": "(onnx::Concat_303_pre_q_vaip_290)_FixShifter@subgraph_(blob.60_vaip_342)"
       },
       {
         "from_port_id": "(input.55_vaip_343)@subgraph_(blob.60_vaip_342)",
@@ -3513,16 +3513,16 @@
         "to_port_id": "(input.119_vaip_436)@subgraph_(blob.136_vaip_48)"
       },
       {
-        "from_port_id": "(onnx::Add_893_vaip_446)@subgraph_(blob.136_vaip_48)",
+        "from_port_id": "(input.111_vaip_426)@subgraph_(blob.124_vaip_424)",
         "id": "C_33",
         "properties": [],
-        "to_port_id": "(onnx::Add_893_vaip_446)@subgraph_(blob.144_vaip_447)"
+        "to_port_id": "(input.111_vaip_426)@subgraph_(blob.144_vaip_447)"
       },
       {
-        "from_port_id": "(input.111_vaip_426)@subgraph_(blob.124_vaip_424)",
+        "from_port_id": "(onnx::Add_893_vaip_446)@subgraph_(blob.136_vaip_48)",
         "id": "C_34",
         "properties": [],
-        "to_port_id": "(input.111_vaip_426)@subgraph_(blob.144_vaip_447)"
+        "to_port_id": "(onnx::Add_893_vaip_446)@subgraph_(blob.144_vaip_447)"
       },
       {
         "from_port_id": "(input.127_vaip_452)@subgraph_(blob.144_vaip_447)",
@@ -3537,16 +3537,16 @@
         "to_port_id": "(input.135_vaip_462)@subgraph_(blob.156_vaip_54)"
       },
       {
-        "from_port_id": "(input.127_vaip_452)@subgraph_(blob.144_vaip_447)",
+        "from_port_id": "(onnx::Add_984_vaip_472)@subgraph_(blob.156_vaip_54)",
         "id": "C_37",
         "properties": [],
-        "to_port_id": "(input.127_vaip_452)@subgraph_(onnx::Concat_985_vaip_473)"
+        "to_port_id": "(onnx::Add_984_vaip_472)@subgraph_(onnx::Concat_985_vaip_473)"
       },
       {
-        "from_port_id": "(onnx::Add_984_vaip_472)@subgraph_(blob.156_vaip_54)",
+        "from_port_id": "(input.127_vaip_452)@subgraph_(blob.144_vaip_447)",
         "id": "C_38",
         "properties": [],
-        "to_port_id": "(onnx::Add_984_vaip_472)@subgraph_(onnx::Concat_985_vaip_473)"
+        "to_port_id": "(input.127_vaip_452)@subgraph_(onnx::Concat_985_vaip_473)"
       },
       {
         "from_port_id": "(input.127_vaip_452)@subgraph_(blob.144_vaip_447)",
@@ -3651,16 +3651,16 @@
         "to_port_id": "(input.175_vaip_522)@subgraph_(blob.200_vaip_69)"
       },
       {
-        "from_port_id": "(onnx::Add_1212_vaip_532)@subgraph_(blob.200_vaip_69)",
+        "from_port_id": "(onnx::Conv_1128_post_dq_vaip_512)@subgraph_(blob.184_vaip_63)_strided_slice_(0_0_0_192)_(1_40_40_384)",
         "id": "C_56",
         "properties": [],
-        "to_port_id": "(onnx::Add_1212_vaip_532)@subgraph_(blob.208_vaip_533)"
+        "to_port_id": "(onnx::Conv_1128_post_dq_vaip_512)@subgraph_(blob.208_vaip_533)"
       },
       {
-        "from_port_id": "(onnx::Conv_1128_post_dq_vaip_512)@subgraph_(blob.184_vaip_63)_strided_slice_(0_0_0_192)_(1_40_40_384)",
+        "from_port_id": "(onnx::Add_1212_vaip_532)@subgraph_(blob.200_vaip_69)",
         "id": "C_57",
         "properties": [],
-        "to_port_id": "(onnx::Conv_1128_post_dq_vaip_512)@subgraph_(blob.208_vaip_533)"
+        "to_port_id": "(onnx::Add_1212_vaip_532)@subgraph_(blob.208_vaip_533)"
       },
       {
         "from_port_id": "(input.183_vaip_535)@subgraph_(blob.208_vaip_533)",
@@ -3675,16 +3675,16 @@
         "to_port_id": "(input.191_vaip_545)@subgraph_(blob.220_vaip_75)"
       },
       {
-        "from_port_id": "(onnx::Add_1303_vaip_555)@subgraph_(blob.220_vaip_75)",
+        "from_port_id": "(input.183_vaip_535)@subgraph_(blob.208_vaip_533)",
         "id": "C_60",
         "properties": [],
-        "to_port_id": "(onnx::Add_1303_vaip_555)@subgraph_(blob.228_vaip_556)"
+        "to_port_id": "(input.183_vaip_535)@subgraph_(blob.228_vaip_556)"
       },
       {
-        "from_port_id": "(input.183_vaip_535)@subgraph_(blob.208_vaip_533)",
+        "from_port_id": "(onnx::Add_1303_vaip_555)@subgraph_(blob.220_vaip_75)",
         "id": "C_61",
         "properties": [],
-        "to_port_id": "(input.183_vaip_535)@subgraph_(blob.228_vaip_556)"
+        "to_port_id": "(onnx::Add_1303_vaip_555)@subgraph_(blob.228_vaip_556)"
       },
       {
         "from_port_id": "(input.199_vaip_558)@subgraph_(blob.228_vaip_556)",
@@ -3765,28 +3765,28 @@
         "to_port_id": "(onnx::Concat_1123_post_dq_vaip_507)@subgraph_(onnx::Concat_1123_pre_q_vaip_506)_FixShifter"
       },
       {
-        "from_port_id": "(onnx::Conv_1128_pre_q_vaip_509)_FixShifter@subgraph_(onnx::Conv_1128_pre_q_vaip_509)_FixShifter",
-        "id": "C_75",
-        "properties": [],
-        "to_port_id": "(onnx::Conv_1128_pre_q_vaip_509)_FixShifter@subgraph_(blob.268_vaip_606)"
-      },
-      {
-        "from_port_id": "(blob.208_vaip_533)_FixShifter@subgraph_(blob.208_vaip_533)_FixShifter",
-        "id": "C_76",
-        "properties": [],
-        "to_port_id": "(blob.208_vaip_533)_FixShifter@subgraph_(blob.268_vaip_606)"
-      },
-      {
         "from_port_id": "(blob.248_vaip_579)_FixShifter@subgraph_(blob.248_vaip_579)_FixShifter",
-        "id": "C_77",
+        "id": "C_75",
         "properties": [],
         "to_port_id": "(blob.248_vaip_579)_FixShifter@subgraph_(blob.268_vaip_606)"
       },
       {
         "from_port_id": "(blob.228_vaip_556)_FixShifter@subgraph_(blob.228_vaip_556)_FixShifter",
-        "id": "C_78",
+        "id": "C_76",
         "properties": [],
         "to_port_id": "(blob.228_vaip_556)_FixShifter@subgraph_(blob.268_vaip_606)"
+      },
+      {
+        "from_port_id": "(blob.208_vaip_533)_FixShifter@subgraph_(blob.208_vaip_533)_FixShifter",
+        "id": "C_77",
+        "properties": [],
+        "to_port_id": "(blob.208_vaip_533)_FixShifter@subgraph_(blob.268_vaip_606)"
+      },
+      {
+        "from_port_id": "(onnx::Conv_1128_pre_q_vaip_509)_FixShifter@subgraph_(onnx::Conv_1128_pre_q_vaip_509)_FixShifter",
+        "id": "C_78",
+        "properties": [],
+        "to_port_id": "(onnx::Conv_1128_pre_q_vaip_509)_FixShifter@subgraph_(blob.268_vaip_606)"
       },
       {
         "from_port_id": "(onnx::Concat_1123_pre_q_vaip_506)_FixShifter@subgraph_(onnx::Concat_1123_pre_q_vaip_506)_FixShifter",
@@ -3837,16 +3837,16 @@
         "to_port_id": "(input.263_vaip_654)@subgraph_(blob.304_vaip_102)"
       },
       {
-        "from_port_id": "(onnx::Add_1713_vaip_664)@subgraph_(blob.304_vaip_102)",
+        "from_port_id": "(onnx::Conv_1629_post_dq_vaip_644)@subgraph_(blob.288_vaip_96)_strided_slice_(0_0_0_288)_(1_20_20_576)",
         "id": "C_87",
         "properties": [],
-        "to_port_id": "(onnx::Add_1713_vaip_664)@subgraph_(blob.312_vaip_665)"
+        "to_port_id": "(onnx::Conv_1629_post_dq_vaip_644)@subgraph_(blob.312_vaip_665)"
       },
       {
-        "from_port_id": "(onnx::Conv_1629_post_dq_vaip_644)@subgraph_(blob.288_vaip_96)_strided_slice_(0_0_0_288)_(1_20_20_576)",
+        "from_port_id": "(onnx::Add_1713_vaip_664)@subgraph_(blob.304_vaip_102)",
         "id": "C_88",
         "properties": [],
-        "to_port_id": "(onnx::Conv_1629_post_dq_vaip_644)@subgraph_(blob.312_vaip_665)"
+        "to_port_id": "(onnx::Add_1713_vaip_664)@subgraph_(blob.312_vaip_665)"
       },
       {
         "from_port_id": "(input.271_vaip_668)@subgraph_(blob.312_vaip_665)",
@@ -3903,16 +3903,16 @@
         "to_port_id": "(onnx::Conv_1629_pre_q_vaip_641)_FixShifter@subgraph_(blob.332_vaip_690)"
       },
       {
-        "from_port_id": "(onnx::Concat_1624_pre_q_vaip_638)_FixShifter@subgraph_(onnx::Concat_1624_pre_q_vaip_638)_FixShifter",
+        "from_port_id": "(onnx::Concat_1805_vaip_689)_inserted_fix_8@subgraph_(onnx::Concat_1805_vaip_689)",
         "id": "C_98",
         "properties": [],
-        "to_port_id": "(onnx::Concat_1624_pre_q_vaip_638)_FixShifter@subgraph_(blob.332_vaip_690)"
+        "to_port_id": "(onnx::Concat_1805_vaip_689)_inserted_fix_8@subgraph_(blob.332_vaip_690)"
       },
       {
-        "from_port_id": "(onnx::Concat_1805_vaip_689)_inserted_fix_8@subgraph_(onnx::Concat_1805_vaip_689)",
+        "from_port_id": "(onnx::Concat_1624_pre_q_vaip_638)_FixShifter@subgraph_(onnx::Concat_1624_pre_q_vaip_638)_FixShifter",
         "id": "C_99",
         "properties": [],
-        "to_port_id": "(onnx::Concat_1805_vaip_689)_inserted_fix_8@subgraph_(blob.332_vaip_690)"
+        "to_port_id": "(onnx::Concat_1624_pre_q_vaip_638)_FixShifter@subgraph_(blob.332_vaip_690)"
       },
       {
         "from_port_id": "(input.287_vaip_691)@subgraph_(blob.332_vaip_690)",
@@ -3963,28 +3963,28 @@
         "to_port_id": "(onnx::MaxPool_1903/duplicated_vaip_716)@subgraph_(onnx::MaxPool_1903/duplicated_vaip_716)_FixShifter"
       },
       {
-        "from_port_id": "(onnx::MaxPool_1903/duplicated_vaip_716)_FixShifter@subgraph_(onnx::MaxPool_1903/duplicated_vaip_716)_FixShifter",
+        "from_port_id": "(onnx::MaxPool_1896/duplicated_vaip_717)@subgraph_(blob.344_vaip_114)",
         "id": "C_108",
+        "properties": [],
+        "to_port_id": "(onnx::MaxPool_1896/duplicated_vaip_717)@subgraph_(blob.360_vaip_718)"
+      },
+      {
+        "from_port_id": "(onnx::Concat_1911_post_dq_vaip_714)_FixShifter@subgraph_(onnx::Concat_1911_post_dq_vaip_714)_FixShifter",
+        "id": "C_109",
+        "properties": [],
+        "to_port_id": "(onnx::Concat_1911_post_dq_vaip_714)_FixShifter@subgraph_(blob.360_vaip_718)"
+      },
+      {
+        "from_port_id": "(onnx::MaxPool_1903/duplicated_vaip_716)_FixShifter@subgraph_(onnx::MaxPool_1903/duplicated_vaip_716)_FixShifter",
+        "id": "C_110",
         "properties": [],
         "to_port_id": "(onnx::MaxPool_1903/duplicated_vaip_716)_FixShifter@subgraph_(blob.360_vaip_718)"
       },
       {
         "from_port_id": "(onnx::MaxPool_1910/duplicated_vaip_715)_FixShifter@subgraph_(onnx::MaxPool_1910/duplicated_vaip_715)_FixShifter",
-        "id": "C_109",
-        "properties": [],
-        "to_port_id": "(onnx::MaxPool_1910/duplicated_vaip_715)_FixShifter@subgraph_(blob.360_vaip_718)"
-      },
-      {
-        "from_port_id": "(onnx::Concat_1911_post_dq_vaip_714)_FixShifter@subgraph_(onnx::Concat_1911_post_dq_vaip_714)_FixShifter",
-        "id": "C_110",
-        "properties": [],
-        "to_port_id": "(onnx::Concat_1911_post_dq_vaip_714)_FixShifter@subgraph_(blob.360_vaip_718)"
-      },
-      {
-        "from_port_id": "(onnx::MaxPool_1896/duplicated_vaip_717)@subgraph_(blob.344_vaip_114)",
         "id": "C_111",
         "properties": [],
-        "to_port_id": "(onnx::MaxPool_1896/duplicated_vaip_717)@subgraph_(blob.360_vaip_718)"
+        "to_port_id": "(onnx::MaxPool_1910/duplicated_vaip_715)_FixShifter@subgraph_(blob.360_vaip_718)"
       },
       {
         "from_port_id": "(input.303_vaip_719)@subgraph_(blob.360_vaip_718)",
@@ -4053,22 +4053,22 @@
         "to_port_id": "(input.315_vaip_733)@subgraph_(blob.376_vaip_128)_strided_slice_(0_0_0_0)_(1_40_40_192)"
       },
       {
-        "from_port_id": "(input.339_vaip_770)@subgraph_(blob.392_vaip_134)",
-        "id": "C_123",
-        "properties": [],
-        "to_port_id": "(input.339_vaip_770)@subgraph_(blob.416_vaip_791)"
-      },
-      {
         "from_port_id": "(onnx::Concat_2192_vaip_790)@subgraph_(blob.408_vaip_140)",
-        "id": "C_124",
+        "id": "C_123",
         "properties": [],
         "to_port_id": "(onnx::Concat_2192_vaip_790)@subgraph_(blob.416_vaip_791)"
       },
       {
         "from_port_id": "(onnx::Conv_2024_post_dq_vaip_749)@subgraph_(blob.376_vaip_128)_strided_slice_(0_0_0_192)_(1_40_40_384)",
-        "id": "C_125",
+        "id": "C_124",
         "properties": [],
         "to_port_id": "(onnx::Conv_2024_post_dq_vaip_749)@subgraph_(blob.416_vaip_791)"
+      },
+      {
+        "from_port_id": "(input.339_vaip_770)@subgraph_(blob.392_vaip_134)",
+        "id": "C_125",
+        "properties": [],
+        "to_port_id": "(input.339_vaip_770)@subgraph_(blob.416_vaip_791)"
       },
       {
         "from_port_id": "(onnx::Concat_2019_post_dq_vaip_745)@subgraph_(blob.376_vaip_128)_strided_slice_(0_0_0_0)_(1_40_40_192)",
@@ -4089,16 +4089,16 @@
         "to_port_id": "(input.363_vaip_803)@subgraph_(onnx::Concat_2246_vaip_145)"
       },
       {
-        "from_port_id": "(input.151_vaip_485)@subgraph_(blob.168_vaip_57)",
+        "from_port_id": "(onnx::Concat_2246_vaip_145)_inserted_fix_4@subgraph_(onnx::Concat_2246_vaip_145)",
         "id": "C_129",
         "properties": [],
-        "to_port_id": "(input.151_vaip_485)@subgraph_(blob.428_vaip_805)"
+        "to_port_id": "(onnx::Concat_2246_vaip_145)_inserted_fix_4@subgraph_(blob.428_vaip_805)"
       },
       {
-        "from_port_id": "(onnx::Concat_2246_vaip_145)_inserted_fix_4@subgraph_(onnx::Concat_2246_vaip_145)",
+        "from_port_id": "(input.151_vaip_485)@subgraph_(blob.168_vaip_57)",
         "id": "C_130",
         "properties": [],
-        "to_port_id": "(onnx::Concat_2246_vaip_145)_inserted_fix_4@subgraph_(blob.428_vaip_805)"
+        "to_port_id": "(input.151_vaip_485)@subgraph_(blob.428_vaip_805)"
       },
       {
         "from_port_id": "(input.367_vaip_806)@subgraph_(blob.428_vaip_805)",
@@ -4149,10 +4149,10 @@
         "to_port_id": "(onnx::Concat_2300_post_dq_vaip_818)@subgraph_(onnx::Concat_2300_pre_q_vaip_817)_FixShifter"
       },
       {
-        "from_port_id": "(onnx::Concat_2473_vaip_863)@subgraph_(blob.464_vaip_160)",
+        "from_port_id": "(onnx::Concat_2300_pre_q_vaip_817)_FixShifter@subgraph_(onnx::Concat_2300_pre_q_vaip_817)_FixShifter",
         "id": "C_139",
         "properties": [],
-        "to_port_id": "(onnx::Concat_2473_vaip_863)@subgraph_(blob.472_vaip_864)"
+        "to_port_id": "(onnx::Concat_2300_pre_q_vaip_817)_FixShifter@subgraph_(blob.472_vaip_864)"
       },
       {
         "from_port_id": "(input.391_vaip_843)@subgraph_(blob.448_vaip_154)",
@@ -4161,10 +4161,10 @@
         "to_port_id": "(input.391_vaip_843)@subgraph_(blob.472_vaip_864)"
       },
       {
-        "from_port_id": "(onnx::Concat_2300_pre_q_vaip_817)_FixShifter@subgraph_(onnx::Concat_2300_pre_q_vaip_817)_FixShifter",
+        "from_port_id": "(onnx::Concat_2473_vaip_863)@subgraph_(blob.464_vaip_160)",
         "id": "C_141",
         "properties": [],
-        "to_port_id": "(onnx::Concat_2300_pre_q_vaip_817)_FixShifter@subgraph_(blob.472_vaip_864)"
+        "to_port_id": "(onnx::Concat_2473_vaip_863)@subgraph_(blob.472_vaip_864)"
       },
       {
         "from_port_id": "(onnx::Conv_2305_pre_q_vaip_820)_FixShifter@subgraph_(onnx::Conv_2305_pre_q_vaip_820)_FixShifter",
@@ -4287,22 +4287,22 @@
         "to_port_id": "(input.423_vaip_887)@subgraph_(blob.496_vaip_169)_strided_slice_(0_0_0_0)_(1_40_40_192)"
       },
       {
-        "from_port_id": "(input.447_vaip_924)@subgraph_(blob.512_vaip_175)",
+        "from_port_id": "(onnx::Conv_2623_post_dq_vaip_903)@subgraph_(blob.496_vaip_169)_strided_slice_(0_0_0_192)_(1_40_40_384)",
         "id": "C_162",
+        "properties": [],
+        "to_port_id": "(onnx::Conv_2623_post_dq_vaip_903)@subgraph_(blob.536_vaip_945)"
+      },
+      {
+        "from_port_id": "(input.447_vaip_924)@subgraph_(blob.512_vaip_175)",
+        "id": "C_163",
         "properties": [],
         "to_port_id": "(input.447_vaip_924)@subgraph_(blob.536_vaip_945)"
       },
       {
         "from_port_id": "(onnx::Concat_2791_vaip_944)@subgraph_(blob.528_vaip_181)",
-        "id": "C_163",
-        "properties": [],
-        "to_port_id": "(onnx::Concat_2791_vaip_944)@subgraph_(blob.536_vaip_945)"
-      },
-      {
-        "from_port_id": "(onnx::Conv_2623_post_dq_vaip_903)@subgraph_(blob.496_vaip_169)_strided_slice_(0_0_0_192)_(1_40_40_384)",
         "id": "C_164",
         "properties": [],
-        "to_port_id": "(onnx::Conv_2623_post_dq_vaip_903)@subgraph_(blob.536_vaip_945)"
+        "to_port_id": "(onnx::Concat_2791_vaip_944)@subgraph_(blob.536_vaip_945)"
       },
       {
         "from_port_id": "(onnx::Concat_2618_post_dq_vaip_899)@subgraph_(blob.496_vaip_169)_strided_slice_(0_0_0_0)_(1_40_40_192)",
@@ -4431,28 +4431,28 @@
         "to_port_id": "(input.479_vaip_968)@subgraph_(blob.560_vaip_190)_strided_slice_(0_0_0_0)_(1_20_20_288)"
       },
       {
-        "from_port_id": "(input.503_vaip_1005)@subgraph_(blob.576_vaip_196)",
-        "id": "C_186",
-        "properties": [],
-        "to_port_id": "(input.503_vaip_1005)@subgraph_(blob.600_vaip_1026)"
-      },
-      {
         "from_port_id": "(onnx::Conv_2941_post_dq_vaip_984)@subgraph_(blob.560_vaip_190)_strided_slice_(0_0_0_288)_(1_20_20_576)",
-        "id": "C_187",
+        "id": "C_186",
         "properties": [],
         "to_port_id": "(onnx::Conv_2941_post_dq_vaip_984)@subgraph_(blob.600_vaip_1026)"
       },
       {
         "from_port_id": "(onnx::Concat_2936_post_dq_vaip_980)@subgraph_(blob.560_vaip_190)_strided_slice_(0_0_0_0)_(1_20_20_288)",
-        "id": "C_188",
+        "id": "C_187",
         "properties": [],
         "to_port_id": "(onnx::Concat_2936_post_dq_vaip_980)@subgraph_(blob.600_vaip_1026)"
       },
       {
         "from_port_id": "(onnx::Concat_3109_vaip_1025)@subgraph_(blob.592_vaip_202)",
-        "id": "C_189",
+        "id": "C_188",
         "properties": [],
         "to_port_id": "(onnx::Concat_3109_vaip_1025)@subgraph_(blob.600_vaip_1026)"
+      },
+      {
+        "from_port_id": "(input.503_vaip_1005)@subgraph_(blob.576_vaip_196)",
+        "id": "C_189",
+        "properties": [],
+        "to_port_id": "(input.503_vaip_1005)@subgraph_(blob.600_vaip_1026)"
       },
       {
         "from_port_id": "(input.519_vaip_1027)@subgraph_(blob.600_vaip_1026)",

@@ -5,10 +5,10 @@
         "patch": "0"
     },
     "generation": {
-        "this_file": "C:\\Users\\CHRN\\RyzenAI-SW-9e02114cea0ede2bc8e405468e07e803dadc0058\\tutorial\\yolov8\\yolov8_python\\xrt.run_summary",
+        "this_file": "C:\\dell\\RyzenAI-SW\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8_python\\xrt.run_summary",
         "source": "vp",
-        "PID": "25004",
-        "timestamp": "1749059433285",
+        "PID": "8976",
+        "timestamp": "1749077643574",
         "target": "TT_HW",
         "flags": [
             ""
