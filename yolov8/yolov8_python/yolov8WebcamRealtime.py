@@ -132,7 +132,6 @@ def setup_camera():
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
     cap.set(cv2.CAP_PROP_FPS, 60)
     
-    # Verify actual resolution
     actual_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     actual_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
     actual_fps = cap.get(cv2.CAP_PROP_FPS)
@@ -177,21 +176,19 @@ def main():
 
     inp_meta = npu_session.get_inputs()[0]
     
-    # Setup camera
     cap = setup_camera()
     
-    # Create window with specific size
     cv2.namedWindow("YOLOv8 Real-time Detection", cv2.WINDOW_NORMAL)
     cv2.resizeWindow("YOLOv8 Real-time Detection", 1280, 720)
     
     # FPS tracking
-    fps_queue = deque(maxlen=30)  # Rolling average over 30 frames
+    fps_queue = deque(maxlen=30)
     prev_time = time.time()
     max_fps = 0.0
     min_fps = float("inf")
     
     # Color palette for different classes
-    np.random.seed(42)  # For consistent colors
+    np.random.seed(42)
     colors = [(int(c[0]), int(c[1]), int(c[2])) for c in np.random.randint(0, 255, size=(80, 3))]
     
     print("Starting real-time detection. Press 'q' to quit, 'r' to reset FPS stats.")
