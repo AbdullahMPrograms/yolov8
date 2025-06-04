@@ -1,0 +1,19 @@
+{
+    "header": {
+        "date": "2025-06-04 13:50:33",
+        "time_created": 1749059433256,
+        "schema_version": {
+            "major": 1,
+            "minor": 1,
+            "patch": 0
+        },
+        "device": "Client",
+        "clock_freq_MHz": 1000,
+        "id_size": 4,
+        "cycle_size": 8,
+        "buffer_size": 196608
+    },
+    "record_timer_ts": [
+        
+    ]
+}

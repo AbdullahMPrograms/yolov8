@@ -287,7 +287,7 @@ struct GuiThread : public MyThread {
       : MyThread{},
         queue_{
             new queue_t{
-                10}  // assuming GUI is not bottleneck, 10 is high enough
+                20} 
         },
         inactive_counter_{0} {
     LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO)) << "INIT GUI";
@@ -482,7 +482,7 @@ struct SortingThread : public MyThread {
       
       // Update FPS statistics
       max_fps_ = std::max(max_fps_, fps_);
-      if (fps_ > 0) {  // Only consider valid FPS values
+      if (fps_ > 0) { 
         min_fps_ = std::min(min_fps_, fps_);
         fps_sum_ += fps_;
         fps_count_++;
@@ -501,12 +501,12 @@ struct SortingThread : public MyThread {
                               (minutes < 10 ? "0" : "") + std::to_string(minutes) + ":" +
                               (seconds < 10 ? "0" : "") + std::to_string(seconds);
         
-        // Display timer (same size and color as FPS)
+        // Display timer
         cv::putText(frame.mat, std::string("Time: ") + time_str,
                     cv::Point(x, y), cv::FONT_HERSHEY_SIMPLEX, 0.7,
                     cv::Scalar(178, 79, 0), 2, 4);
         
-        // Display current FPS (moved down)
+        // Display current FPS
         cv::putText(frame.mat, std::string("FPS: ") + std::to_string(fps),
                     cv::Point(x, y + 25), cv::FONT_HERSHEY_SIMPLEX, 0.7,
                     cv::Scalar(178, 79, 0), 2, 4);
@@ -534,7 +534,7 @@ struct SortingThread : public MyThread {
         << queue_out_->size() << "   FPS: " << fps 
         << " Avg: " << avg_fps_ << " Min: " << min_fps_ << " Max: " << max_fps_;
     points_.push_front(now);
-    if (duration > 2000) {  // sliding window for 2 seconds.
+    if (duration > 2000) { 
       points_.pop_back();
     }
     while (!queue_out_->push(frame, std::chrono::milliseconds(500))) {
@@ -688,8 +688,6 @@ int main_for_video_demo(int argc, char* argv[],
   LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO)) << "BYEBYE";
   return 0;
 }
-
-
 
 }  // namespace ai
 }  // namespace vitis
