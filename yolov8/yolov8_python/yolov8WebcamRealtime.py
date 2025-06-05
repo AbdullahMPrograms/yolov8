@@ -50,7 +50,7 @@ class FrameReader(threading.Thread):
 
 class DetectionWorker(threading.Thread):
     """
-    Runs YOLOv8 detection on frames from an input queue and places results in an output queue.
+    Runs YOLOv8 detection and tracks detailed performance statistics (min, avg, max FPS).
     """
     def __init__(self, in_queue, out_queue, model_session, input_meta):
         super().__init__()
@@ -60,7 +60,13 @@ class DetectionWorker(threading.Thread):
         self.npu_session = model_session
         self.inp_meta = input_meta
         self.running = True
+        
+        # --- NEW: Expanded FPS Tracking ---
         self.fps_queue = deque(maxlen=30)
+        self.min_fps = float('inf')
+        self.max_fps = 0.0
+        
+        # Pre-loaded components for post-processing
         self.dfl = DFL(16)
         self.anchors = torch.tensor(np.load("./anchors.npy", allow_pickle=True))
         self.strides = torch.tensor(np.load("./strides.npy", allow_pickle=True))
@@ -86,11 +92,18 @@ class DetectionWorker(threading.Thread):
                 preds, conf_thres=0.25, iou_thres=0.7, agnostic=False, max_det=300
             )
             
-            self.fps_queue.append(1.0 / (time.time() - start_time))
+            # --- NEW: Update all FPS stats ---
+            end_time = time.time()
+            current_fps = 1.0 / (end_time - start_time)
+            self.fps_queue.append(current_fps)
+            self.min_fps = min(self.min_fps, current_fps)
+            self.max_fps = max(self.max_fps, current_fps)
+            avg_fps = sum(self.fps_queue) / len(self.fps_queue)
 
-            # Put results in the output queue
+            # --- NEW: Pass all stats in the output queue ---
+            stats_tuple = (avg_fps, self.min_fps, self.max_fps)
             if not self.out_queue.full():
-                self.out_queue.put((preds[0], self.get_average_fps()))
+                self.out_queue.put((preds[0], stats_tuple))
             
             self.in_queue.task_done()
 
@@ -99,9 +112,6 @@ class DetectionWorker(threading.Thread):
         dbox = dist2bbox(self.dfl(box), self.anchors.unsqueeze(0), xywh=True, dim=1) * self.strides
         return torch.cat((dbox, cls.sigmoid()), dim=1), x
 
-    def get_average_fps(self):
-        return sum(self.fps_queue) / len(self.fps_queue) if self.fps_queue else 0.0
-
     def stop(self):
         self.running = False
 
@@ -109,7 +119,12 @@ class DetectionWorker(threading.Thread):
 # --- Main Function (Corrected Architecture) ---
 
 def main():
-    """Main function with truly decoupled display and detection."""
+    """Main function with CORRECT and robust FPS capping."""
+    
+    # --- FPS Capping Configuration ---
+    CAP_DISPLAY_FPS = True  # Set to True to cap FPS, False for unlimited
+    TARGET_FPS = 60.0
+    
     # --- Setup (Model, Camera, etc.) ---
     try:
         with open("coco.names", "r") as f:
@@ -117,8 +132,7 @@ def main():
         np.random.seed(42)
         colors = [(int(c[0]), int(c[1]), int(c[2])) for c in np.random.randint(0, 255, size=(len(names), 3))]
     except Exception as e:
-        print(f"Error loading assets: {e}")
-        return
+        print(f"Error loading assets: {e}"); return
 
     try:
         npu_opts = onnxruntime.SessionOptions()
@@ -141,8 +155,6 @@ def main():
     
     frame_reader.start()
     detection_worker.start()
-
-    # Wait briefly for the first frame to be read
     time.sleep(1) 
 
     # --- Main Display Loop ---
@@ -150,58 +162,67 @@ def main():
     cv2.resizeWindow("YOLOv8 Real-time Detection", 1280, 720)
 
     display_fps_queue = deque(maxlen=60)
-    prev_time = time.time()
+    prev_loop_end_time = time.time()
     
     latest_detections = None
-    detection_fps = 0.0
+    detection_stats = (0.0, float('inf'), 0.0) # Initialize min FPS properly
 
     print("Starting real-time detection. Press 'q' to quit.")
     
     try:
         while True:
-            # 1. Grab the latest frame from the reader thread
+            # --- START: Corrected FPS Capping and Measurement ---
+            loop_start_time = time.time()
+            target_frame_time = 1.0 / TARGET_FPS if CAP_DISPLAY_FPS else 0
+
+            # 1. Grab the latest frame
             frame = frame_reader.get_frame()
             if frame is None:
                 if not frame_reader.running: break
-                time.sleep(0.01)
+                time.sleep(0.001)
                 continue
 
-            # 2. Feed the detector (non-blocking)
+            # 2. Feed the detector
             if not detection_in_queue.full():
                 detection_in_queue.put(frame)
 
-            # 3. Check for new detection results (non-blocking)
+            # 3. Check for new results
             try:
-                latest_detections, detection_fps = detection_out_queue.get_nowait()
+                latest_detections, detection_stats = detection_out_queue.get_nowait()
             except queue.Empty:
-                pass # No new results, continue using the old ones
+                pass
 
-            # 4. Draw detections on the frame
-            annotated_frame = frame # No copy needed since get_frame() already provided one
-            num_detections = 0
-            if latest_detections is not None:
-                num_detections = draw_detections(annotated_frame, latest_detections, names, colors)
+            # 4. Draw all visuals
+            annotated_frame = frame
+            num_detections = draw_detections(annotated_frame, latest_detections, names, colors) if latest_detections is not None else 0
             
-            # 5. Draw UI Info
-            curr_time = time.time()
-            delta_time = curr_time - prev_time
-            prev_time = curr_time
-
-            if delta_time > 0:
-                display_fps = 1.0 / delta_time
-                display_fps_queue.append(display_fps)
-
-            avg_display_fps = 0.0
-            if display_fps_queue:
-                avg_display_fps = sum(display_fps_queue) / len(display_fps_queue)
-            
-            draw_fps_info(annotated_frame, avg_display_fps, detection_fps)
+            # We calculate the current average display FPS *before* drawing it
+            avg_display_fps = sum(display_fps_queue) / len(display_fps_queue) if display_fps_queue else 0
+            draw_fps_info(annotated_frame, avg_display_fps, detection_stats)
             draw_detection_info(annotated_frame, num_detections)
 
-            # 6. Display the frame
+            # 5. Display the frame
             cv2.imshow("YOLOv8 Real-time Detection", annotated_frame)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
+
+            # 6. Enforce FPS Cap
+            if CAP_DISPLAY_FPS:
+                # Calculate how long the loop took and how long to sleep
+                elapsed_time = time.time() - loop_start_time
+                sleep_time = target_frame_time - elapsed_time
+                if sleep_time > 0:
+                    time.sleep(sleep_time)
+            
+            # 7. Calculate final, accurate FPS for this iteration and add to queue
+            # This measures the time from the end of the last loop to the end of this one
+            current_loop_end_time = time.time()
+            actual_frame_time = current_loop_end_time - prev_loop_end_time
+            prev_loop_end_time = current_loop_end_time
+            if actual_frame_time > 0:
+                display_fps_queue.append(1.0 / actual_frame_time)
+
+            # --- END: Corrected FPS Capping and Measurement ---
 
     except KeyboardInterrupt:
         print("\nInterrupted by user")
@@ -282,14 +303,60 @@ def dist2bbox(distance, anchor_points, xywh=True, dim=-1):
     if xywh: c_xy = (x1y1 + x2y2) / 2; wh = x2y2 - x1y1; return torch.cat((c_xy, wh), dim)
     return torch.cat((x1y1, x2y2), dim)
 
-def draw_fps_info(frame, display_fps, detection_fps):
-    overlay = frame.copy(); box_height, box_width = 60, 220
-    cv2.rectangle(overlay, (10, 10), (10 + box_width, 10 + box_height), (0, 0, 0), -1)
-    cv2.addWeighted(overlay, 0.7, frame, 0.3, 0, frame)
-    cv2.rectangle(frame, (10, 10), (10 + box_width, 10 + box_height), (100, 100, 100), 2)
-    font, scale, thick = cv2.FONT_HERSHEY_SIMPLEX, 0.6, 1
-    cv2.putText(frame, f"Display FPS: {display_fps:.1f}", (20, 35), font, scale, (0, 255, 0), thick)
-    cv2.putText(frame, f"Detection FPS: {detection_fps:.1f}", (20, 60), font, scale, (0, 255, 255), thick)
+def draw_fps_info(frame, display_fps, det_stats):
+    """Draws two separate, styled boxes for Display and Detection FPS."""
+    det_avg_fps, det_min_fps, det_max_fps = det_stats
+    
+    font = cv2.FONT_HERSHEY_SIMPLEX
+    font_scale = 0.5
+    thickness = 1
+    
+    # --- 1. Display FPS Box (Top) ---
+    box1_pos = (10, 10)
+    box1_size = (200, 50)
+    
+    # Semi-transparent background
+    overlay = frame.copy()
+    cv2.rectangle(overlay, box1_pos, (box1_pos[0] + box1_size[0], box1_pos[1] + box1_size[1]), 
+                  (0, 0, 0), -1)
+    cv2.addWeighted(overlay, 0.6, frame, 0.4, 0, frame)
+    
+    # Border
+    cv2.rectangle(frame, box1_pos, (box1_pos[0] + box1_size[0], box1_pos[1] + box1_size[1]), 
+                  (100, 100, 100), 2)
+
+    # Text
+    cv2.putText(frame, "Display", (box1_pos[0] + 10, box1_pos[1] + 20), font, font_scale, (255, 255, 255), thickness)
+    display_fps_color = (0, 255, 0) if display_fps > 50 else (0, 255, 255) if display_fps > 30 else (0, 0, 255)
+    cv2.putText(frame, f"FPS: {display_fps:.1f}", (box1_pos[0] + 10, box1_pos[1] + 40), font, font_scale, display_fps_color, thickness)
+
+
+    # --- 2. Detection FPS Box (Bottom) ---
+    box2_pos = (10, box1_pos[1] + box1_size[1] + 10) # Position below the first box
+    box2_size = (200, 95)
+    
+    # Semi-transparent background
+    overlay = frame.copy()
+    cv2.rectangle(overlay, box2_pos, (box2_pos[0] + box2_size[0], box2_pos[1] + box2_size[1]), 
+                  (0, 0, 0), -1)
+    cv2.addWeighted(overlay, 0.6, frame, 0.4, 0, frame)
+    
+    # Border
+    cv2.rectangle(frame, box2_pos, (box2_pos[0] + box2_size[0], box2_pos[1] + box2_size[1]), 
+                  (100, 100, 100), 2)
+    
+    # Text
+    cv2.putText(frame, "Detection", (box2_pos[0] + 10, box2_pos[1] + 20), font, font_scale, (255, 255, 255), thickness)
+    
+    # Use the average detection FPS for the main "FPS" line to match the style
+    det_fps_color = (0, 255, 0) if det_avg_fps > 15 else (0, 255, 255) if det_avg_fps > 10 else (0, 0, 255)
+    text_color = (255, 255, 255)
+    
+    y_offset = box2_pos[1] + 40
+    cv2.putText(frame, f"FPS: {det_avg_fps:.1f}", (box2_pos[0] + 10, y_offset), font, font_scale, det_fps_color, thickness)
+    cv2.putText(frame, f"Avg: {det_avg_fps:.1f}", (box2_pos[0] + 10, y_offset + 15), font, font_scale, text_color, thickness)
+    cv2.putText(frame, f"Max: {det_max_fps:.1f}", (box2_pos[0] + 10, y_offset + 30), font, font_scale, text_color, thickness)
+    cv2.putText(frame, f"Min: {det_min_fps:.1f}", (box2_pos[0] + 10, y_offset + 45), font, font_scale, text_color, thickness)
 
 def draw_detection_info(frame, num_detections):
     if num_detections <= 0: return
