@@ -98,8 +98,8 @@ def main():
     """Main function with a multi-worker pool sharing a SINGLE inference session."""
     
     # --- Configuration ---
-    CAP_DISPLAY_FPS = True
-    TARGET_FPS = 120.0
+    CAP_DISPLAY_FPS = False
+    TARGET_FPS = 60.0
     NUM_DETECTION_WORKERS = 1
     
     print(f"Initializing a pool of {NUM_DETECTION_WORKERS} workers sharing one model...")
@@ -145,21 +145,20 @@ def main():
         worker.start()
     time.sleep(2)
 
-# --- Main Display Loop ---
+    # --- Main Display Loop ---
     cv2.namedWindow("YOLOv8 Real-time Detection", cv2.WINDOW_NORMAL)
     cv2.resizeWindow("YOLOv8 Real-time Detection", 1280, 720)
 
+    # --- Stats Tracking ---
     display_fps_queue = deque(maxlen=60)
     prev_loop_end_time = time.time()
     
     latest_detections = None
     
-    detection_results_count = 0
-    det_fps_start_time = time.time()
-    detection_fps = 0.0
+    detection_fps_queue = deque(maxlen=60) 
+    prev_det_time = time.time()
 
     print("Starting real-time detection. Press 'q' to quit.")
-    
     
     try:
         while True:
@@ -175,27 +174,33 @@ def main():
             if not detection_in_queue.full():
                 detection_in_queue.put(frame)
 
-            # Check for results from any of the workers (used for 2+)
+            # Check for results from any of the workers (used for 2+)d
             try:
                 latest_detections = detection_out_queue.get_nowait()
-                detection_results_count += 1
+                
+                # --- NEW: Calculate instantaneous NPU FPS ---
+                curr_det_time = time.time()
+                # Calculate time delta since the last detection result
+                delta = curr_det_time - prev_det_time
+                if delta > 0:
+                    # Calculate FPS for this single result and add to our queue
+                    instant_det_fps = 1.0 / delta
+                    detection_fps_queue.append(instant_det_fps)
+                prev_det_time = curr_det_time
+
             except queue.Empty:
                 pass
-            
-            # Update the detection throughput FPS every second
-            elapsed_det_time = time.time() - det_fps_start_time
-            if elapsed_det_time >= 1.0:
-                detection_fps = detection_results_count / elapsed_det_time
-                detection_results_count = 0
-                det_fps_start_time = time.time()
 
             # --- Draw all visuals ---
             annotated_frame = frame
             num_detections = draw_detections(annotated_frame, latest_detections, names, colors) if latest_detections is not None else 0
-            avg_display_fps = sum(display_fps_queue) / len(display_fps_queue) if display_fps_queue else 0
             
-            # Call the simplified drawing function
-            draw_fps_info(annotated_frame, avg_display_fps, detection_fps)
+            # Calculate moving averages for both display and detection
+            avg_display_fps = sum(display_fps_queue) / len(display_fps_queue) if display_fps_queue else 0
+            avg_detection_fps = sum(detection_fps_queue) / len(detection_fps_queue) if detection_fps_queue else 0
+            
+            # Call the drawing function
+            draw_fps_info(annotated_frame, avg_display_fps, avg_detection_fps)
             draw_detection_info(annotated_frame, num_detections)
 
             cv2.imshow("YOLOv8 Real-time Detection", annotated_frame)
@@ -259,22 +264,40 @@ def draw_detections(frame, detections, names, colors):
     return len(boxes)
 
 def setup_camera():
-    cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+    """
+    Setup camera with optimal settings.
+    Allows for easy selection of a different camera index.
+    """
+    # --- CAMERA SELECTION ---
+    # Change this index to select a different camera.
+    # 0 = default, 1 = second camera, 2 = third, etc.
+    CAMERA_INDEX = 0
+    
+    # --- Open Camera ---
+    print(f"Attempting to open camera index: {CAMERA_INDEX}")
+    cap = cv2.VideoCapture(CAMERA_INDEX, cv2.CAP_DSHOW) 
+    
     if not cap.isOpened():
-        print("DSHOW backend failed, trying default...")
-        cap = cv2.VideoCapture(0)
+        print(f"DSHOW backend failed for camera {CAMERA_INDEX}. Trying default backend...")
+        cap = cv2.VideoCapture(CAMERA_INDEX)
+    
     if not cap.isOpened():
-         raise RuntimeError("Cannot open webcam.")
+         raise RuntimeError(f"Cannot open webcam. Please check that camera index {CAMERA_INDEX} is valid and not in use.")
 
+    # --- Set Camera Properties ---
+    # Request 720p @ 60 FPS. The driver will negotiate the best possible settings.
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
     cap.set(cv2.CAP_PROP_FPS, 60)
-
     
+    # --- Verify and Report Actual Settings ---
     actual_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     actual_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
     actual_fps = cap.get(cv2.CAP_PROP_FPS)
-    print(f"Camera reports: {actual_width}x{actual_height} @ {actual_fps} FPS")
+    
+    print(f"Successfully opened camera {CAMERA_INDEX}.")
+    print(f"Camera settings reported by driver: {actual_width}x{actual_height} @ {actual_fps:.2f} FPS")
+    
     return cap
 
 def frame_process(frame, input_shape=(640, 640)):
@@ -322,7 +345,7 @@ def draw_fps_info(frame, display_fps, detection_fps):
     # --- 2. Detection FPS Box (Bottom) ---
     det_fps_color = (0, 255, 0) if detection_fps > 30 else (0, 255, 255) if detection_fps > 20 else (0, 0, 255)
     box2_pos = (10, box1_pos[1] + box_size[1] + 10)
-    draw_box(box2_pos, box_size, "Detection (NPU)", detection_fps, det_fps_color)
+    draw_box(box2_pos, box_size, "Detection", detection_fps, det_fps_color)
 
 def draw_detection_info(frame, num_detections):
     if num_detections <= 0: return
