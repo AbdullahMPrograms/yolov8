@@ -7,586 +7,298 @@ import cv2
 from collections import deque
 import threading
 import queue
-from concurrent.futures import ThreadPoolExecutor
-import copy
-import traceback
 
 from yolov8_utils import *
 
-def frame_process(frame, input_shape=(640, 640)):
-    """Process frame for YOLOv8 inference"""
-    img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    img = cv2.resize(img, input_shape)
-    img = torch.from_numpy(img).float() / 255.0      
-    img = img.permute(2, 0, 1)                        
-    return img
+# --- NEW: Thread-Safe Frame Handling ---
 
-class DFL(nn.Module):
-    def __init__(self, c1=16):
+class FrameReader(threading.Thread):
+    """
+    Reads frames from a camera stream and continuously updates a shared frame variable.
+    This runs as fast as the camera can provide frames.
+    """
+    def __init__(self, cap):
         super().__init__()
-        self.conv = nn.Conv2d(c1, 1, 1, bias=False).requires_grad_(False)
-        x = torch.arange(c1, dtype=torch.float)
-        self.conv.weight.data[:] = x.view(1, c1, 1, 1)
-        self.c1 = c1
+        self.daemon = True
+        self.cap = cap
+        self.frame = None
+        self.lock = threading.Lock()
+        self.running = True
 
-    def forward(self, x):
-        b, c, a = x.shape 
-        return self.conv(
-            x.view(b, 4, self.c1, a).transpose(2, 1).softmax(1)
-        ).view(b, 4, a)
-
-def dist2bbox(distance, anchor_points, xywh=True, dim=-1):
-    """Convert distance predictions to bounding boxes"""
-    lt, rb = torch.split(distance, 2, dim)
-    x1y1 = anchor_points - lt
-    x2y2 = anchor_points + rb
-    if xywh:
-        c_xy = (x1y1 + x2y2) / 2
-        wh = x2y2 - x1y1
-        return torch.cat((c_xy, wh), dim) 
-    return torch.cat((x1y1, x2y2), dim)  
-
-def post_process(x):
-    """Post-process YOLOv8 outputs"""
-    dfl = DFL(16)
-    anchors = torch.tensor(np.load("./anchors.npy", allow_pickle=True))
-    strides = torch.tensor(np.load("./strides.npy", allow_pickle=True))
-
-    box, cls = torch.cat(
-        [xi.view(x[0].shape[0], 144, -1) for xi in x], dim=2
-    ).split((16*4, 80), dim=1)
-
-    dbox = dist2bbox(dfl(box), anchors.unsqueeze(0), xywh=True, dim=1) * strides
-    y = torch.cat((dbox, cls.sigmoid()), dim=1)  
-    return y, x
-
-class OptimizedInferenceEngine:
-    """Single session with optimized threading for NPU utilization"""
-    
-    def __init__(self, model_path, config_path):
-        self.model_path = model_path
-        self.config_path = config_path
-        self.session = None
-        self.session_lock = threading.Lock()
-        self.executor = ThreadPoolExecutor(max_workers=2)
-        
-        # Initialize session
-        self._create_session()
-        
-    def _create_session(self):
-        """Create optimized ONNX Runtime session"""
-        try:
-            with open(self.config_path, "r") as f:
-                cfg = f.read()
-
-            npu_opts = onnxruntime.SessionOptions()
-            npu_opts.enable_profiling = False
-            npu_opts.log_severity_level = 3
-            npu_opts.execution_mode = onnxruntime.ExecutionMode.ORT_PARALLEL
+    def run(self):
+        while self.running:
+            ret, frame = self.cap.read()
+            if not ret:
+                print("FrameReader: Failed to grab frame, stopping.")
+                self.running = False
+                continue
             
-            # Optimize provider options for better NPU utilization
-            provider_opts = [{
-                "config": cfg,
-                "ai_analyzer_visualization": False,  # Disable for performance
-                "ai_analyzer_profiling": False,
-            }]
+            with self.lock:
+                self.frame = frame
+        self.cap.release()
+        print("FrameReader thread stopped.")
 
-            self.session = onnxruntime.InferenceSession(
-                self.model_path,
-                providers=["VitisAIExecutionProvider"],
-                sess_options=npu_opts,
-                provider_options=provider_opts
+    def get_frame(self):
+        """Returns a thread-safe copy of the latest frame."""
+        with self.lock:
+            if self.frame is None:
+                return None
+            return self.frame.copy()
+
+    def stop(self):
+        self.running = False
+
+class DetectionWorker(threading.Thread):
+    """
+    Runs YOLOv8 detection on frames from an input queue and places results in an output queue.
+    """
+    def __init__(self, in_queue, out_queue, model_session, input_meta):
+        super().__init__()
+        self.daemon = True
+        self.in_queue = in_queue
+        self.out_queue = out_queue
+        self.npu_session = model_session
+        self.inp_meta = input_meta
+        self.running = True
+        self.fps_queue = deque(maxlen=30)
+        self.dfl = DFL(16)
+        self.anchors = torch.tensor(np.load("./anchors.npy", allow_pickle=True))
+        self.strides = torch.tensor(np.load("./strides.npy", allow_pickle=True))
+
+    def run(self):
+        while self.running:
+            try:
+                frame = self.in_queue.get(timeout=1)
+            except queue.Empty:
+                continue
+
+            start_time = time.time()
+            
+            # --- Inference Pipeline ---
+            im = frame_process(frame, input_shape=(640, 640))
+            nhwc = im.unsqueeze(0).permute(0, 2, 3, 1).cpu().numpy().astype(np.float32)
+            
+            outputs = self.npu_session.run(None, {self.inp_meta.name: np.ascontiguousarray(nhwc)})
+            outputs = [torch.tensor(o).permute(0, 3, 1, 2) for o in outputs]
+            
+            preds = self.post_process(outputs)
+            preds = non_max_suppression(
+                preds, conf_thres=0.25, iou_thres=0.7, agnostic=False, max_det=300
             )
             
-            print("Optimized inference session loaded successfully")
-                
-        except Exception as e:
-            print(f"Error creating session: {e}")
-            traceback.print_exc()
-            raise
-    
-    def get_input_meta(self):
-        """Get input metadata"""
-        return self.session.get_inputs()[0]
-    
-    def infer_async(self, input_data, input_name):
-        """Submit inference task asynchronously"""
-        future = self.executor.submit(self._infer_sync, input_data, input_name)
-        return future
-    
-    def _infer_sync(self, input_data, input_name):
-        """Perform synchronous inference with thread safety"""
-        try:
-            with self.session_lock:
-                outputs = self.session.run(None, {input_name: input_data})
-            return outputs
+            self.fps_queue.append(1.0 / (time.time() - start_time))
+
+            # Put results in the output queue
+            if not self.out_queue.full():
+                self.out_queue.put((preds[0], self.get_average_fps()))
             
-        except Exception as e:
-            print(f"Inference session error: {e}")
-            traceback.print_exc()
-            raise e
-    
-    def cleanup(self):
-        """Cleanup resources"""
-        self.executor.shutdown(wait=True)
+            self.in_queue.task_done()
 
-class FrameBuffer:
-    """Thread-safe frame buffer for pipeline processing"""
+    def post_process(self, x):
+        box, cls = torch.cat([xi.view(x[0].shape[0], 144, -1) for xi in x], dim=2).split((64, 80), dim=1)
+        dbox = dist2bbox(self.dfl(box), self.anchors.unsqueeze(0), xywh=True, dim=1) * self.strides
+        return torch.cat((dbox, cls.sigmoid()), dim=1), x
+
+    def get_average_fps(self):
+        return sum(self.fps_queue) / len(self.fps_queue) if self.fps_queue else 0.0
+
+    def stop(self):
+        self.running = False
+
+
+# --- Main Function (Corrected Architecture) ---
+
+def main():
+    """Main function with truly decoupled display and detection."""
+    # --- Setup (Model, Camera, etc.) ---
+    try:
+        with open("coco.names", "r") as f:
+            names = [n.strip() for n in f.readlines()]
+        np.random.seed(42)
+        colors = [(int(c[0]), int(c[1]), int(c[2])) for c in np.random.randint(0, 255, size=(len(names), 3))]
+    except Exception as e:
+        print(f"Error loading assets: {e}")
+        return
+
+    try:
+        npu_opts = onnxruntime.SessionOptions()
+        with open("./vaip_config.json", "r") as f: cfg = f.read()
+        provider_opts = [{"config": cfg}]
+        npu_session = onnxruntime.InferenceSession("yolov8m.onnx", providers=["VitisAIExecutionProvider"], sess_options=npu_opts, provider_options=provider_opts)
+        inp_meta = npu_session.get_inputs()[0]
+        print("Model loaded successfully with VitisAI provider")
+    except Exception as e:
+        print(f"Error loading model: {e}"); return
+
+    cap = setup_camera()
     
-    def __init__(self, maxsize=3):  # Reduced buffer size
-        self.queue = queue.Queue(maxsize=maxsize)
-        self.latest_frame = None
-        self.lock = threading.Lock()
+    # --- Threading and Queues Setup ---
+    detection_in_queue = queue.Queue(maxsize=1)
+    detection_out_queue = queue.Queue(maxsize=1)
+
+    frame_reader = FrameReader(cap)
+    detection_worker = DetectionWorker(detection_in_queue, detection_out_queue, npu_session, inp_meta)
     
-    def put_frame(self, frame, frame_id):
-        """Add frame to buffer (non-blocking)"""
-        try:
-            self.queue.put((frame.copy(), frame_id), block=False)
-        except queue.Full:
-            # Remove oldest frame and add new one
+    frame_reader.start()
+    detection_worker.start()
+
+    # Wait briefly for the first frame to be read
+    time.sleep(1) 
+
+    # --- Main Display Loop ---
+    cv2.namedWindow("YOLOv8 Real-time Detection", cv2.WINDOW_NORMAL)
+    cv2.resizeWindow("YOLOv8 Real-time Detection", 1280, 720)
+
+    display_fps_queue = deque(maxlen=60)
+    prev_time = time.time()
+    
+    latest_detections = None
+    detection_fps = 0.0
+
+    print("Starting real-time detection. Press 'q' to quit.")
+    
+    try:
+        while True:
+            # 1. Grab the latest frame from the reader thread
+            frame = frame_reader.get_frame()
+            if frame is None:
+                if not frame_reader.running: break
+                time.sleep(0.01)
+                continue
+
+            # 2. Feed the detector (non-blocking)
+            if not detection_in_queue.full():
+                detection_in_queue.put(frame)
+
+            # 3. Check for new detection results (non-blocking)
             try:
-                self.queue.get_nowait()
+                latest_detections, detection_fps = detection_out_queue.get_nowait()
             except queue.Empty:
-                pass
-            try:
-                self.queue.put((frame.copy(), frame_id), block=False)
-            except queue.Full:
-                pass  # Skip if still full
-        
-        with self.lock:
-            self.latest_frame = frame.copy()
-    
-    def get_frame(self, timeout=0.05):
-        """Get frame from buffer"""
-        try:
-            return self.queue.get(timeout=timeout)
-        except queue.Empty:
-            return None, None
-    
-    def get_latest_frame(self):
-        """Get the most recent frame for display"""
-        with self.lock:
-            return self.latest_frame.copy() if self.latest_frame is not None else None
+                pass # No new results, continue using the old ones
 
-def draw_fps_info(frame, fps, avg_fps, max_fps, min_fps):
-    """Draw FPS information as the main metric"""
-    overlay = frame.copy()
-    
-    box_height = 80  # Fixed height
-    box_width = 240
-    
-    cv2.rectangle(overlay, (10, 10), (10 + box_width, 10 + box_height), (0, 0, 0), -1)
-    alpha = 0.7
-    cv2.addWeighted(overlay, alpha, frame, 1 - alpha, 0, frame)
-    cv2.rectangle(frame, (10, 10), (10 + box_width, 10 + box_height), (100, 100, 100), 2)
-    
-    font = cv2.FONT_HERSHEY_SIMPLEX
-    font_scale = 0.5
-    thickness = 1
-    
-    # Main FPS color coding based on performance
-    fps_color = (0, 255, 0) if fps > 20 else (0, 255, 255) if fps > 15 else (0, 0, 255)
-    text_color = (255, 255, 255)
-    
-    y_offset = 30
-    cv2.putText(frame, f"FPS: {fps:.1f}", (20, y_offset), font, font_scale, fps_color, thickness)
-    y_offset += 15
-    cv2.putText(frame, f"Avg: {avg_fps:.1f}", (20, y_offset), font, font_scale, text_color, thickness)
-    y_offset += 15
-    cv2.putText(frame, f"Max: {max_fps:.1f}", (20, y_offset), font, font_scale, text_color, thickness)
-    y_offset += 15
-    cv2.putText(frame, f"Min: {min_fps:.1f}", (20, y_offset), font, font_scale, text_color, thickness)
+            # 4. Draw detections on the frame
+            annotated_frame = frame # No copy needed since get_frame() already provided one
+            num_detections = 0
+            if latest_detections is not None:
+                num_detections = draw_detections(annotated_frame, latest_detections, names, colors)
+            
+            # 5. Draw UI Info
+            curr_time = time.time()
+            delta_time = curr_time - prev_time
+            prev_time = curr_time
 
-def draw_detection_info(frame, num_detections):
-    """Draw detection count information"""
-    font = cv2.FONT_HERSHEY_SIMPLEX
-    font_scale = 0.6
-    thickness = 2
-    
-    # Detection count
-    if num_detections > 0:
-        text = f"Detections: {num_detections}"
-        (text_width, text_height), _ = cv2.getTextSize(text, font, font_scale, thickness)
-        x = frame.shape[1] - text_width - 20
-        y = 30
+            if delta_time > 0:
+                display_fps = 1.0 / delta_time
+                display_fps_queue.append(display_fps)
+
+            avg_display_fps = 0.0
+            if display_fps_queue:
+                avg_display_fps = sum(display_fps_queue) / len(display_fps_queue)
+            
+            draw_fps_info(annotated_frame, avg_display_fps, detection_fps)
+            draw_detection_info(annotated_frame, num_detections)
+
+            # 6. Display the frame
+            cv2.imshow("YOLOv8 Real-time Detection", annotated_frame)
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
+
+    except KeyboardInterrupt:
+        print("\nInterrupted by user")
+    finally:
+        # Cleanup
+        print("Stopping threads...")
+        frame_reader.stop()
+        detection_worker.stop()
+        frame_reader.join()
+        detection_worker.join()
+        cv2.destroyAllWindows()
+        print("Application finished.")
+
+# --- Helper Functions (Refactored and Unchanged) ---
+
+def draw_detections(frame, detections, names, colors):
+    if detections is None or detections.numel() == 0:
+        return 0
         
-        cv2.rectangle(frame, (x - 10, y - text_height - 5), (x + text_width + 10, y + 5), (0, 0, 0), -1)
-        cv2.rectangle(frame, (x - 10, y - text_height - 5), (x + text_width + 10, y + 5), (100, 100, 100), 2)
-        cv2.putText(frame, text, (x, y), font, font_scale, (0, 255, 0), thickness)
+    h0, w0 = frame.shape[:2]
+    scale_x, scale_y = w0 / 640, h0 / 640
+    
+    det_np = detections.cpu().numpy()
+    boxes, scores, class_ids = det_np[:, 0:4], det_np[:, 4], det_np[:, 5].astype(int)
+
+    for i in range(len(boxes)):
+        x1, y1, x2, y2 = boxes[i]
+        cls_id, conf = class_ids[i], scores[i]
+        
+        x1n, y1n = int(x1 * scale_x), int(y1 * scale_y)
+        x2n, y2n = int(x2 * scale_x), int(y2 * scale_y)
+        
+        color = colors[cls_id % len(colors)]
+        cv2.rectangle(frame, (x1n, y1n), (x2n, y2n), color, 2)
+        
+        label = f"{names[cls_id]} {conf:.2f}"
+        (lw, lh), base = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 1)
+        cv2.rectangle(frame, (x1n, y1n - lh - 10), (x1n + lw, y1n), color, -1)
+        cv2.putText(frame, label, (x1n, y1n - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+
+    return len(boxes)
 
 def setup_camera():
-    """Setup camera with higher FPS settings"""
-    backends = [cv2.CAP_DSHOW, cv2.CAP_MSMF, cv2.CAP_ANY]
-    cap = None
-    
-    for backend in backends:
-        cap = cv2.VideoCapture(0, backend)
-        if cap.isOpened():
-            print(f"Camera opened with backend: {backend}")
-            break
-    
-    if not cap or not cap.isOpened():
-        raise RuntimeError("Cannot open webcam with any backend.")
-    
-    # Set higher FPS and optimize settings
+    cap = cv2.VideoCapture(0, cv2.CAP_DSHOW) # CAP_DSHOW is often faster on Windows
+    if not cap.isOpened():
+        print("DSHOW backend failed, trying default...")
+        cap = cv2.VideoCapture(0)
+    if not cap.isOpened():
+         raise RuntimeError("Cannot open webcam.")
+
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
-    cap.set(cv2.CAP_PROP_FPS, 60) 
-    cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
-    cap.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'))
+    cap.set(cv2.CAP_PROP_FPS, 60)
+
     
     actual_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     actual_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
     actual_fps = cap.get(cv2.CAP_PROP_FPS)
-    
-    print(f"Camera resolution: {actual_width}x{actual_height} @ {actual_fps} FPS")
-    
+    print(f"Camera reports: {actual_width}x{actual_height} @ {actual_fps} FPS")
     return cap
 
-class AsyncFrameCapture:
-    """Asynchronous frame capture to decouple camera from display"""
-    
-    def __init__(self, cap):
-        self.cap = cap
-        self.frame = None
-        self.running = False
-        self.lock = threading.Lock()
-        self.thread = None
-        
-    def start(self):
-        """Start capture thread"""
-        self.running = True
-        self.thread = threading.Thread(target=self._capture_frames, daemon=True)
-        self.thread.start()
-        
-    def _capture_frames(self):
-        """Continuously capture frames"""
-        while self.running:
-            ret, frame = self.cap.read()
-            if ret:
-                with self.lock:
-                    self.frame = frame
-            else:
-                time.sleep(0.001)  # Brief pause on failure
-                
-    def get_frame(self):
-        """Get latest frame"""
-        with self.lock:
-            return self.frame.copy() if self.frame is not None else None
-            
-    def stop(self):
-        """Stop capture thread"""
-        self.running = False
-        if self.thread:
-            self.thread.join(timeout=1.0)
+def frame_process(frame, input_shape=(640, 640)):
+    img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    img = cv2.resize(img, input_shape)
+    img = torch.from_numpy(img).float() / 255.0
+    img = img.permute(2, 0, 1)
+    return img
 
-def inference_worker(inference_engine, frame_buffer, result_queue, inp_meta, stop_event):
-    """Worker thread for running inference with better error handling"""
-    inference_times = deque(maxlen=30)
-    
-    # Pre-load DFL and anchors once
-    dfl = DFL(16)
-    try:
-        anchors = torch.tensor(np.load("./anchors.npy", allow_pickle=True))
-        strides = torch.tensor(np.load("./strides.npy", allow_pickle=True))
-    except Exception as e:
-        print(f"Error loading anchors/strides: {e}")
-        return
-    
-    print("Inference worker started")
-    
-    while not stop_event.is_set():
-        try:
-            frame_data = frame_buffer.get_frame(timeout=0.1)
-            if frame_data[0] is None:
-                continue
-                
-            frame, frame_id = frame_data
-            
-            if frame is None or frame.size == 0:
-                continue
-            
-            start_time = time.time()
-            
-            # Preprocess frame
-            try:
-                im = frame_process(frame, input_shape=(640, 640))
-                im = im.unsqueeze(0)
-                nhwc = im.permute(0, 2, 3, 1).cpu().numpy().astype(np.float32)
-                nhwc = np.ascontiguousarray(nhwc)
-            except Exception as e:
-                print(f"Preprocessing error: {e}")
-                continue
-            
-            # Run inference
-            try:
-                future = inference_engine.infer_async(nhwc, inp_meta.name)
-                outputs = future.result(timeout=1.0)  # Increased timeout
-            except Exception as e:
-                print(f"Inference execution error: {e}")
-                continue
-            
-            inference_time = time.time() - start_time
-            if inference_time > 0:
-                inference_times.append(1.0 / inference_time)
-            
-            # Convert outputs to PyTorch tensors
-            try:
-                outputs = [torch.tensor(o).permute(0, 3, 1, 2) for o in outputs]
-            except Exception as e:
-                print(f"Output conversion error: {e}")
-                continue
-            
-            # Post-process with pre-loaded components
-            try:
-                box, cls = torch.cat(
-                    [xi.view(outputs[0].shape[0], 144, -1) for xi in outputs], dim=2
-                ).split((16*4, 80), dim=1)
+class DFL(nn.Module):
+    def __init__(self, c1=16):
+        super().__init__(); self.conv = nn.Conv2d(c1, 1, 1, bias=False).requires_grad_(False)
+        x = torch.arange(c1, dtype=torch.float); self.conv.weight.data[:] = x.view(1, c1, 1, 1); self.c1 = c1
+    def forward(self, x):
+        b, c, a = x.shape; return self.conv(x.view(b, 4, self.c1, a).transpose(2, 1).softmax(1)).view(b, 4, a)
 
-                dbox = dist2bbox(dfl(box), anchors.unsqueeze(0), xywh=True, dim=1) * strides
-                preds = torch.cat((dbox, cls.sigmoid()), dim=1)
-                
-                preds = non_max_suppression(
-                    preds, 
-                    conf_thres=0.25, 
-                    iou_thres=0.7, 
-                    agnostic=False, 
-                    max_det=300, 
-                    classes=None
-                )
-            except Exception as e:
-                print(f"Post-processing error: {e}")
-                continue
-            
-            # Calculate average FPS
-            avg_fps = sum(inference_times) / len(inference_times) if inference_times else 0
-            
-            # Put result in queue
-            try:
-                result_queue.put((frame_id, preds[0], avg_fps), block=False)
-            except queue.Full:
-                # Remove oldest result
-                try:
-                    result_queue.get_nowait()
-                except queue.Empty:
-                    pass
-                try:
-                    result_queue.put((frame_id, preds[0], avg_fps), block=False)
-                except queue.Full:
-                    pass  # Skip if still full
-                    
-        except Exception as e:
-            print(f"Worker loop error: {e}")
-            traceback.print_exc()
-            time.sleep(0.1)  # Brief pause before retrying
-    
-    print("Inference worker stopped")
+def dist2bbox(distance, anchor_points, xywh=True, dim=-1):
+    lt, rb = torch.split(distance, 2, dim); x1y1 = anchor_points - lt; x2y2 = anchor_points + rb
+    if xywh: c_xy = (x1y1 + x2y2) / 2; wh = x2y2 - x1y1; return torch.cat((c_xy, wh), dim)
+    return torch.cat((x1y1, x2y2), dim)
 
-def main():
-    """Main function with 60 FPS display and FPS as main metric"""
-    # Load COCO class names
-    try:
-        with open("coco.names", "r") as f:
-            names = [n.strip() for n in f.readlines()]
-    except FileNotFoundError:
-        print("Warning: coco.names not found. Using default class names.")
-        names = [f"class_{i}" for i in range(80)]
-    
-    # Initialize optimized inference engine
-    onnx_model_path = "yolov8m.onnx"
-    config_path = "./vaip_config.json"
-    
-    try:
-        inference_engine = OptimizedInferenceEngine(onnx_model_path, config_path)
-        inp_meta = inference_engine.get_input_meta()
-        print("Optimized inference engine initialized successfully")
-    except Exception as e:
-        print(f"Error initializing inference engine: {e}")
-        traceback.print_exc()
-        return
-    
-    # Setup camera and async capture
-    try:
-        cap = setup_camera()
-        async_capture = AsyncFrameCapture(cap)
-        async_capture.start()
-        print("Async frame capture started")
-    except Exception as e:
-        print(f"Camera setup error: {e}")
-        return
-        
-    frame_buffer = FrameBuffer(maxsize=3)
-    result_queue = queue.Queue(maxsize=5)
-    
-    # Create window with optimized settings
-    cv2.namedWindow("YOLOv8 Real-time Detection", cv2.WINDOW_NORMAL)
-    cv2.resizeWindow("YOLOv8 Real-time Detection", 1280, 720)
-    
-    # FPS tracking (main performance metric)
-    fps_queue = deque(maxlen=30)
-    max_fps = 0.0
-    min_fps = float("inf")
-    
-    # Display timing control (60 FPS cap)
-    target_display_interval = 1.0 / 60.0  # 16.67ms for 60 FPS
-    last_display_time = time.time()
-    
-    # Start inference worker threads
-    stop_event = threading.Event()
-    num_workers = 2
-    workers = []
-    
-    for i in range(num_workers):
-        worker = threading.Thread(
-            target=inference_worker,
-            args=(inference_engine, frame_buffer, result_queue, inp_meta, stop_event),
-            daemon=True
-        )
-        worker.start()
-        workers.append(worker)
-        print(f"Started inference worker {i+1}")
-    
-    # Color palette for different classes
-    np.random.seed(42)
-    colors = [(int(c[0]), int(c[1]), int(c[2])) for c in np.random.randint(0, 255, size=(80, 3))]
-    
-    print("Starting real-time detection. Press 'q' to quit, 'r' to reset FPS stats.")
-    print("Display locked at 60 FPS, showing FPS as main performance metric.")
-    
-    frame_id = 0
-    latest_detections = None
-    current_fps = 0
-    
-    # Display loop - capped at 60 FPS
-    try:
-        while True:
-            current_time = time.time()
-            
-            # Cap display at 60 FPS
-            time_since_last_display = current_time - last_display_time
-            if time_since_last_display < target_display_interval:
-                sleep_time = target_display_interval - time_since_last_display
-                time.sleep(sleep_time)
-                current_time = time.time()
-            
-            last_display_time = current_time
-            
-            # Get latest frame from async capture
-            current_frame = async_capture.get_frame()
-            if current_frame is None:
-                continue
+def draw_fps_info(frame, display_fps, detection_fps):
+    overlay = frame.copy(); box_height, box_width = 60, 220
+    cv2.rectangle(overlay, (10, 10), (10 + box_width, 10 + box_height), (0, 0, 0), -1)
+    cv2.addWeighted(overlay, 0.7, frame, 0.3, 0, frame)
+    cv2.rectangle(frame, (10, 10), (10 + box_width, 10 + box_height), (100, 100, 100), 2)
+    font, scale, thick = cv2.FONT_HERSHEY_SIMPLEX, 0.6, 1
+    cv2.putText(frame, f"Display FPS: {display_fps:.1f}", (20, 35), font, scale, (0, 255, 0), thick)
+    cv2.putText(frame, f"Detection FPS: {detection_fps:.1f}", (20, 60), font, scale, (0, 255, 255), thick)
 
-            # Add frame to processing buffer every 3rd frame to reduce CPU load
-            if frame_id % 3 == 0:
-                frame_buffer.put_frame(current_frame, frame_id)
-            frame_id += 1
-            
-            # Check for new inference results
-            try:
-                while True:
-                    result_frame_id, detections, fps = result_queue.get_nowait()
-                    latest_detections = detections
-                    current_fps = fps
-                    
-                    # Track FPS statistics
-                    if fps > 0:
-                        fps_queue.append(fps)
-                        max_fps = max(fps, max_fps)
-                        min_fps = min(fps, min_fps)
-            except queue.Empty:
-                pass
-            
-            # Create annotated frame
-            annotated_frame = current_frame.copy()
-            h0, w0 = current_frame.shape[:2]
-            scale_x, scale_y = w0 / 640, h0 / 640
-            
-            num_detections = 0
-
-            # Draw latest detections
-            if latest_detections is not None and latest_detections.numel() > 0:
-                det = latest_detections.cpu().numpy()
-                boxes_np = det[:, 0:4]
-                scores_np = det[:, 4].astype(np.float32)
-                class_ids_np = det[:, 5].astype(np.int32)
-                
-                num_detections = len(boxes_np)
-
-                for i in range(len(boxes_np)):
-                    x1, y1, x2, y2 = boxes_np[i]
-                    cls_id = int(class_ids_np[i])
-                    conf = float(scores_np[i])
-
-                    x1n = int(x1 * scale_x)
-                    y1n = int(y1 * scale_y)
-                    x2n = int(x2 * scale_x)
-                    y2n = int(y2 * scale_y)
-
-                    color = colors[cls_id % len(colors)]
-                    
-                    cv2.rectangle(annotated_frame, (x1n, y1n), (x2n, y2n), color, 2)
-
-                    label = f"{names[cls_id]} {conf:.2f}"
-                    (label_width, label_height), _ = cv2.getTextSize(
-                        label, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 1
-                    )
-                    
-                    cv2.rectangle(
-                        annotated_frame,
-                        (x1n, y1n - label_height - 10),
-                        (x1n + label_width, y1n),
-                        color,
-                        -1
-                    )
-                    
-                    cv2.putText(
-                        annotated_frame,
-                        label,
-                        (x1n, y1n - 5),
-                        cv2.FONT_HERSHEY_SIMPLEX,
-                        0.5,
-                        (255, 255, 255),
-                        1,
-                    )
-
-            # Calculate average FPS
-            avg_fps = sum(fps_queue) / len(fps_queue) if fps_queue else 0
-            
-            # Draw UI elements with FPS as main metric
-            draw_fps_info(annotated_frame, current_fps, avg_fps, max_fps, min_fps)
-            draw_detection_info(annotated_frame, num_detections)
-
-            # Display frame
-            cv2.imshow("YOLOv8 Real-time Detection", annotated_frame)
-
-            # Handle key presses with minimal delay
-            key = cv2.waitKey(1) & 0xFF
-            if key == ord("q"):
-                break
-            elif key == ord("r"):
-                fps_queue.clear()
-                max_fps = 0.0
-                min_fps = float("inf")
-                print("FPS statistics reset")
-
-    except KeyboardInterrupt:
-        print("\nInterrupted by user")
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        traceback.print_exc()
-    finally:
-        # Cleanup
-        print("Shutting down...")
-        stop_event.set()
-        async_capture.stop()
-        
-        for worker in workers:
-            worker.join(timeout=3.0)
-        
-        inference_engine.cleanup()
-        cap.release()
-        cv2.destroyAllWindows()
-        print("Cleanup completed")
+def draw_detection_info(frame, num_detections):
+    if num_detections <= 0: return
+    text = f"Detections: {num_detections}"; font, scale, thick = cv2.FONT_HERSHEY_SIMPLEX, 0.6, 2
+    (tw, th), _ = cv2.getTextSize(text, font, scale, thick)
+    x, y = frame.shape[1] - tw - 20, 35
+    cv2.rectangle(frame, (x - 10, y - th - 5), (x + tw + 10, y + 5), (0, 0, 0), -1)
+    cv2.rectangle(frame, (x - 10, y - th - 5), (x + tw + 10, y + 5), (100, 100, 100), 2)
+    cv2.putText(frame, text, (x, y), font, scale, (0, 255, 0), thick)
 
 if __name__ == "__main__":
     main()
