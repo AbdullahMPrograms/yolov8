@@ -110,7 +110,6 @@ def main():
             names = [n.strip() for n in f.readlines()]
         np.random.seed(42)
         colors = [(int(c[0]), int(c[1]), int(c[2])) for c in np.random.randint(0, 255, size=(len(names), 3))]
-        # --- NEW: Pre-load assets once ---
         anchors = torch.tensor(np.load("./anchors.npy", allow_pickle=True))
         strides = torch.tensor(np.load("./strides.npy", allow_pickle=True))
     except Exception as e:
@@ -178,12 +177,9 @@ def main():
             try:
                 latest_detections = detection_out_queue.get_nowait()
                 
-                # --- NEW: Calculate instantaneous NPU FPS ---
                 curr_det_time = time.time()
-                # Calculate time delta since the last detection result
                 delta = curr_det_time - prev_det_time
                 if delta > 0:
-                    # Calculate FPS for this single result and add to our queue
                     instant_det_fps = 1.0 / delta
                     detection_fps_queue.append(instant_det_fps)
                 prev_det_time = curr_det_time

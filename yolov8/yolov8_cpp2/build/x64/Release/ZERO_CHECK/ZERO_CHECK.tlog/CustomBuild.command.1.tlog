@@ -1,0 +1,10 @@
+^C:\DELL\RYZENAI-SW\RYZENAI-SW\TUTORIAL\YOLOV8\YOLOV8\YOLOV8_CPP2\BUILD\CMAKEFILES\50702A264BEF2E5279A90850F1BC1C53\GENERATE.STAMP.RULE
+setlocal
+C:\Users\abdul\miniforge3\Lib\site-packages\cmake\data\bin\cmake.exe -SC:/dell/RyzenAI-SW/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8_cpp2 -BC:/dell/RyzenAI-SW/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8_cpp2/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/dell/RyzenAI-SW/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8_cpp2/build/yolov8_project.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

@@ -1,0 +1,8 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/dell/RyzenAI-SW/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8_cpp2/build/cmake_install.cmake",
+		"C:/dell/RyzenAI-SW/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8_cpp2/build/yolov8/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
