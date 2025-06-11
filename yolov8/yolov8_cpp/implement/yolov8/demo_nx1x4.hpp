@@ -17,7 +17,6 @@
 #include <glog/logging.h>
 #include <opencv2/imgproc/types_c.h>
 #include <signal.h>
-// #include <unistd.h>
 
 #include <cassert>
 #include <iostream>
@@ -33,9 +32,9 @@
 #include <type_traits>
 #include "vitis/ai/bounded_queue.hpp"
 #include "vitis/ai/env_config.hpp"
+#include "yolov8_onnx.hpp" // Include for Yolov8OnnxResult
 
 DEF_ENV_PARAM(DEBUG_DEMO, "0")
-
 
 // onnx_param
 extern int onnx_x;
@@ -72,56 +71,40 @@ static std::vector<std::string> split(const std::string &s,
   return elems;
 }
 
-
-
 inline std::string ToUTF8String(const std::string& s) { return s; }
-/**
- * Convert a wide character string to a UTF-8 string
- */
 std::string ToUTF8String(const std::wstring& s);
-
-//
-
-// set the layout
-inline std::vector<cv::Rect>& gui_layout() {
-  static std::vector<cv::Rect> rects;
-  return rects;
-}
-// set the wallpaper
-inline cv::Mat& gui_background() {
-  static cv::Mat img;
-  return img;
-}
-
 
 namespace vitis {
 namespace ai {
-// Read a video without doing anything
-struct VideoByPass {
- public:
-  int run(const cv::Mat& input_image) { return 0; }
-};
 
-// Do nothing after after excuting
-inline cv::Mat process_none(cv::Mat image, int fake_result, bool is_jpeg) {
-  return image;
-}
-
-// A struct that can storage data and info for each frame
+// A struct for passing frames to the detection pipeline
 struct FrameInfo {
   int channel_id;
   unsigned long frame_id;
   cv::Mat mat;
-  float max_fps;
-  float fps;
-  cv::Rect_<int> local_rect;
-  cv::Rect_<int> page_layout;
-  std::string channel_name;
 };
 
-using queue_t = vitis::ai::BoundedQueue<FrameInfo>;
+// A struct for passing detection results to the GUI
+struct DetectionResult {
+  unsigned long frame_id;
+  Yolov8OnnxResult yolo_result;
+  // The dimensions of the frame that the yolo_result corresponds to.
+  int original_width = 0;
+  int original_height = 0;
+  // Stats
+  float fps = 0.0f;
+  float max_fps = 0.0f;
+  float min_fps = 0.0f;
+  float avg_fps = 0.0f;
+  std::string time_str;
+};
+
+// Define queue types for clarity
+using frame_queue_t = vitis::ai::BoundedQueue<FrameInfo>;
+using result_queue_t = vitis::ai::BoundedQueue<DetectionResult>;
+using display_queue_t = vitis::ai::BoundedQueue<cv::Mat>;
+
 struct MyThread {
-  // static std::vector<MyThread *> all_threads_;
   static inline std::vector<MyThread*>& all_threads() {
     static std::vector<MyThread*> threads;
     return threads;
@@ -159,36 +142,28 @@ struct MyThread {
   }
 
   virtual int run() = 0;
-
   virtual std::string name() = 0;
 
   explicit MyThread() : stop_(false), thread_{nullptr} {
-    LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO)) << "INIT A Thread";
     all_threads().push_back(this);
   }
 
-  virtual ~MyThread() {  //
+  virtual ~MyThread() {
     all_threads().erase(
         std::remove(all_threads().begin(), all_threads().end(), this),
         all_threads().end());
   }
 
   void start() {
-    LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO))
-        << "thread [" << name() << "] is starting";
     thread_ = std::unique_ptr<std::thread>(new std::thread(main_proxy, this));
   }
 
   void stop() {
-    LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO))
-        << "thread [" << name() << "] is stopped.";
     stop_ = true;
   }
 
   void wait() {
     if (thread_ && thread_->joinable()) {
-      LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO))
-          << "waiting for [" << name() << "] ended";
       thread_->join();
     }
   }
@@ -197,16 +172,17 @@ struct MyThread {
   bool stop_;
   std::unique_ptr<std::thread> thread_;
 };
-//
-// std::vector<MyThread *> MyThread::all_threads_;
+
 struct DecodeThread : public MyThread {
-  DecodeThread(int channel_id, const std::string& video_file, queue_t* queue)
+  DecodeThread(int channel_id, const std::string& video_file,
+               frame_queue_t* queue, display_queue_t* display_queue)
       : MyThread{},
         channel_id_{channel_id},
         video_file_{video_file},
         frame_id_{0},
         video_stream_{},
-        queue_{queue} {
+        queue_{queue},
+        display_queue_{display_queue} {
     open_stream();
     auto& cap = *video_stream_.get();
     if (is_camera_) {
@@ -215,29 +191,22 @@ struct DecodeThread : public MyThread {
     }
   }
 
-  virtual ~DecodeThread() {}
-
   virtual int run() override {
     auto& cap = *video_stream_.get();
     cv::Mat image;
     cap >> image;
-    auto video_ended = image.empty();
-    if (video_ended) {
-      // loop the video
+    if (image.empty()) {
       open_stream();
       return 0;
     }
-    LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO))
-        << "decode queue size " << queue_->size();
-    if (queue_->size() > 0 && is_camera_ == true) {
-      return 0;
-    }
-    while (!queue_->push(FrameInfo{channel_id_, ++frame_id_, image},
-                         std::chrono::milliseconds(500))) {
-      if (is_stopped()) {
-        return -1;
-      }
-    }
+
+    // Push to display queue for smooth playback. Drop if the GUI is lagging.
+    display_queue_->push(image, std::chrono::milliseconds(5));
+
+    // Push to detection queue. Drop if detection is lagging.
+    queue_->push(FrameInfo{channel_id_, ++frame_id_, image.clone()},
+                 std::chrono::milliseconds(5));
+
     return 0;
   }
 
@@ -252,10 +221,7 @@ struct DecodeThread : public MyThread {
         is_camera_ ? new cv::VideoCapture(std::stoi(video_file_))
                    : new cv::VideoCapture(video_file_));
     if (!video_stream_->isOpened()) {
-      LOG(FATAL)
-          << "[UNILOG][FATAL][VAILIB_DEMO_VIDEO_OPEN_ERROR][Can not open "
-             "video stream!]  video name: "
-          << video_file_;
+      LOG(FATAL) << "Cannot open video stream: " << video_file_;
       stop();
     }
   }
@@ -264,183 +230,149 @@ struct DecodeThread : public MyThread {
   std::string video_file_;
   unsigned long frame_id_;
   std::unique_ptr<cv::VideoCapture> video_stream_;
-  queue_t* queue_;
+  frame_queue_t* queue_;
+  display_queue_t* display_queue_;
   bool is_camera_;
 };
 
-
+// The signature of the processing function is changed to accept DetectionResult
+using DpuProcessResult = std::function<cv::Mat(cv::Mat&, const DetectionResult&, bool)>;
 
 struct GuiThread : public MyThread {
-  static std::shared_ptr<GuiThread> instance() {
-    static std::weak_ptr<GuiThread> the_instance;
-    std::shared_ptr<GuiThread> ret;
-    if (the_instance.expired()) {
-      ret = std::make_shared<GuiThread>();
-      the_instance = ret;
-    }
-    ret = the_instance.lock();
-    assert(ret != nullptr);
-    return ret;
-  }
-
-  GuiThread()
+  GuiThread(display_queue_t* display_queue, result_queue_t* result_queue, DpuProcessResult processor)
       : MyThread{},
-        queue_{
-            new queue_t{
-                20} 
-        },
-        inactive_counter_{0} {
-    LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO)) << "INIT GUI";
-  }
-  virtual ~GuiThread() {  //
-  }
-  void clean_up_queue() {
-    FrameInfo frame_info;
-    while (!queue_->empty()) {
-      queue_->pop(frame_info);
-      frames_[frame_info.channel_id].frame_info = frame_info;
-      frames_[frame_info.channel_id].dirty = true;
-    }
-  }
-  virtual int run() override {
-    FrameInfo frame_info;
-    if (!queue_->pop(frame_info, std::chrono::milliseconds(500))) {
-      inactive_counter_++;
-      if (inactive_counter_ > 10) {
-        // inactive for 5 second, stop
-        LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO)) << "no frame_info to show";
-        return 1;
-      } else {
-        return 0;
-      }
-    }
-    inactive_counter_ = 0;
-    frames_[frame_info.channel_id].frame_info = frame_info;
-    frames_[frame_info.channel_id].dirty = true;
-    LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO))
-        << " gui queue size " << queue_->size()
-        << ", state = " << (is_stopped() ? "stopped" : "running");
-    clean_up_queue();
+        display_queue_{display_queue},
+        result_queue_{result_queue},
+        processor_{processor} {}
 
-    bool any_dirty = false;
-    for (auto& f : frames_) {
-      if (f.second.dirty) {
-        if (video_writer_ == nullptr) {
-          cv::imshow(std::string{"CH-"} +
-                         std::to_string(f.second.frame_info.channel_id),
-                     f.second.frame_info.mat);
-        } else {
-          *video_writer_ << f.second.frame_info.mat;
-        }
-        f.second.dirty = false;
-        any_dirty = true;
-      }
-    }
-    if (video_writer_ == nullptr) {
-      if (any_dirty) {
+  virtual int run() override {
+    cv::Mat frame;
+    if (!display_queue_->pop(frame, std::chrono::milliseconds(10))) {
         auto key = cv::waitKey(1);
-        if (key == 27) {
-          return 1;
-        }
+        if (key == 27) return 1;
+        return 0;
+    }
+    
+    // Ensure the display frame has a consistent size.
+    if (frame.cols != display_width || frame.rows != display_height) {
+        cv::resize(frame, frame, cv::Size(display_width, display_height));
+    }
+    
+    auto now = std::chrono::steady_clock::now();
+    display_points_.push_front(now);
+    if(display_points_.size() > 1) {
+      long duration = std::chrono::duration_cast<std::chrono::milliseconds>(now - display_points_.back()).count();
+      if (duration > 1000) { 
+          display_fps_ = (float)(display_points_.size() - 1) * 1000.0f / (float)duration;
+          while(std::chrono::duration_cast<std::chrono::milliseconds>(now - display_points_.back()).count() > 1000) {
+              display_points_.pop_back();
+          }
       }
     }
-    clean_up_queue();
+
+    DetectionResult result;
+    while (result_queue_->pop(result, std::chrono::milliseconds(1))) {
+      latest_result_ = result;
+    }
+
+    // Only draw if we have received at least one valid result.
+    if (latest_result_.original_width > 0) {
+      // The processor_ is the process_result function from demo_yolov8_onnx_n.cpp
+      processor_(frame, latest_result_, false);
+    }
+    
+    draw_helpers(frame);
+
+    cv::imshow("YOLOv8 Decoupled", frame);
+    auto key = cv::waitKey(1);
+    if (key == 27) {
+      return 1; // stop
+    }
     return 0;
+  }
+
+  void draw_helpers(cv::Mat& frame) {
+    int x = 13;
+    int y = 28;
+    
+    std::string display_fps_str = "DISPLAY FPS: " + std::to_string(display_fps_).substr(0,4);
+    cv::putText(frame, display_fps_str,
+                cv::Point(x, y + 115), cv::FONT_HERSHEY_SIMPLEX, 0.7,
+                cv::Scalar(0, 255, 0), 2, 4);
+
+    cv::putText(frame, latest_result_.time_str, cv::Point(x, y),
+                cv::FONT_HERSHEY_SIMPLEX, 0.7, cv::Scalar(178, 79, 0), 2, 4);
+    cv::putText(frame, "DETECTION FPS: " + std::to_string(latest_result_.fps).substr(0,4),
+                cv::Point(x, y + 25), cv::FONT_HERSHEY_SIMPLEX, 0.7,
+                cv::Scalar(178, 79, 0), 2, 4);
+    cv::putText(frame, "Avg: " + std::to_string(latest_result_.avg_fps).substr(0,4),
+                cv::Point(x, y + 50), cv::FONT_HERSHEY_SIMPLEX, 0.5,
+                cv::Scalar(178, 0, 79), 2, 4);
+    float display_min_fps = (latest_result_.min_fps == std::numeric_limits<float>::max()) ? 0.0f : latest_result_.min_fps;
+    cv::putText(frame, "Min: " + std::to_string(display_min_fps).substr(0,4),
+                cv::Point(x, y + 70), cv::FONT_HERSHEY_SIMPLEX, 0.5,
+                cv::Scalar(178, 0, 79), 2, 4);
+    cv::putText(frame, "Max: " + std::to_string(latest_result_.max_fps).substr(0,4),
+                cv::Point(x, y + 90), cv::FONT_HERSHEY_SIMPLEX, 0.5,
+                cv::Scalar(178, 0, 79), 2, 4);
   }
 
   virtual std::string name() override { return std::string{"GUIThread"}; }
 
-  queue_t* getQueue() { return queue_.get(); }
-
-  std::unique_ptr<queue_t> queue_;
-  int inactive_counter_=0;
-  struct FrameCache {
-    bool dirty=false;
-    FrameInfo frame_info;
-  };
-  std::map<int, FrameCache> frames_;
-  std::unique_ptr<cv::VideoWriter> video_writer_;
-};  // namespace ai
-
-
-
-struct Filter {
-  explicit Filter() {}
-  virtual ~Filter() {}
-  virtual cv::Mat run(cv::Mat& input) = 0;
+  display_queue_t* display_queue_;
+  result_queue_t* result_queue_;
+  DpuProcessResult processor_;
+  DetectionResult latest_result_;
+  std::deque<std::chrono::time_point<std::chrono::steady_clock>> display_points_;
+  float display_fps_ = 0.0f;
 };
 
-// Execute each lib run function and processor your implement
-template <typename dpu_model_type_t, typename ProcessResult>
-struct DpuFilter : public Filter {
-  DpuFilter(std::unique_ptr<dpu_model_type_t>&& dpu_model,
-            const ProcessResult& processor)
-      : Filter{}, dpu_model_{std::move(dpu_model)}, processor_{processor} {
-    LOG(INFO) << "DPU model size=" << dpu_model_->getInputWidth() << "x"
-              << dpu_model_->getInputHeight();
-  }
-  virtual ~DpuFilter() {}
-  cv::Mat run(cv::Mat& image) override {
-    auto result = dpu_model_->run(image);
-    return processor_(image, result, false);
-  }
-  std::unique_ptr<dpu_model_type_t> dpu_model_;
-  const ProcessResult& processor_;
-};
-template <typename FactoryMethod, typename ProcessResult>
-std::unique_ptr<Filter> create_dpu_filter(const FactoryMethod& factory_method,
-                                          const ProcessResult& process_result) {
-  using dpu_model_type_t = typename decltype(factory_method())::element_type;
-  return std::unique_ptr<Filter>(new DpuFilter<dpu_model_type_t, ProcessResult>(
-      factory_method(), process_result));
-}
-
-// Execute dpu filter
+template<typename dpu_model_type_t>
 struct DpuThread : public MyThread {
-  DpuThread(std::unique_ptr<Filter>&& filter, queue_t* queue_in,
-            queue_t* queue_out, const std::string& suffix)
+  DpuThread(std::unique_ptr<dpu_model_type_t>&& model, frame_queue_t* queue_in,
+            result_queue_t* queue_out, const std::string& suffix)
       : MyThread{},
-        filter_{std::move(filter)},
+        dpu_model_{std::move(model)},
         queue_in_{queue_in},
         queue_out_{queue_out},
         suffix_{suffix} {
     LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO)) << "INIT DPU";
   }
-  virtual ~DpuThread() {}
 
   virtual int run() override {
     FrameInfo frame;
     if (!queue_in_->pop(frame, std::chrono::milliseconds(500))) {
-      return 0;
+      return 0; 
     }
-    if (filter_) {
-      frame.mat = filter_->run(frame.mat);
-    }
-    LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO))
-        << "dpu queue size " << queue_out_->size();
-    while (!queue_out_->push(frame, std::chrono::milliseconds(500))) {
-      if (is_stopped()) {
-        return -1;
-      }
+    
+    auto yolo_result = dpu_model_->run(frame.mat);
+    
+    DetectionResult result_info;
+    result_info.frame_id = frame.frame_id;
+    result_info.yolo_result = yolo_result;
+    // CRITICAL FIX: Store the dimensions of the frame that was processed.
+    result_info.original_width = frame.mat.cols;
+    result_info.original_height = frame.mat.rows;
+
+    if (!queue_out_->push(result_info, std::chrono::milliseconds(500))) {
+      if(is_stopped()) return -1;
     }
     return 0;
   }
 
   virtual std::string name() override { return std::string("DPU-") + suffix_; }
-  std::unique_ptr<Filter> filter_;
-  queue_t* queue_in_=NULL;
-  queue_t* queue_out_=NULL;
+  std::unique_ptr<dpu_model_type_t> dpu_model_;
+  frame_queue_t* queue_in_;
+  result_queue_t* queue_out_;
   std::string suffix_;
 };
 
-// Implement sorting thread
 struct SortingThread : public MyThread {
-  SortingThread(queue_t* queue_in, queue_t* queue_out,
+  SortingThread(result_queue_t* queue_in, result_queue_t* queue_out,
                 const std::string& suffix)
       : MyThread{},
         queue_in_{queue_in},
         queue_out_{queue_out},
-        frame_id_{0},
         suffix_{suffix},
         fps_{0.0f},
         max_fps_{0.0f},
@@ -448,115 +380,62 @@ struct SortingThread : public MyThread {
         avg_fps_{0.0f},
         fps_sum_{0.0f},
         fps_count_{0},
-        start_time_{std::chrono::steady_clock::now()} {
-    LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO)) << "INIT SORTING";
-  }
-  virtual ~SortingThread() {}
+        start_time_{std::chrono::steady_clock::now()} {}
+  
   virtual int run() override {
-    FrameInfo frame;
-    frame_id_++;
-    auto frame_id = frame_id_;
-    auto cond =
-        std::function<bool(const FrameInfo&)>{[frame_id](const FrameInfo& f) {
-          // sorted by frame id
-          return f.frame_id <= frame_id;
-        }};
-    if (!queue_in_->pop(frame, cond, std::chrono::milliseconds(500))) {
+    DetectionResult result_info;
+    if (!queue_in_->pop(result_info, std::chrono::milliseconds(500))) {
       return 0;
     }
+
     auto now = std::chrono::steady_clock::now();
-    float fps = -1.0f;
     long duration = 0;
-    if (!points_.empty()) {
-      auto end = points_.back();
-      duration =
-          std::chrono::duration_cast<std::chrono::milliseconds>(now - end)
-              .count();
-      float duration2 = (float)duration;
-      float total = (float)points_.size();
-      fps = total / duration2 * 1000.0f;
-      auto x = 13;
-      auto y = 28;
-      fps_ = fps;
-      frame.fps = fps;
-      
-      // Update FPS statistics
-      max_fps_ = std::max(max_fps_, fps_);
-      if (fps_ > 0) { 
+    points_.push_front(now);
+    if (points_.size() > 1) {
+      duration = std::chrono::duration_cast<std::chrono::milliseconds>(now - points_.back()).count();
+      if (duration > 2000) { 
+          fps_ = (float)(points_.size()-1) * 1000.0f / (float)duration;
+          while(std::chrono::duration_cast<std::chrono::milliseconds>(now - points_.back()).count() > 2000) {
+              points_.pop_back();
+          }
+      }
+    }
+
+    if(fps_ > 0) {
+        max_fps_ = std::max(max_fps_, fps_);
         min_fps_ = std::min(min_fps_, fps_);
         fps_sum_ += fps_;
         fps_count_++;
         avg_fps_ = fps_sum_ / fps_count_;
-      }
-      
-      frame.max_fps = max_fps_;
-      
-      if (frame.mat.cols > 200) {
-        // Calculate elapsed time since program start
-        auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(now - start_time_).count();
-        int hours = elapsed / 3600;
-        int minutes = (elapsed % 3600) / 60;
-        int seconds = elapsed % 60;
-        std::string time_str = std::to_string(hours) + ":" + 
-                              (minutes < 10 ? "0" : "") + std::to_string(minutes) + ":" +
-                              (seconds < 10 ? "0" : "") + std::to_string(seconds);
-        
-        // Display timer
-        cv::putText(frame.mat, std::string("Time: ") + time_str,
-                    cv::Point(x, y), cv::FONT_HERSHEY_SIMPLEX, 0.7,
-                    cv::Scalar(178, 79, 0), 2, 4);
-        
-        // Display current FPS
-        cv::putText(frame.mat, std::string("FPS: ") + std::to_string(fps),
-                    cv::Point(x, y + 25), cv::FONT_HERSHEY_SIMPLEX, 0.7,
-                    cv::Scalar(178, 79, 0), 2, 4);
-        
-        // Display average FPS
-        cv::putText(frame.mat, std::string("Avg: ") + std::to_string(avg_fps_),
-                    cv::Point(x, y + 50), cv::FONT_HERSHEY_SIMPLEX, 0.5,
-                    cv::Scalar(178, 0, 79), 2, 4);
-        
-        // Display min FPS
-        float display_min_fps = (min_fps_ == std::numeric_limits<float>::max()) ? 0.0f : min_fps_;
-        cv::putText(frame.mat, std::string("Min: ") + std::to_string(display_min_fps),
-                    cv::Point(x, y + 70), cv::FONT_HERSHEY_SIMPLEX, 0.5,
-                    cv::Scalar(178, 0, 79), 2, 4);
-        
-        // Display max FPS
-        cv::putText(frame.mat, std::string("Max: ") + std::to_string(max_fps_),
-                    cv::Point(x, y + 90), cv::FONT_HERSHEY_SIMPLEX, 0.5,
-                    cv::Scalar(178, 0, 79), 2, 4);
-      }
     }
-    LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO))
-        << "thread [" << name() << "] "
-        << " frame id " << frame.frame_id << " sorting queue size "
-        << queue_out_->size() << "   FPS: " << fps 
-        << " Avg: " << avg_fps_ << " Min: " << min_fps_ << " Max: " << max_fps_;
-    points_.push_front(now);
-    if (duration > 2000) { 
-      points_.pop_back();
-    }
-    while (!queue_out_->push(frame, std::chrono::milliseconds(500))) {
-      if (is_stopped()) {
-        return -1;
-      }
+
+    auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(now - start_time_).count();
+    int hours = elapsed / 3600;
+    int minutes = (elapsed % 3600) / 60;
+    int seconds = elapsed % 60;
+    std::string time_str = "Time: " + std::to_string(hours) + ":" + 
+                          (minutes < 10 ? "0" : "") + std::to_string(minutes) + ":" +
+                          (seconds < 10 ? "0" : "") + std::to_string(seconds);
+    
+    result_info.fps = fps_;
+    result_info.max_fps = max_fps_;
+    result_info.min_fps = min_fps_;
+    result_info.avg_fps = avg_fps_;
+    result_info.time_str = time_str;
+
+    if (!queue_out_->push(result_info, std::chrono::milliseconds(500))) {
+      if (is_stopped()) return -1;
     }
     return 0;
   }
 
   virtual std::string name() override { return std::string{"SORT-"} + suffix_; }
-  queue_t* queue_in_=NULL;
-  queue_t* queue_out_=NULL;
-  unsigned long frame_id_=0;
+  result_queue_t* queue_in_;
+  result_queue_t* queue_out_;
   std::deque<std::chrono::time_point<std::chrono::steady_clock>> points_;
   std::string suffix_;
-  float fps_=0.0;
-  float max_fps_=0.0;
-  float min_fps_=std::numeric_limits<float>::max();
-  float avg_fps_=0.0;
-  float fps_sum_=0.0;
-  long fps_count_=0;
+  float fps_, max_fps_, min_fps_, avg_fps_, fps_sum_;
+  long fps_count_;
   std::chrono::steady_clock::time_point start_time_;
 };
 
@@ -573,11 +452,8 @@ inline void usage_video(const char* progname) {
             << "      -L Print detection log when turning on.\n"
             << "      -h: help\n"
             << std::endl;
-  return;
 }
-/*
-  global command line options
- */
+
 static std::vector<int> g_num_of_threads;
 static std::vector<std::string> g_avi_file;
 
@@ -587,102 +463,68 @@ inline void parse_opt(int argc, char* argv[], int start_pos = 1) {
   std::vector<std::string> sp;
   std::vector<std::string> spd;
   while ((opt = getopt(argc, argv, "s:y:x:c:T:R:r:DhLZ")) != -1) {
-    // LOG(INFO) << *argv;
     switch (opt) {
-      case 'c':
-        LOG(INFO) << "Setting parallelism to " << std::stoi(optarg);
-        g_num_of_threads.emplace_back(std::stoi(optarg));
-        break;
-      case 'x':
-        LOG(INFO) << "Setting intra_op_num_threads to " << std::stoi(optarg);
-        onnx_x = std::stoi(optarg);
-        break;
-      case 'y':
-        LOG(INFO) << "Setting inter_op_num_threads to " << std::stoi(optarg);
-        onnx_y = std::stoi(optarg);
-        break;
-      case 'D':
-        onnx_disable_spinning = true;
-        LOG(INFO) << "[Disable thread spinning]";
-        break;
-      case 'L':
-        enable_result_print = true;
-        LOG(INFO) << "[Result printing is on]";
-        break;
-      case 'Z':
-        onnx_disable_spinning_between_run = true;
-        LOG(INFO) << "[Force thread to stop spinning between runs]";
-        break;
-      case 'T':
-        intra_op_thread_affinities = ToUTF8String(optarg);
-        LOG(INFO) << "[Set intra op thread affinities]: " << intra_op_thread_affinities;
-        break;
-      case 'h':
-        usage_video(argv[0]);
-        exit(1);
-      case 's':
-        LOG(INFO) << "stream: " << optarg;
-        g_avi_file.push_back(optarg);
-        break;
+      case 'c': g_num_of_threads.emplace_back(std::stoi(optarg)); break;
+      case 'x': onnx_x = std::stoi(optarg); break;
+      case 'y': onnx_y = std::stoi(optarg); break;
+      case 'D': onnx_disable_spinning = true; break;
+      case 'L': enable_result_print = true; break;
+      case 'Z': onnx_disable_spinning_between_run = true; break;
+      case 'T': intra_op_thread_affinities = ToUTF8String(optarg); break;
+      case 'h': usage_video(argv[0]); exit(1);
+      case 's': g_avi_file.push_back(optarg); break;
       case 'R':
         sp = split(optarg, "x");
         cap_width = stoi(sp[0].c_str());
         cap_height = stoi(sp[1].c_str());
-        LOG(INFO) << "[Set camera resolution]: " << cap_width << "x" << cap_height;
         break;
       case 'r':
         spd = split(optarg, "x");
         display_width = stoi(spd[0].c_str());
         display_height = stoi(spd[1].c_str());
-        LOG(INFO) << "[Set display resolution]: " << display_width << "x" << display_height;
         break;
-      default:
-        usage_video(argv[0]);
-        exit(1);
+      default: usage_video(argv[0]); exit(1);
     }
   }
-  // for (int i = optind; i < argc; ++i) {
-    // g_avi_file.push_back(std::string(argv[i]));
-  // }
-  if (g_avi_file.empty()) {
-    std::cerr << "Expected argument after options\n";
-    exit(EXIT_FAILURE);
-  }
-  if (g_num_of_threads.empty()) {
-    // by default, all channels has at least one thread
-    g_num_of_threads.emplace_back(1);
-  }
-  return;
+  if (g_avi_file.empty()) { g_avi_file.push_back("0"); }
+  if (g_num_of_threads.empty()) { g_num_of_threads.emplace_back(1); }
 }
 
-// Entrance of single channel video demo
-template <typename FactoryMethod, typename ProcessResult>
+template <typename FactoryMethod>
 int main_for_video_demo(int argc, char* argv[],
                         const FactoryMethod& factory_method,
-                        const ProcessResult& process_result) {
+                        const DpuProcessResult& process_result) {
   signal(SIGINT, MyThread::signal_handler);
   parse_opt(argc, argv);
   {
     auto channel_id = 0;
-    auto decode_queue = std::unique_ptr<queue_t>{new queue_t{5}};
-    auto decode_thread = std::unique_ptr<DecodeThread>(
-        new DecodeThread{channel_id, g_avi_file[0], decode_queue.get()});
-    auto dpu_thread = std::vector<std::unique_ptr<DpuThread>>{};
-    auto sorting_queue =
-        std::unique_ptr<queue_t>(new queue_t(5 * g_num_of_threads[0]));
-    auto gui_thread = GuiThread::instance();
-    auto gui_queue = gui_thread->getQueue();
+    auto decode_queue = std::make_unique<frame_queue_t>(5);
+    auto display_queue = std::make_unique<display_queue_t>(3); 
+    auto dpu_out_queue = std::make_unique<result_queue_t>(5 * g_num_of_threads[0]);
+    auto gui_result_queue = std::make_unique<result_queue_t>(5 * g_num_of_threads[0]);
+    
+    auto decode_thread = std::make_unique<DecodeThread>(
+        channel_id, g_avi_file[0], decode_queue.get(), display_queue.get());
+
+    auto dpu_threads = std::vector<std::unique_ptr<MyThread>>{};
+    auto model_prototype = factory_method();
+    using dpu_model_t = typename std::remove_reference<decltype(*model_prototype)>::type;
+    
     for (int i = 0; i < g_num_of_threads[0]; ++i) {
-      dpu_thread.emplace_back(new DpuThread(
-          create_dpu_filter(factory_method, process_result), decode_queue.get(),
-          sorting_queue.get(), std::to_string(i)));
+      dpu_threads.emplace_back(new DpuThread<dpu_model_t>(
+          (i == 0) ? std::move(model_prototype) : factory_method(),
+          decode_queue.get(),
+          dpu_out_queue.get(), 
+          std::to_string(i)));
     }
-    auto sorting_thread = std::unique_ptr<SortingThread>(
-        new SortingThread(sorting_queue.get(), gui_queue, std::to_string(0)));
-    // start everything
+    
+    auto sorting_thread = std::make_unique<SortingThread>(
+        dpu_out_queue.get(), gui_result_queue.get(), std::to_string(0));
+
+    auto gui_thread = std::make_unique<GuiThread>(
+        display_queue.get(), gui_result_queue.get(), process_result);
+
     MyThread::start_all();
-    gui_thread->wait();
-    MyThread::stop_all();
     MyThread::wait_all();
   }
   LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO)) << "BYEBYE";

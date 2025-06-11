@@ -13,23 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "yolov8_onnx.hpp"
 #include "demo_nx1x4.hpp"
 #include <iostream>
 #include "color.hpp"
 
-static cv::Mat process_result(cv::Mat& image, const Yolov8OnnxResult& result, bool is_jpeg=false) {
+// CRITICAL CHANGE: The function signature is updated to accept the whole DetectionResult struct.
+static cv::Mat process_result(cv::Mat& image, const vitis::ai::DetectionResult& result_info, bool is_jpeg=false) {
+  (void)is_jpeg; // Unused parameter
   __TIC__(process_result)
-  float width_ratio = 1;
-  float height_ratio = 1;
-  if(cap_height != display_height || cap_width != display_width) {
-    width_ratio = (float)display_width / (float)image.cols;
-    height_ratio = (float)display_height / (float)image.rows;
-    cv::resize(image, image, cv::Size(display_width, display_height));
-  }
-  for (auto& res : result.bboxes) {
+
+  // Get the YOLO result from the wrapper struct
+  const auto& yolo_result = result_info.yolo_result;
+
+  // CRITICAL FIX: Calculate scaling ratios based on the dimensions passed with the result.
+  // This ensures that we always scale correctly, regardless of any timing mismatches.
+  // 'image' is the frame we are drawing on (display size).
+  // 'result_info.original_width/height' is the size of the frame the detection was run on.
+  float width_ratio = (float)image.cols / result_info.original_width;
+  float height_ratio = (float)image.rows / result_info.original_height;
+
+  for (const auto& res : yolo_result.bboxes) {
     int label = res.label;
+    // Make a copy of the box to modify it for drawing
     auto box = res.box;
+
+    // Apply the robust scaling
     box[0] *= width_ratio;
     box[2] *= width_ratio;
     box[1] *= height_ratio;
@@ -52,7 +60,8 @@ static cv::Mat process_result(cv::Mat& image, const Yolov8OnnxResult& result, bo
 
 int main(int argc, char* argv[]) {
   return vitis::ai::main_for_video_demo(
-      argc, argv, [&] {return  Yolov8Onnx::create("DetectionModel_int.onnx", 0.3);}, process_result);
-
-  return 0;
+      argc, argv, 
+      [] { return Yolov8Onnx::create("DetectionModel_int.onnx", 0.3); }, 
+      process_result
+  );
 }
