@@ -49,7 +49,7 @@ SET(glog_DIR "C:/Users/abdul/miniforge3/envs/ryzen-ai-1.4.1/Lib/site-packages/fl
 SET(GFLAGS_INCLUDE_DIR "C:/dell/vcpkg/packages/gflags_x64-windows")
 SET(gflags_DIR "C:/dell/vcpkg/packages/gflags_x64-windows/share/gflags")
 SET(GFLAGS_USE_TARGET_NAMESPACE ON)
-SET(OpenCV_DIR "C:/dell/opencv/mybuild/build")
+SET(OpenCV_DIR "C:/opencv/mybuild/build/install/bin")
 find_package(glog REQUIRED)
 find_package(
   OpenCV

@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ProjectOutputs>
+    <ProjectOutput>
+      <FullPath>C:\dell\RyzenAI-SW\RyzenAI-SW\tutorial\yolov8\yolov8\yolov8_cpp2\build\x64\Release\ZERO_CHECK</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\dell\RyzenAI-SW\RyzenAI-SW\tutorial\yolov8\yolov8\yolov8_cpp2\build\yolov8\Release\yolov8_demo.exe</FullPath>
+    </ProjectOutput>
+  </ProjectOutputs>
+  <ContentFiles />
+  <SatelliteDlls />
+  <NonRecipeFileRefs />
+</Project>

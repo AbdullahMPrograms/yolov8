@@ -1,0 +1,11 @@
+﻿  1>Checking Build System
+  CMake is re-running because C:/dell/RyzenAI-SW/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8_cpp2/build/CMakeFiles/generate.stamp is out-of-date.
+    the file 'C:/dell/RyzenAI-SW/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8_cpp2/CMakeLists.txt'
+    is newer than 'C:/dell/RyzenAI-SW/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8_cpp2/build/CMakeFiles/generate.stamp.depend'
+    result='-1'
+  -- Found ONNX Runtime Library: C:/Program Files/RyzenAI/1.5.0/voe-4.0-win_amd64/voe/lib/onnxruntime.lib
+  -- OpenCV paths are set manually. Bypassing find_package.
+  -- Found Torch libraries: torch;torch_library;C:/dell/libtorch/lib/c10.lib;C:/dell/libtorch/lib/kineto.lib
+  -- Configuring done (0.3s)
+  -- Generating done (0.1s)
+  -- Build files have been written to: C:/dell/RyzenAI-SW/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8_cpp2/build

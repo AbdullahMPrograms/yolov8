@@ -1,4 +1,4 @@
-set PATH=%ONNXRUNTIME_ROOTDIR%/bin;%cd%\..;%PATH%;
+set PATH=%ONNXRUNTIME_ROOTDIR%/bin;%cd%\..;C:\opencv\mybuild\build\install\bin;%PATH%;
 set XLNX_VART_FIRMWARE=%RYZEN_AI_INSTALLATION_PATH%\voe-4.0-win_amd64\xclbins\strix\AMD_AIE2P_Nx4_Overlay.xclbin
 
 set XLNX_ENABLE_TRACE=1

@@ -20,7 +20,9 @@ at::Tensor dfl(const at::Tensor& x) {
     conv->weight.set_data(torch::arange(c1, at::kFloat).view({1, c1, 1, 1}));
     conv->eval(); // Set to evaluation mode
     
-    auto [b, c, a] = x.sizes();
+    auto sizes = x.sizes();
+    int64_t b = sizes[0];
+    int64_t a = sizes[2];
     return conv(x.view({b, 4, c1, a}).transpose(1, 2).softmax(1)).view({b, 4, a});
 }
 
@@ -114,7 +116,7 @@ at::Tensor non_max_suppression(const at::Tensor& prediction, float conf_thres, f
         }
     }
     // For this app, we only care about the first batch item
-    return output[0].slice(0, 0, std::min((long)max_det, output[0].size(0)));
+    return output[0].slice(0, 0, std::min((long)max_det, (long)output[0].size(0)));
 }
 
 

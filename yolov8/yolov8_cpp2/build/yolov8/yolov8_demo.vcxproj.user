@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LocalDebuggerWorkingDirectory>C:\dell\RyzenAI-SW\RyzenAI-SW\tutorial\yolov8\yolov8\yolov8_cpp2</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerEnvironment>PATH=C:\Program Files\RyzenAI\1.5.0\voe-4.0-win_amd64\voe\bin;C:\opencv\mybuild\build\install\bin;C:\dell\libtorch\lib;C:\Users\abdul\miniforge3\envs\ryzen-ai-1.4.1\Lib\site-packages\flexml\flexml_extras\bin;%PATH%</LocalDebuggerEnvironment>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+</Project>

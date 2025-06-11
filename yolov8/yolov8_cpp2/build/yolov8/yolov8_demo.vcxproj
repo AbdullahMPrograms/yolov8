@@ -96,12 +96,14 @@
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <MinimalRebuild></MinimalRebuild>
+      <MinimalRebuild>
+      </MinimalRebuild>
       <Optimization>Disabled</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <SupportJustMyCode></SupportJustMyCode>
+      <SupportJustMyCode>
+      </SupportJustMyCode>
       <TreatWarningAsError>false</TreatWarningAsError>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level4</WarningLevel>
@@ -122,7 +124,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>C:\Program Files\RyzenAI\1.5.0\voe-4.0-win_amd64\voe\lib\onnxruntime.lib;C:\opencv\mybuild\build\install\lib\opencv_core470.lib;C:\opencv\mybuild\build\install\lib\opencv_highgui470.lib;C:\opencv\mybuild\build\install\lib\opencv_imgproc470.lib;C:\dell\libtorch\lib\c10.lib;C:\dell\libtorch\lib\kineto.lib;C:\Users\abdul\miniforge3\envs\ryzen-ai-1.4.1\Lib\site-packages\flexml\flexml_extras\lib\glog.lib;C:\dell\libtorch\lib\torch.lib;C:\dell\libtorch\lib\torch_cpu.lib;C:\dell\libtorch\lib\c10.lib;dbghelp.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>C:\Program Files\RyzenAI\1.5.0\voe-4.0-win_amd64\voe\lib\onnxruntime.lib;C:\opencv\mybuild\build\install\lib\opencv_core470.lib;C:\opencv\mybuild\build\install\lib\opencv_highgui470.lib;C:\opencv\mybuild\build\install\lib\opencv_imgproc470.lib;C:\opencv\mybuild\build\install\lib\opencv_videoio470.lib;C:\dell\libtorch\lib\c10.lib;C:\dell\libtorch\lib\kineto.lib;C:\Users\abdul\miniforge3\envs\ryzen-ai-1.4.1\Lib\site-packages\flexml\flexml_extras\lib\glog.lib;C:\dell\libtorch\lib\torch.lib;C:\dell\libtorch\lib\torch_cpu.lib;C:\dell\libtorch\lib\c10.lib;dbghelp.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:/Program Files/RyzenAI/1.5.0/voe-4.0-win_amd64/voe/lib;C:/Program Files/RyzenAI/1.5.0/voe-4.0-win_amd64/voe/lib/$(Configuration);/lib;/lib/$(Configuration);/lib/intel64;/lib/intel64/$(Configuration);/lib/intel64_win;/lib/intel64_win/$(Configuration);/lib/win-x64;/lib/win-x64/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -146,19 +148,20 @@
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <MinimalRebuild></MinimalRebuild>
+      <MinimalRebuild>
+      </MinimalRebuild>
       <Optimization>MaxSpeed</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <SupportJustMyCode></SupportJustMyCode>
+      <SupportJustMyCode>
+      </SupportJustMyCode>
       <TreatWarningAsError>false</TreatWarningAsError>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level4</WarningLevel>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;USE_DISTRIBUTED;USE_C10D_GLOO;GLOG_NO_ABBREVIATED_SEVERITIES;GLOG_CUSTOM_PREFIX_SUPPORT;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <DebugInformationFormat>
-      </DebugInformationFormat>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
     </ClCompile>
     <ResourceCompile>
@@ -174,10 +177,10 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>C:\Program Files\RyzenAI\1.5.0\voe-4.0-win_amd64\voe\lib\onnxruntime.lib;C:\opencv\mybuild\build\install\lib\opencv_core470.lib;C:\opencv\mybuild\build\install\lib\opencv_highgui470.lib;C:\opencv\mybuild\build\install\lib\opencv_imgproc470.lib;C:\dell\libtorch\lib\c10.lib;C:\dell\libtorch\lib\kineto.lib;C:\Users\abdul\miniforge3\envs\ryzen-ai-1.4.1\Lib\site-packages\flexml\flexml_extras\lib\glog.lib;C:\dell\libtorch\lib\torch.lib;C:\dell\libtorch\lib\torch_cpu.lib;C:\dell\libtorch\lib\c10.lib;dbghelp.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>C:\Program Files\RyzenAI\1.5.0\voe-4.0-win_amd64\voe\lib\onnxruntime.lib;C:\opencv\mybuild\build\install\lib\opencv_core470.lib;C:\opencv\mybuild\build\install\lib\opencv_highgui470.lib;C:\opencv\mybuild\build\install\lib\opencv_imgproc470.lib;C:\opencv\mybuild\build\install\lib\opencv_videoio470.lib;C:\dell\libtorch\lib\c10.lib;C:\dell\libtorch\lib\kineto.lib;C:\Users\abdul\miniforge3\envs\ryzen-ai-1.4.1\Lib\site-packages\flexml\flexml_extras\lib\glog.lib;C:\dell\libtorch\lib\torch.lib;C:\dell\libtorch\lib\torch_cpu.lib;C:\dell\libtorch\lib\c10.lib;dbghelp.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:/Program Files/RyzenAI/1.5.0/voe-4.0-win_amd64/voe/lib;C:/Program Files/RyzenAI/1.5.0/voe-4.0-win_amd64/voe/lib/$(Configuration);/lib;/lib/$(Configuration);/lib/intel64;/lib/intel64/$(Configuration);/lib/intel64_win;/lib/intel64_win/$(Configuration);/lib/win-x64;/lib/win-x64/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ImportLibrary>C:/dell/RyzenAI-SW/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8_cpp2/build/yolov8/Release/yolov8_demo.lib</ImportLibrary>
       <ProgramDataBaseFile>C:/dell/RyzenAI-SW/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8_cpp2/build/yolov8/Release/yolov8_demo.pdb</ProgramDataBaseFile>
@@ -198,12 +201,14 @@
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <MinimalRebuild></MinimalRebuild>
+      <MinimalRebuild>
+      </MinimalRebuild>
       <Optimization>MinSpace</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <SupportJustMyCode></SupportJustMyCode>
+      <SupportJustMyCode>
+      </SupportJustMyCode>
       <TreatWarningAsError>false</TreatWarningAsError>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level4</WarningLevel>
@@ -226,7 +231,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>C:\Program Files\RyzenAI\1.5.0\voe-4.0-win_amd64\voe\lib\onnxruntime.lib;C:\opencv\mybuild\build\install\lib\opencv_core470.lib;C:\opencv\mybuild\build\install\lib\opencv_highgui470.lib;C:\opencv\mybuild\build\install\lib\opencv_imgproc470.lib;C:\dell\libtorch\lib\c10.lib;C:\dell\libtorch\lib\kineto.lib;C:\Users\abdul\miniforge3\envs\ryzen-ai-1.4.1\Lib\site-packages\flexml\flexml_extras\lib\glog.lib;C:\dell\libtorch\lib\torch.lib;C:\dell\libtorch\lib\torch_cpu.lib;C:\dell\libtorch\lib\c10.lib;dbghelp.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>C:\Program Files\RyzenAI\1.5.0\voe-4.0-win_amd64\voe\lib\onnxruntime.lib;C:\opencv\mybuild\build\install\lib\opencv_core470.lib;C:\opencv\mybuild\build\install\lib\opencv_highgui470.lib;C:\opencv\mybuild\build\install\lib\opencv_imgproc470.lib;C:\opencv\mybuild\build\install\lib\opencv_videoio470.lib;C:\dell\libtorch\lib\c10.lib;C:\dell\libtorch\lib\kineto.lib;C:\Users\abdul\miniforge3\envs\ryzen-ai-1.4.1\Lib\site-packages\flexml\flexml_extras\lib\glog.lib;C:\dell\libtorch\lib\torch.lib;C:\dell\libtorch\lib\torch_cpu.lib;C:\dell\libtorch\lib\c10.lib;dbghelp.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:/Program Files/RyzenAI/1.5.0/voe-4.0-win_amd64/voe/lib;C:/Program Files/RyzenAI/1.5.0/voe-4.0-win_amd64/voe/lib/$(Configuration);/lib;/lib/$(Configuration);/lib/intel64;/lib/intel64/$(Configuration);/lib/intel64_win;/lib/intel64_win/$(Configuration);/lib/win-x64;/lib/win-x64/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -251,12 +256,14 @@
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <MinimalRebuild></MinimalRebuild>
+      <MinimalRebuild>
+      </MinimalRebuild>
       <Optimization>MaxSpeed</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <SupportJustMyCode></SupportJustMyCode>
+      <SupportJustMyCode>
+      </SupportJustMyCode>
       <TreatWarningAsError>false</TreatWarningAsError>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level4</WarningLevel>
@@ -277,7 +284,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>C:\Program Files\RyzenAI\1.5.0\voe-4.0-win_amd64\voe\lib\onnxruntime.lib;C:\opencv\mybuild\build\install\lib\opencv_core470.lib;C:\opencv\mybuild\build\install\lib\opencv_highgui470.lib;C:\opencv\mybuild\build\install\lib\opencv_imgproc470.lib;C:\dell\libtorch\lib\c10.lib;C:\dell\libtorch\lib\kineto.lib;C:\Users\abdul\miniforge3\envs\ryzen-ai-1.4.1\Lib\site-packages\flexml\flexml_extras\lib\glog.lib;C:\dell\libtorch\lib\torch.lib;C:\dell\libtorch\lib\torch_cpu.lib;C:\dell\libtorch\lib\c10.lib;dbghelp.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>C:\Program Files\RyzenAI\1.5.0\voe-4.0-win_amd64\voe\lib\onnxruntime.lib;C:\opencv\mybuild\build\install\lib\opencv_core470.lib;C:\opencv\mybuild\build\install\lib\opencv_highgui470.lib;C:\opencv\mybuild\build\install\lib\opencv_imgproc470.lib;C:\opencv\mybuild\build\install\lib\opencv_videoio470.lib;C:\dell\libtorch\lib\c10.lib;C:\dell\libtorch\lib\kineto.lib;C:\Users\abdul\miniforge3\envs\ryzen-ai-1.4.1\Lib\site-packages\flexml\flexml_extras\lib\glog.lib;C:\dell\libtorch\lib\torch.lib;C:\dell\libtorch\lib\torch_cpu.lib;C:\dell\libtorch\lib\c10.lib;dbghelp.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:/Program Files/RyzenAI/1.5.0/voe-4.0-win_amd64/voe/lib;C:/Program Files/RyzenAI/1.5.0/voe-4.0-win_amd64/voe/lib/$(Configuration);/lib;/lib/$(Configuration);/lib/intel64;/lib/intel64/$(Configuration);/lib/intel64_win;/lib/intel64_win/$(Configuration);/lib/win-x64;/lib/win-x64/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>

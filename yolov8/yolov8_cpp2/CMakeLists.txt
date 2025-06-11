@@ -5,7 +5,7 @@ project(
   LANGUAGES C CXX)
 set(CMAKE_CXX_STANDARD 20)
 
-# --- MSVC Compiler Flags (from your file) ---
+# --- MSVC Compiler Flags (from your file) ---  
 if(MSVC)
   string(APPEND CMAKE_CXX_FLAGS " /Zc:__cplusplus")
   # unreferenced formal parameter
@@ -35,7 +35,7 @@ include_directories("${ONNXRUNTIME_ROOTDIR}/include"
                     "${ONNXRUNTIME_ROOTDIR}/include/onnxruntime/core/session")
 link_directories("${ONNXRUNTIME_ROOTDIR}/lib")
 
-# Find the ONNX Runtime library file and store its path in ORT_LIBRARY
+# Find the ONNX Runtime library file and store its path in ORT_LIBRARY 
 find_library(ORT_LIBRARY onnxruntime HINTS "${ONNXRUNTIME_ROOTDIR}/lib" REQUIRED)
 message(STATUS "Found ONNX Runtime Library: ${ORT_LIBRARY}")
 
@@ -52,6 +52,8 @@ set(OpenCV_LIBS
     "C:/opencv/mybuild/build/install/lib/opencv_core470.lib"
     "C:/opencv/mybuild/build/install/lib/opencv_highgui470.lib"
     "C:/opencv/mybuild/build/install/lib/opencv_imgproc470.lib"
+    "C:/opencv/mybuild/build/install/lib/opencv_videoio470.lib"
+
 )
 message(STATUS "OpenCV paths are set manually. Bypassing find_package.")
 # --- END OPENCV MANUAL DEFINITION ---
