@@ -16,6 +16,9 @@
 #include <onnxruntime_cxx_api.h>
 #include <torch/torch.h>
 
+#include <glog/logging.h> // Add for glog
+#include "onnx_task.hpp"   // Add for our new class
+
 #include "thread_safe_queue.h"
 #include "yolov8_utils.h"
 
@@ -266,75 +269,27 @@ int main() {
         return -1;
     }
 
-    // --- ONNX Runtime Setup ---
-    Ort::Env env(ORT_LOGGING_LEVEL_WARNING, "YOLOv8-Demo");
-    Ort::SessionOptions session_options;
-    Ort::Session session(nullptr); // Define session outside the try block
-
+    std::unique_ptr<OnnxTask> onnx_task;
     try {
-        // Mimic the working logic from onnx_task.hpp
-        std::cout << "Configuring VitisAI Execution Provider..." << std::endl;
-        
-        // 1. Create the options map
-        auto options = std::unordered_map<std::string, std::string>({});
-        
-        // 2. Set the config_file path. 
-        options["config_file"] = "vaip_config.json";
-
-        // 3. Append the provider using the specific Vitis-AI helper function
-        // This method exists in Ort::SessionOptions from the standard header
-        // when linking against the Ryzen AI ONNX Runtime library.
-        session_options.AppendExecutionProvider_VitisAI(options);
-        std::cout << "VitisAI Execution Provider configured." << std::endl;
-
-        // Set other session options
-        session_options.SetIntraOpNumThreads(1);
-        
-        // 4. Convert model name to wide string for Windows
-        const char* model_path_char = "yolov8m.onnx";
-        std::cout << "Loading model: " << model_path_char << "..." << std::endl;
-
-        #ifdef _WIN32
-            using convert_t = std::codecvt_utf8<wchar_t>;
-            std::wstring_convert<convert_t, wchar_t> strconverter;
-            std::wstring model_path_wide = strconverter.from_bytes(model_path_char);
-            session = Ort::Session(env, model_path_wide.c_str(), session_options);
-        #else
-            session = Ort::Session(env, model_path_char, session_options);
-        #endif
-        
-        std::cout << "Model loaded successfully." << std::endl;
-
+        std::cout << "Initializing OnnxTask..." << std::endl;
+        onnx_task = std::make_unique<OnnxTask>("./DetectionModel_int.onnx");
+        std::cout << "OnnxTask initialized successfully." << std::endl;
     } catch (const Ort::Exception& e) {
-        std::cerr << "ONNXRUNTIME ERROR: " << e.what() << std::endl;
-        std::cerr << "ORT Error Code: " << e.GetOrtErrorCode() << std::endl;
-        std::cerr << "Press Enter to continue...";
-        std::cin.get();
+        std::cerr << "ONNXRUNTIME ERROR during OnnxTask creation: " << e.what() << std::endl;
         return -1;
     } catch (const std::exception& e) {
-        std::cerr << "STD::EXCEPTION ERROR: " << e.what() << std::endl;
-        std::cerr << "Press Enter to continue...";
-        std::cin.get();
+        std::cerr << "STD::EXCEPTION ERROR during OnnxTask creation: " << e.what() << std::endl;
         return -1;
     }
 
-    Ort::AllocatorWithDefaultOptions allocator;
-    
-    auto input_name_ptr = session.GetInputNameAllocated(0, allocator);
-    const char* input_name = input_name_ptr.get();
-    auto input_type_info = session.GetInputTypeInfo(0);
-    auto input_tensor_info = input_type_info.GetTensorTypeAndShapeInfo();
-    std::vector<int64_t> input_dims = input_tensor_info.GetShape();
-    input_dims[0] = 1;
-
-    std::vector<std::string> output_name_strings;
+    // Get the necessary info from the OnnxTask object
+    auto& session = onnx_task->session(); // We need a way to get the session
+    auto input_dims = onnx_task->get_input_shapes()[0];
+    auto input_name = onnx_task->get_input_names()[0].c_str();
     std::vector<const char*> output_names;
-    for (size_t i = 0; i < session.GetOutputCount(); i++) {
-        auto output_name_ptr = session.GetOutputNameAllocated(i, allocator);
-        output_names.push_back(output_name_ptr.get());
-        output_name_strings.push_back(output_name_ptr.get());
+    for(const auto& name : onnx_task->get_output_names()) {
+        output_names.push_back(name.c_str());
     }
-
     Ort::MemoryInfo memory_info = Ort::MemoryInfo::CreateCpu(OrtArenaAllocator, OrtMemTypeDefault);
 
     // --- Camera, Queues, Threads ---

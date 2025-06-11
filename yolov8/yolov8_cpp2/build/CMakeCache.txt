@@ -17,6 +17,9 @@
 //Path to a program.
 CMAKE_AR:FILEPATH=C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/lib.exe
 
+//No help, variable specified on the command line.
+CMAKE_BUILD_TYPE:UNINITIALIZED=Release
+
 //Semicolon separated list of supported configuration types, only
 // supports Debug, Release, MinSizeRel, and RelWithDebInfo, anything
 // else will be ignored.
@@ -106,7 +109,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO:STRING=/debug /INCREMENTAL
 CMAKE_MT:FILEPATH=CMAKE_MT-NOTFOUND
 
 //No help, variable specified on the command line.
-CMAKE_PREFIX_PATH:UNINITIALIZED=C:\dell\libtorch;C:/Users/abdul/miniforge3/envs/ryzen-ai-1.4.1/Lib/site-packages/flexml/flexml_extras
+CMAKE_PREFIX_PATH:UNINITIALIZED=C:\dell\libtorch
 
 //Value Computed by CMake
 CMAKE_PROJECT_DESCRIPTION:STATIC=
@@ -226,9 +229,6 @@ Torch_DIR:PATH=C:/dell/libtorch/share/cmake/Torch
 
 //Path to a library.
 c10_LIBRARY:FILEPATH=C:/dell/libtorch/lib/c10.lib
-
-//The directory containing a CMake configuration file for glog.
-glog_DIR:PATH=C:/Users/abdul/miniforge3/envs/ryzen-ai-1.4.1/Lib/site-packages/flexml/flexml_extras/lib/cmake/glog
 
 //Path to a library.
 kineto_LIBRARY:FILEPATH=C:/dell/libtorch/lib/kineto.lib

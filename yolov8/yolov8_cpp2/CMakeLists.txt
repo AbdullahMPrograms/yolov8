@@ -5,6 +5,11 @@ project(
   LANGUAGES C CXX)
 set(CMAKE_CXX_STANDARD 20)
 
+# =================================================================
+set(GLOG_GFLAGS_ROOT "C:/dell/RyzenAI-SW/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8_cpp")
+message(STATUS "Using custom glog/gflags from: ${GLOG_GFLAGS_ROOT}")
+# =================================================================
+
 # --- MSVC Compiler Flags (from your file) ---  
 if(MSVC)
   string(APPEND CMAKE_CXX_FLAGS " /Zc:__cplusplus")
@@ -43,7 +48,7 @@ message(STATUS "Found ONNX Runtime Library: ${ORT_LIBRARY}")
 # --- Dependency Finding ---
 
 # 1. Find glog/gflags
-find_package(glog REQUIRED)
+#find_package(glog REQUIRED)
 
 # 2. Define OpenCV paths manually (NO find_package)
 # --- BEGIN OPENCV MANUAL DEFINITION ---
