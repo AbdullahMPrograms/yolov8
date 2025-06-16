@@ -32,7 +32,7 @@
 #include <type_traits>
 #include "vitis/ai/bounded_queue.hpp"
 #include "vitis/ai/env_config.hpp"
-#include "yolov8_onnx.hpp" // Include for Yolov8OnnxResult
+#include "yolov8_onnx.hpp"
 
 DEF_ENV_PARAM(DEBUG_DEMO, "0")
 
@@ -91,7 +91,7 @@ struct DetectionResult {
   // The dimensions of the frame that the yolo_result corresponds to.
   int original_width = 0;
   int original_height = 0;
-  // Stats
+  // FPS Stats
   float fps = 0.0f;
   float max_fps = 0.0f;
   float min_fps = 0.0f;
@@ -200,10 +200,10 @@ struct DecodeThread : public MyThread {
       return 0;
     }
 
-    // Push to display queue for smooth playback. Drop if the GUI is lagging.
+    // Push to display queue for playback.
     display_queue_->push(image, std::chrono::milliseconds(5));
 
-    // Push to detection queue. Drop if detection is lagging.
+    // Push to detection queue.
     queue_->push(FrameInfo{channel_id_, ++frame_id_, image.clone()},
                  std::chrono::milliseconds(5));
 
@@ -235,7 +235,6 @@ struct DecodeThread : public MyThread {
   bool is_camera_;
 };
 
-// The signature of the processing function is changed to accept DetectionResult
 using DpuProcessResult = std::function<cv::Mat(cv::Mat&, const DetectionResult&, bool)>;
 
 struct GuiThread : public MyThread {
@@ -350,7 +349,7 @@ struct DpuThread : public MyThread {
     DetectionResult result_info;
     result_info.frame_id = frame.frame_id;
     result_info.yolo_result = yolo_result;
-    // CRITICAL FIX: Store the dimensions of the frame that was processed.
+    // Store the dimensions of the frame that was processed.
     result_info.original_width = frame.mat.cols;
     result_info.original_height = frame.mat.rows;
 

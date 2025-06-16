@@ -11,7 +11,6 @@ import queue
 from yolov8_utils import *
 
 # --- Frame Handling ---
-
 class FrameReader(threading.Thread):
     """
     Reads frames from a camera stream and continuously updates a shared frame variable.
@@ -98,8 +97,8 @@ def main():
     """Main function with a multi-worker pool sharing a SINGLE inference session."""
     
     # --- Configuration ---
-    CAP_DISPLAY_FPS = False
-    TARGET_FPS = 60.0
+    CAP_DISPLAY_FPS = True
+    TARGET_FPS = 30.0
     NUM_DETECTION_WORKERS = 1
     
     print(f"Initializing a pool of {NUM_DETECTION_WORKERS} workers sharing one model...")
