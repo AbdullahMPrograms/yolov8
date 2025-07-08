@@ -1,192 +1,141 @@
-<table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1> Ryzen™ AI Tutorial </h1>
-    </td>
- </tr>
-</table>
+# YOLO with Ryzen™ AI Setup Guide
 
-#  Yolov8 cpp flow on Ryzen AI
+This document provides detailed instructions for setting up and running a YOLO (You Only Look Once) object detection application accelerated by AMD Ryzen™ AI. This guide covers the necessary prerequisites, building OpenCV from source, and running the final application.
 
-- Version:      Ryzen AI Software v1.2 
-- Support:      AMD Ryzen™ 7940HS, 7840HS, 7640HS, 7840U, 7640U, 8640U, 8640HS, 8645H, 8840U, 8840HS, 8845H, 8945H with Windows 11 OS.
+---
 
-## Table of Contents
+## 1. Prerequisites
 
-[1 Introduction](#1-introduction)
+Before proceeding, ensure your system meets the following requirements and that all necessary software is installed.
 
-[2 Prerequisites](#2-prerequisites)
+### Hardware & Drivers:
 
-[3 Installation](#3-installation)
+* **AMD Ryzen™ AI-powered Processor:** Your system must have a compatible AMD processor with an integrated Neural Processing Unit (NPU).
+* **Ryzen™ AI Software & NPU Drivers:** Download and install the Ryzen™ AI software package. The installation is a multi-step process involving NPU drivers and the core software. For complete, up-to-date instructions, always refer to the official documentation.
+    * **Official Documentation:** [AMD Ryzen™ AI Installation Guide](https://ryzenai.docs.amd.com/en/latest/inst.html)
 
-[4 Implementation](#4-implementation)
+    **Installation Summary:**
+    1.  **Install NPU Drivers:**
+        * Download the NPU driver installation package from the documentation link.
+        * Extract the ZIP file.
+        * Open a terminal in administrator mode and run the `.exe` installer.
+        * Verify the installation by checking for "NPU 0" in the Performance tab of the Task Manager.
+    2.  **Install Ryzen™ AI Software:**
+        * Download the Ryzen™ AI Software installer (`.msi`) from the documentation link.
+        * Launch the installer and follow the wizard. It will prompt you to accept the license agreement, choose a destination folder, and name the Conda environment that will be created.
+    3.  **Test the Installation:**
+        * Open a Miniforge/Conda prompt.
+        * Activate the Conda environment created by the installer (e.g., `conda activate ryzen-ai-1.5.0`).
+        * Run the `quicktest.py` script located in the installation folder to verify that the NPU is working correctly.
 
-[License](#license)
+### Development Tools:
 
+* **Visual Studio 2022:** The "Desktop development with C++" workload is required.
+    * **Download Link:** [Visual Studio Downloads](https://visualstudio.microsoft.com/downloads/?cid=learn-onpage-download-install-visual-studio-page-cta)
+* **Miniforge3:** A minimal installer for Conda, used for managing Python environments. The Ryzen™ AI installer will use this.
+    * **Download Link:** [Miniforge3 Releases](https://github.com/conda-forge/miniforge/releases)
+* **CMake:** A cross-platform tool for building, testing, and packaging software.
+    * **Download Link:** [CMake Downloads](https://cmake.org/download/)
+* **OpenCV Source Code (v4.11):** Download the source code for OpenCV. We will build it from source to ensure compatibility.
+    * **Download Link:** [OpenCV Releases](https://opencv.org/releases/)
 
-## 1 Introduction
+---
 
-[Ryzen™ AI](https://ryzenai.docs.amd.com/en/latest/index.html) is a dedicated AI accelerator integrated on-chip with the CPU cores. The AMD Ryzen™ AI SDK enables developers to take machine learning models trained in PyTorch or TensorFlow and run them on laptops powered by Ryzen AI which can intelligently optimizes tasks and workloads, freeing-up CPU and GPU resources, and ensuring optimal performance at lower power.
+## 2. Building OpenCV 4.11 from Source
 
-In this Deep Learning(DL) tutorial, you will see how to deploy the Yolov8 detection model with ONNX framework on Ryzen AI laptop.
+To ensure proper integration with the system's libraries and hardware, it is recommended to build OpenCV directly from its source code.
 
-## 2 Prerequisites
+### Step-by-Step Build Process
 
-- AMD Ryzen AI Laptop with Windows 11 OS
-- Visual Studio 2022 (with Desktop dev c++ & MSVC v143-vs2022 x64/x86 Spectre-mitigated libs)
-- Anaconda or Miniconda
-- Git
-- openCV (version = 4.6.0)
-- cmake (version >= 3.26)
-- python (version = 3.10)
-- NPU driver & NPU xclbin = 1.2 release 
-- voe package = 1.2 release
+1.  **Navigate to OpenCV Directory:** Open a command prompt or terminal and change to the directory where you extracted the OpenCV source code.
+    ```bash
+    cd path\to\opencv
+    ```
+2.  **Create a Build Directory:** It is best practice to perform an out-of-source build by creating a separate directory for the build files.
+    ```bash
+    mkdir mybuild
+    cd mybuild
+    ```
+3.  **Configure with CMake:** Run the following `cmake` command to configure the build. This command sets up the build environment for Visual Studio 2022 (64-bit) and specifies various build options.
+    ```powershell
+    cmake -G "Visual Studio 17 2022" -A x64 -T host=x64 `
+      -DCMAKE_INSTALL_PREFIX="C:\Program Files\opencv" `
+      -DCMAKE_PREFIX_PATH=".\opencv" `
+      -DCMAKE_BUILD_TYPE=Release `
+      -DCMAKE_EXPORT_COMPILE_COMMANDS=ON `
+      -DBUILD_SHARED_LIBS=OFF `
+      -DCMAKE_POSITION_INDEPENDENT_CODE=ON `
+      -DBUILD_opencv_python2=OFF `
+      -DBUILD_opencv_python3=OFF `
+      -DBUILD_WITH_STATIC_CRT=OFF `
+      -B build -S ../
+    ```
+4.  **Build the Project:** Compile the source code using the build configuration generated by CMake.
+    ```bash
+    cmake --build build --config Release
+    ```
+5.  **Install the Libraries:** Install the compiled OpenCV libraries to the directory specified by `CMAKE_INSTALL_PREFIX`. This may require administrator privileges.
+    ```bash
+    cmake --install build --config Release
+    ```
 
-## 3 Installation
+---
 
-Please refer to the [installation instructions](https://ryzenai.docs.amd.com/en/latest/inst.html#) to properlly install the Ryzen AI software.
+## 3. Running the YOLO Application
 
-### Denpendencies of Yolov8
+Once all prerequisites are installed and OpenCV is built, you can run the YOLO implementation.
 
-There are some more libraries you need to install for the Yolov8 inference.
+1.  **Navigate to the Implementation Directory:** Change your directory to the following path within the Ryzen AI Software folder structure.
+    ```bash
+    cd path\to\RyzenAI-SW\tutorial\yolov8\yolov8_cpp\implement
+    ```
+2.  **Run the Build Script:** Execute the `build.bat` script. This script compiles the YOLO application code, linking it against the newly built OpenCV libraries.
+    ```bash
+    .\build.bat
+    ```
+3.  **Run the Camera Demo:** After the build is successful, run the `camera.bat` script to start the object detection application using a camera feed.
+    ```bash
+    .\camera.bat
+    ```
+The application should now launch, capturing video from your camera and overlaying bounding boxes on detected objects in real-time.
 
-#### Cmake
+---
 
-```Anaconda Prompt
-# pip install cmake
-```
+## 4. Demo Options
 
-Output:
-
-```
-Collecting cmake
-  Obtaining dependency information for cmake from https://files.pythonhosted.org/packages/e0/67/3cc8ccb0cebac463033e1f8588328de32f8f85cfd9d3150c05b57b827893/cmake-3.27.4.1-py2.py3-none-win_amd64.whl.metadata
-  Downloading cmake-3.27.4.1-py2.py3-none-win_amd64.whl.metadata (6.8 kB)
-Downloading cmake-3.27.4.1-py2.py3-none-win_amd64.whl (34.6 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 34.6/34.6 MB 147.5 kB/s eta 0:00:00
-Installing collected packages: cmake
-Successfully installed cmake-3.27.4.1
-```
-
-#### OpenCV
-
-It is recommended to build OpenCV form source code and use static build. [Git](https://git-scm.com/download/win) is required to clone the repository.
-
-Start a `Anaconda Prompt`. In your workspace, clone the repository
-
-```Anaconda Prompt
-# git clone https://github.com/opencv/opencv.git -b 4.6.0
-```
-
-Then compile the OpenCV source code with cmake.
-
-```Anaconda Prompt
-# cd opencv
-# mkdir mybuild
-# cd mybuild
-# cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DBUILD_SHARED_LIBS=OFF -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DCMAKE_CONFIGURATION_TYPES=Release -A x64 -T host=x64 -G "Visual Studio 17 2022" '-DCMAKE_INSTALL_PREFIX=C:\Program Files\opencv' '-DCMAKE_PREFIX_PATH=.\opencv' -DCMAKE_BUILD_TYPE=Release -DBUILD_opencv_python2=OFF -DBUILD_opencv_python3=OFF -DBUILD_WITH_STATIC_CRT=OFF -B build -S ../
-# cmake --build build --config Release
-# cmake --install build --config Release
-# cd ../..
-```
-
-All the dependencies on the Ryzen AI laptop are installed completely. User could run a Yolov8 deplomyment progress in cpp with int8 Yolov8 pre-quantized model in the following ***Section 4***,
-
-## 4 Implementation
-
-### Compilation
-
-In the `Anaconda Prompt`, clone the repository
-
-```Anaconda Prompt
-# git clone https://github.com/amd/RyzenAI-SW.git
-```
-
-Then compile the Yolov8 source code.
-
-```Anaconda Prompt
-# cd RyzenAI-SW/tutorial/yolov8_cpp/implement
-# build.bat
-```
-
-The output will be generated as below.
-
-```
-......
-    -- Installing: C:/Users/fanz/Documents/Workspace/RyzenAI-SW/tutorial/yolov8_cpp/bin/camera_yolov8.exe
-    -- Installing: C:/Users/fanz/Documents/Workspace/RyzenAI-SW/tutorial/yolov8_cpp/bin/camera_yolov8_nx1x4.exe
-    -- Installing: C:/Users/fanz/Documents/Workspace/RyzenAI-SW/tutorial/yolov8_cpp/bin/test_jpeg_yolov8.exe
-```
-
-### Run with Image
-
-To validate your setup, the following command will do the inference with single image.
-
-Please modify the ***conda env path*** in the batch file before execution.
-
-Copy the ***vaip_config.json*** file to <RyzenAI-SW-Home>/tutorial/yolov8__cpp/bin from the Ryzen AI installation folder.
-
-```
-# run_jpeg.bat DetectionModel_int.onnx sample_yolov8.jpg
-```
-
-The output will be generated as below.
-
-```
-result: 0       person  490.38498       85.79535        640.00488       475.18262       0.932453     
-result: 0       person  65.96048        97.76373        320.66068       473.83783       0.924142   
-result: 0       person  182.15485       306.91266       445.14795       475.26132       0.893309   
-result: 27      tie     584.48022       221.15732       632.27008       244.21243       0.851953   
-result: 27      tie     175.62622       224.15210       235.84900       248.83557       0.651355    
-```
-
-### Run with Live Camera
-
-To run with live camera, user needs to change the display and camera settings manually as below.
-
-Please modify the ***conda env name*** in the batch file before execution.
-
-- Go to `Display settings`, change Scale to ***100%*** in the `Scale & layout` section.
-- Go to `Bluetooth & devices` -> `Cameras` -> `USB2.0 FHD UVC WebCam`, turn off the Background effects in the `Windows Studio Effects` section.
-
-```
-camera.bat
-```
-
-<p align="left">
-<img src="images/image.png">
-</p>
-
-Possible options to run the yolov8 demo.
+You can view the help menu for the camera demo to see a list of possible runtime options.
 
 ```bash
-# camera.bat -h
+# .\camera.bat -h
 
 Options:
-      -c [parallel runs]: Specifies the (max) number of runs to invoke simultaneously. Default:1.
-      -s [input_stream] set input stream, E.g. set 0 to use default camera.
-      -x [intra_op_num_threads]: Sets the number of threads used to parallelize the execution within nodes, A value of 0 means ORT will pick a default. Must >=0.
-      -y [inter_op_num_threads]: Sets the number of threads used to parallelize the execution of the graph (across nodes), A value of 0 means ORT will pick a default. Must >=0.    
-      -D [Disable thread spinning]: disable spinning entirely for thread owned by onnxruntime intra-op thread pool.
-      -Z [Force thread to stop spinning between runs]: disallow thread from spinning during runs to reduce cpu usage.
-      -T [Set intra op thread affinities]: Specify intra op thread affinity string.
-         [Example]: -T 1,2;3,4;5,6 or -T 1-2;3-4;5-6
-         Use semicolon to separate configuration between threads.
-         E.g. 1,2;3,4;5,6 specifies affinities for three threads, the first thread will be attached to the first and second logical processor.
-      -R [Set camera resolution]: Specify the camera resolution by string.
-         [Example]: -R 1280x720
-         Default:1920x1080.
-      -r [Set Display resolution]: Specify the display resolution by string.
-         [Example]: -r 1280x720
-         Default:1920x1080.
-      -L Print detection log when turning on.
-      -h: help
+      -c [parallel runs]: Specifies the (max) number of runs to invoke simultaneously. Default:1.
+      -s [input_stream] set input stream, E.g. set 0 to use default camera.
+      -x [intra_op_num_threads]: Sets the number of threads used to parallelize the execution within nodes, A value of 0 means ORT will pick a default. Must >=0.
+      -y [inter_op_num_threads]: Sets the number of threads used to parallelize the execution of the graph (across nodes), A value of 0 means ORT will pick a default. Must >=0.    
+      -D [Disable thread spinning]: disable spinning entirely for thread owned by onnxruntime intra-op thread pool.
+      -Z [Force thread to stop spinning between runs]: disallow thread from spinning during runs to reduce cpu usage.
+      -T [Set intra op thread affinities]: Specify intra op thread affinity string.
+         [Example]: -T 1,2;3,4;5,6 or -T 1-2;3-4;5-6
+         Use semicolon to separate configuration between threads.
+         E.g. 1,2;3,4;5,6 specifies affinities for three threads, the first thread will be attached to the first and second logical processor.
+      -R [Set camera resolution]: Specify the camera resolution by string.
+         [Example]: -R 1280x720
+         Default:1920x1080.
+      -r [Set Display resolution]: Specify the display resolution by string.
+         [Example]: -r 1280x720
+         Default:1920x1080.
+      -L Print detection log when turning on.
+      -h: help
 ```
+
+---
 
 ## License
 
 The MIT License (MIT)
 
-Copyright (c) 2022 Advanced Micro Devices, Inc.
+Copyright (c) 2025 Advanced Micro Devices, Inc.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
