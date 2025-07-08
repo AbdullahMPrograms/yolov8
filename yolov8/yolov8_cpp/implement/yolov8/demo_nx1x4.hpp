@@ -18,6 +18,7 @@
 #include <opencv2/imgproc/types_c.h>
 #include <signal.h>
 
+#include <algorithm>
 #include <cassert>
 #include <iostream>
 #include <map>
@@ -30,6 +31,7 @@
 #include <stack>
 #include <thread>
 #include <type_traits>
+#include <limits>
 #include "vitis/ai/bounded_queue.hpp"
 #include "vitis/ai/env_config.hpp"
 #include "yolov8_onnx.hpp"
@@ -184,26 +186,26 @@ struct DecodeThread : public MyThread {
         queue_{queue},
         display_queue_{display_queue} {
     open_stream();
-    auto& cap = *video_stream_.get();
-    if (is_camera_) {
-      cap.set(cv::CAP_PROP_FRAME_WIDTH, cap_width);
-      cap.set(cv::CAP_PROP_FRAME_HEIGHT, cap_height);
-    }
   }
 
   virtual int run() override {
     auto& cap = *video_stream_.get();
     cv::Mat image;
+    
+    if (is_camera_) {
+      cap.grab();
+    }
+    
     cap >> image;
     if (image.empty()) {
-      open_stream();
+      if (is_camera_) {
+        open_stream();
+      }
       return 0;
     }
 
-    // Push to display queue for playback.
     display_queue_->push(image, std::chrono::milliseconds(5));
 
-    // Push to detection queue.
     queue_->push(FrameInfo{channel_id_, ++frame_id_, image.clone()},
                  std::chrono::milliseconds(5));
 
@@ -217,12 +219,42 @@ struct DecodeThread : public MyThread {
   void open_stream() {
     is_camera_ = video_file_.size() == 1 && video_file_[0] >= '0' &&
                  video_file_[0] <= '9';
-    video_stream_ = std::unique_ptr<cv::VideoCapture>(
-        is_camera_ ? new cv::VideoCapture(std::stoi(video_file_))
-                   : new cv::VideoCapture(video_file_));
+    
+    if (is_camera_) {
+      int camera_id = std::stoi(video_file_);
+      std::vector<int> backends = {cv::CAP_DSHOW, cv::CAP_MSMF, cv::CAP_ANY};
+      
+      for (int backend : backends) {
+        video_stream_ = std::unique_ptr<cv::VideoCapture>(new cv::VideoCapture(camera_id, backend));
+        if (video_stream_->isOpened()) {
+          LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO)) << "Camera opened with backend: " << backend;
+          break;
+        }
+      }
+    } else {
+      video_stream_ = std::unique_ptr<cv::VideoCapture>(new cv::VideoCapture(video_file_));
+    }
+    
     if (!video_stream_->isOpened()) {
       LOG(FATAL) << "Cannot open video stream: " << video_file_;
       stop();
+      return;
+    }
+    
+    if (is_camera_) {
+      auto& cap = *video_stream_.get();
+      
+      cap.set(cv::CAP_PROP_FRAME_WIDTH, cap_width);
+      cap.set(cv::CAP_PROP_FRAME_HEIGHT, cap_height);
+      
+      cap.set(cv::CAP_PROP_FPS, 30);
+      cap.set(cv::CAP_PROP_BUFFERSIZE, 1);
+      
+      cap.set(cv::CAP_PROP_FOURCC, cv::VideoWriter::fourcc('M', 'J', 'P', 'G'));
+      
+      int actual_width = cap.get(cv::CAP_PROP_FRAME_WIDTH);
+      int actual_height = cap.get(cv::CAP_PROP_FRAME_HEIGHT);
+      LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO)) << "Camera resolution set to: " << actual_width << "x" << actual_height;
     }
   }
 
@@ -242,7 +274,8 @@ struct GuiThread : public MyThread {
       : MyThread{},
         display_queue_{display_queue},
         result_queue_{result_queue},
-        processor_{processor} {}
+        processor_{processor},
+        window_initialized_{false} {}
 
   virtual int run() override {
     cv::Mat frame;
@@ -252,9 +285,18 @@ struct GuiThread : public MyThread {
         return 0;
     }
     
-    // Ensure the display frame has a consistent size.
+    // Initialize window with proper settings on first run
+    if (!window_initialized_) {
+      cv::namedWindow("YOLOv8 Decoupled", cv::WINDOW_AUTOSIZE | cv::WINDOW_KEEPRATIO);
+      cv::resizeWindow("YOLOv8 Decoupled", display_width, display_height);
+      window_initialized_ = true;
+    }
+    
+    // Resize frame while preserving aspect ratio to avoid stretching
     if (frame.cols != display_width || frame.rows != display_height) {
-        cv::resize(frame, frame, cv::Size(display_width, display_height));
+        cv::Mat resized_frame;
+        resize_with_aspect_ratio(frame, resized_frame, display_width, display_height);
+        frame = resized_frame;
     }
     
     auto now = std::chrono::steady_clock::now();
@@ -316,6 +358,29 @@ struct GuiThread : public MyThread {
                 cv::Scalar(178, 0, 79), 2, 4);
   }
 
+  void resize_with_aspect_ratio(const cv::Mat& src, cv::Mat& dst, int target_width, int target_height) {
+    // Calculate scaling factors for width and height
+    double scale_x = static_cast<double>(target_width) / src.cols;
+    double scale_y = static_cast<double>(target_height) / src.rows;
+    
+    double scale = std::min(scale_x, scale_y);
+    
+    int new_width = static_cast<int>(src.cols * scale);
+    int new_height = static_cast<int>(src.rows * scale);
+    
+    cv::Mat resized;
+    cv::resize(src, resized, cv::Size(new_width, new_height), 0, 0, cv::INTER_LANCZOS4);
+    
+    dst = cv::Mat::zeros(target_height, target_width, src.type());
+    
+    // Calculate position to center the resized image
+    int x_offset = (target_width - new_width) / 2;
+    int y_offset = (target_height - new_height) / 2;
+    
+    cv::Rect roi(x_offset, y_offset, new_width, new_height);
+    resized.copyTo(dst(roi));
+  }
+
   virtual std::string name() override { return std::string{"GUIThread"}; }
 
   display_queue_t* display_queue_;
@@ -324,6 +389,7 @@ struct GuiThread : public MyThread {
   DetectionResult latest_result_;
   std::deque<std::chrono::time_point<std::chrono::steady_clock>> display_points_;
   float display_fps_ = 0.0f;
+  bool window_initialized_;
 };
 
 template<typename dpu_model_type_t>
