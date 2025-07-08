@@ -97,7 +97,7 @@ def main():
     """Main function with a multi-worker pool sharing a SINGLE inference session."""
     
     # --- Configuration ---
-    CAP_DISPLAY_FPS = True
+    CAP_DISPLAY_FPS = False
     TARGET_FPS = 30.0
     NUM_DETECTION_WORKERS = 1
     

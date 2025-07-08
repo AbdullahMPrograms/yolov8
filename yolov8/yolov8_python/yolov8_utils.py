@@ -2,6 +2,7 @@ import threading
 import os
 import contextlib
 import torch
+torch.set_num_threads(1)
 import torch.nn as nn
 from PIL import Image, ImageDraw, ImageFont, ExifTags
 from PIL import __version__ as pil_version
