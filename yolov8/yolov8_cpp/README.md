@@ -89,11 +89,23 @@ Once all prerequisites are installed and OpenCV is built, you can run the YOLO i
     ```bash
     cd path\to\RyzenAI-SW\tutorial\yolov8\yolov8_cpp\implement
     ```
-2.  **Run the Build Script:** Execute the `build.bat` script. This script compiles the YOLO application code, linking it against the newly built OpenCV libraries.
+### Configuration
+Before building the application, you must edit two files to point to your specific Ryzen AI installation paths.
+
+2.  **Edit `build.bat`:** Open the `build.bat` file in a text editor. Locate the line that sets the `RYZEN_AI_DIR` variable and modify it to point to your Ryzen AI installation directory.
+
+3.  **Edit `CMakeLists.txt`:** Open the `CMakeLists.txt` file in a text editor. Locate the `SET(glog_DIR "")` line and update it to point to the `glog` library directory within your Ryzen AI Conda environment. For example:
+    ```cmake
+    SET(glog_DIR "C:/Users/user/miniforge3/envs/ryzen-ai-1.4.1/Lib/site-packages/flexml/flexml_extras/lib/cmake/glog")
+    ```
+
+### Build and Run
+
+4.  **Run the Build Script:** Execute the `build.bat` script. This script compiles the YOLO application code, linking it against the newly built OpenCV libraries.
     ```bash
     .\build.bat
     ```
-3.  **Run the Camera Demo:** After the build is successful, run the `camera.bat` script to start the object detection application using a camera feed.
+5.  **Run the Camera Demo:** After the build is successful, run the `camera.bat` script to start the object detection application using a camera feed.
     ```bash
     .\camera.bat
     ```
