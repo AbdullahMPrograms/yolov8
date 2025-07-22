@@ -28,15 +28,14 @@ set (RYZEN_AI_INSTALLATION_PATH $ENV{RYZEN_AI_INSTALLATION_PATH})
 
 if(NOT ONNXRUNTIME_ROOTDIR)
   if(WIN32)
-    set(ONNXRUNTIME_ROOTDIR "${RYZEN_AI_INSTALLATION_PATH}/voe-4.0-win_amd64/voe/lib")
+    set(ONNXRUNTIME_ROOTDIR "${RYZEN_AI_INSTALLATION_PATH}/voe-4.0-win_amd64/voe")
 else()
     set(ONNXRUNTIME_ROOTDIR "/usr/local")
   endif()
 endif()
 
 include_directories("${ONNXRUNTIME_ROOTDIR}/include"                           # Pre-built package
-                    "${ONNXRUNTIME_ROOTDIR}/include/onnxruntime"               # Linux local install to /usr/local
-                    "${ONNXRUNTIME_ROOTDIR}/include/onnxruntime/core/session"  # Windows local install
+                    "${ONNXRUNTIME_ROOTDIR}/include/onnxruntime"               # RyzenAI 1.5.0 path
                     "${CMAKE_PREFIX_PATH}/include")
 
 link_directories("${ONNXRUNTIME_ROOTDIR}/lib"
@@ -45,7 +44,7 @@ link_directories("${ONNXRUNTIME_ROOTDIR}/lib"
 find_library(ORT_LIBRARY onnxruntime HINTS "${ONNXRUNTIME_ROOTDIR}/lib"
                                            REQUIRED)
 
-SET(glog_DIR "C:/Users/abdul/miniforge3/envs/ryzen-ai-1.4.1/Lib/site-packages/flexml/flexml_extras/lib/cmake/glog")
+SET(glog_DIR "C:/Users/atiqa/miniforge3/envs/ryzen-ai-1.5.0/Lib/site-packages/flexml/flexml_extras/lib/cmake/glog")
 SET(GFLAGS_INCLUDE_DIR "C:/dell/vcpkg/packages/gflags_x64-windows")
 SET(gflags_DIR "C:/dell/vcpkg/packages/gflags_x64-windows/share/gflags")
 SET(GFLAGS_USE_TARGET_NAMESPACE ON)

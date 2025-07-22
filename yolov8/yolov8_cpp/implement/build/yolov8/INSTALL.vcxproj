@@ -10,7 +10,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{C35B42D1-BB76-3016-9BC0-1ADC8EBCC6A7}</ProjectGuid>
+    <ProjectGuid>{B69D04B7-C4DB-3E8C-8733-901A96050633}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
     <Platform>x64</Platform>
@@ -50,7 +50,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CustomBuild Include="C:\dell\RyzenAI-SW\RyzenAI-SW\tutorial\yolov8\yolov8\yolov8_cpp\implement\build\CMakeFiles\e4e44cf4f0f813e5c4fc78eed00bcbd6\INSTALL_force.rule">
+    <CustomBuild Include="C:\RyzenAI-SW\tutorial\yolov8\yolov8\yolov8\yolov8_cpp\implement\build\CMakeFiles\fa2cf8d8f2f2ded09a934945b3048426\INSTALL_force.rule">
       <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'"> </Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
@@ -63,21 +63,21 @@ exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\dell\RyzenAI-SW\RyzenAI-SW\tutorial\yolov8\yolov8\yolov8_cpp\implement\build\yolov8\CMakeFiles\INSTALL_force</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\RyzenAI-SW\tutorial\yolov8\yolov8\yolov8\yolov8_cpp\implement\build\yolov8\CMakeFiles\INSTALL_force</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
       <VerifyInputsAndOutputsExist Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</VerifyInputsAndOutputsExist>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="C:\dell\RyzenAI-SW\RyzenAI-SW\tutorial\yolov8\yolov8\yolov8_cpp\implement\build\ZERO_CHECK.vcxproj">
-      <Project>{5E752732-9E76-3D99-B451-E101968081DE}</Project>
+    <ProjectReference Include="C:\RyzenAI-SW\tutorial\yolov8\yolov8\yolov8\yolov8_cpp\implement\build\ZERO_CHECK.vcxproj">
+      <Project>{4D9EEB17-D20E-3FB6-9B1C-737CC80E479E}</Project>
       <Name>ZERO_CHECK</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\dell\RyzenAI-SW\RyzenAI-SW\tutorial\yolov8\yolov8\yolov8_cpp\implement\build\ALL_BUILD.vcxproj">
-      <Project>{C666A751-87A4-3BCD-87E9-20E46AD0243F}</Project>
+    <ProjectReference Include="C:\RyzenAI-SW\tutorial\yolov8\yolov8\yolov8\yolov8_cpp\implement\build\ALL_BUILD.vcxproj">
+      <Project>{FF16D990-33DC-352D-AD38-DC5073C7792F}</Project>
       <Name>ALL_BUILD</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>

@@ -5,10 +5,10 @@ set CMAKE_PREFIX_PATH=%cd%\..
 :: Please reset the env below to your Ryzen AI installation path
 :: --------------------------------------------------------------
 :: set RYZEN_AI_INSTALLATION_PATH=C:\dell\RyzenAI\1.4.0
-:: Set to 1.4.1
-set RYZEN_AI_INSTALLATION_PATH=C:\Program Files\RyzenAI\1.4.1
+:: Set to 1.5.0
+set RYZEN_AI_INSTALLATION_PATH=C:\Program Files\RyzenAI\1.5.0
 
-set ONNXRUNTIME_ROOTDIR=%RYZEN_AI_INSTALLATION_PATH%\onnxruntime
+set ONNXRUNTIME_ROOTDIR=%RYZEN_AI_INSTALLATION_PATH%\voe-4.0-win_amd64\voe
 
 :: --------------------------------------------------------------
 :: Please reset the env below to your opencv installation path

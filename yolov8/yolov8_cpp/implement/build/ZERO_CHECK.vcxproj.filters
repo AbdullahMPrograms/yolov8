@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <CustomBuild Include="C:\dell\RyzenAI-SW\RyzenAI-SW\tutorial\yolov8\yolov8\yolov8_cpp\implement\build\CMakeFiles\d72710be80271508edb4b21351f26fca\generate.stamp.rule">
+    <CustomBuild Include="C:\RyzenAI-SW\tutorial\yolov8\yolov8\yolov8\yolov8_cpp\implement\build\CMakeFiles\d21a419f2a384a5d588544e8fde1eb84\generate.stamp.rule">
       <Filter>CMake Rules</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="CMake Rules">
-      <UniqueIdentifier>{C43EA164-8057-380C-8EEC-2FE6B8516BDE}</UniqueIdentifier>
+      <UniqueIdentifier>{3CC54903-83FC-3C63-9506-A3D336BF8F34}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
