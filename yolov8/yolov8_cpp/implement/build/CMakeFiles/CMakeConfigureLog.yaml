@@ -39,21 +39,27 @@ events:
       ENV{CMAKE_PREFIX_PATH}:
         - "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\.."
       ENV{PATH}:
+        - "C:\\Users\\atiqa\\miniforge3"
+        - "C:\\Users\\atiqa\\miniforge3\\Library\\mingw-w64\\bin"
+        - "C:\\Users\\atiqa\\miniforge3\\Library\\usr\\bin"
+        - "C:\\Users\\atiqa\\miniforge3\\Library\\bin"
+        - "C:\\Users\\atiqa\\miniforge3\\Scripts"
+        - "C:\\Users\\atiqa\\miniforge3\\bin"
         - "C:\\Users\\atiqa\\miniforge3\\condabin"
         - "C:\\WINDOWS\\system32"
         - "C:\\WINDOWS"
         - "C:\\WINDOWS\\System32\\Wbem"
-        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
-        - "C:\\WINDOWS\\System32\\OpenSSH\\"
-        - "C:\\Program Files (x86)\\Windows Kits\\10\\Windows Performance Toolkit\\"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0"
+        - "C:\\WINDOWS\\System32\\OpenSSH"
+        - "C:\\Program Files (x86)\\Windows Kits\\10\\Windows Performance Toolkit"
         - "C:\\Users\\atiqa\\miniforge3"
         - "C:\\Users\\atiqa\\miniforge3\\Scripts"
         - "C:\\Program Files\\CMake\\bin"
         - "C:\\Program Files\\HP\\HP One Agent"
-        - "C:\\Program Files\\RyzenAI\\1.4.1\\utils\\"
+        - "C:\\Program Files\\RyzenAI\\1.4.1\\utils"
         - "\\VC\\Auxiliary\\Build"
-        - "C:\\Program Files\\RyzenAI\\1.5.0\\utils\\"
-        - "C:\\Program Files\\Tailscale\\"
+        - "C:\\Program Files\\RyzenAI\\1.5.0\\utils"
+        - "C:\\Program Files\\Tailscale"
         - "C:\\Program Files\\Git\\cmd"
         - "C:\\Users\\atiqa\\miniforge3"
         - "C:\\Users\\atiqa\\miniforge3\\Library\\mingw-w64\\bin"
@@ -62,6 +68,8 @@ events:
         - "C:\\Users\\atiqa\\miniforge3\\Scripts"
         - "C:\\Users\\atiqa\\AppData\\Local\\Microsoft\\WindowsApps"
         - "C:\\Users\\atiqa\\AppData\\Local\\Programs\\Microsoft VS Code Insiders\\bin"
+        - "c:\\Users\\atiqa\\.vscode-insiders\\extensions\\ms-python.debugpy-2025.10.0-win32-x64\\bundled\\scripts\\noConfigScripts"
+        - "c:\\Users\\atiqa\\AppData\\Roaming\\Code - Insiders\\User\\globalStorage\\github.copilot-chat\\debugCommand"
       CMAKE_INSTALL_PREFIX: "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\.."
   -
     kind: "message-v1"
@@ -79,7 +87,7 @@ events:
       The output was:
       0
       MSBuild version 17.14.14+a129329f1 for .NET Framework
-      Build started 7/22/2025 4:24:30 PM.
+      Build started 7/23/2025 10:29:38 AM.
       
       Project "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\4.1.0-rc2\\CompilerIdC\\CompilerIdC.vcxproj" on node 1 (default targets).
       PrepareForBuild:
@@ -108,7 +116,7 @@ events:
           0 Warning(s)
           0 Error(s)
       
-      Time Elapsed 00:00:00.69
+      Time Elapsed 00:00:00.51
       
       
       Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.exe"
@@ -141,6 +149,12 @@ events:
       - "link"
     candidate_directories:
       - "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/"
+      - "C:/Users/atiqa/miniforge3/"
+      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/"
+      - "C:/Users/atiqa/miniforge3/Library/usr/bin/"
+      - "C:/Users/atiqa/miniforge3/Library/bin/"
+      - "C:/Users/atiqa/miniforge3/Scripts/"
+      - "C:/Users/atiqa/miniforge3/bin/"
       - "C:/Users/atiqa/miniforge3/condabin/"
       - "C:/Windows/System32/"
       - "C:/Windows/"
@@ -148,8 +162,6 @@ events:
       - "C:/Windows/System32/WindowsPowerShell/v1.0/"
       - "C:/Windows/System32/OpenSSH/"
       - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/"
-      - "C:/Users/atiqa/miniforge3/"
-      - "C:/Users/atiqa/miniforge3/Scripts/"
       - "C:/Program Files/CMake/bin/"
       - "C:/Program Files/HP/HP One Agent/"
       - "C:/Program Files/RyzenAI/1.4.1/utils/"
@@ -157,11 +169,10 @@ events:
       - "C:/Program Files/RyzenAI/1.5.0/utils/"
       - "C:/Program Files/Tailscale/"
       - "C:/Program Files/Git/cmd/"
-      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/"
-      - "C:/Users/atiqa/miniforge3/Library/usr/bin/"
-      - "C:/Users/atiqa/miniforge3/Library/bin/"
       - "C:/Users/atiqa/AppData/Local/Microsoft/WindowsApps/"
       - "C:/Users/atiqa/AppData/Local/Programs/Microsoft VS Code Insiders/bin/"
+      - "C:/Users/atiqa/.vscode-insiders/extensions/ms-python.debugpy-2025.10.0-win32-x64/bundled/scripts/noConfigScripts/"
+      - "C:/Users/atiqa/AppData/Roaming/Code - Insiders/User/globalStorage/github.copilot-chat/debugCommand/"
     searched_directories:
       - "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/link.com"
     found: "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/link.exe"
@@ -171,21 +182,27 @@ events:
       ENV{CMAKE_PREFIX_PATH}:
         - "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\.."
       ENV{PATH}:
+        - "C:\\Users\\atiqa\\miniforge3"
+        - "C:\\Users\\atiqa\\miniforge3\\Library\\mingw-w64\\bin"
+        - "C:\\Users\\atiqa\\miniforge3\\Library\\usr\\bin"
+        - "C:\\Users\\atiqa\\miniforge3\\Library\\bin"
+        - "C:\\Users\\atiqa\\miniforge3\\Scripts"
+        - "C:\\Users\\atiqa\\miniforge3\\bin"
         - "C:\\Users\\atiqa\\miniforge3\\condabin"
         - "C:\\WINDOWS\\system32"
         - "C:\\WINDOWS"
         - "C:\\WINDOWS\\System32\\Wbem"
-        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
-        - "C:\\WINDOWS\\System32\\OpenSSH\\"
-        - "C:\\Program Files (x86)\\Windows Kits\\10\\Windows Performance Toolkit\\"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0"
+        - "C:\\WINDOWS\\System32\\OpenSSH"
+        - "C:\\Program Files (x86)\\Windows Kits\\10\\Windows Performance Toolkit"
         - "C:\\Users\\atiqa\\miniforge3"
         - "C:\\Users\\atiqa\\miniforge3\\Scripts"
         - "C:\\Program Files\\CMake\\bin"
         - "C:\\Program Files\\HP\\HP One Agent"
-        - "C:\\Program Files\\RyzenAI\\1.4.1\\utils\\"
+        - "C:\\Program Files\\RyzenAI\\1.4.1\\utils"
         - "\\VC\\Auxiliary\\Build"
-        - "C:\\Program Files\\RyzenAI\\1.5.0\\utils\\"
-        - "C:\\Program Files\\Tailscale\\"
+        - "C:\\Program Files\\RyzenAI\\1.5.0\\utils"
+        - "C:\\Program Files\\Tailscale"
         - "C:\\Program Files\\Git\\cmd"
         - "C:\\Users\\atiqa\\miniforge3"
         - "C:\\Users\\atiqa\\miniforge3\\Library\\mingw-w64\\bin"
@@ -194,6 +211,8 @@ events:
         - "C:\\Users\\atiqa\\miniforge3\\Scripts"
         - "C:\\Users\\atiqa\\AppData\\Local\\Microsoft\\WindowsApps"
         - "C:\\Users\\atiqa\\AppData\\Local\\Programs\\Microsoft VS Code Insiders\\bin"
+        - "c:\\Users\\atiqa\\.vscode-insiders\\extensions\\ms-python.debugpy-2025.10.0-win32-x64\\bundled\\scripts\\noConfigScripts"
+        - "c:\\Users\\atiqa\\AppData\\Roaming\\Code - Insiders\\User\\globalStorage\\github.copilot-chat\\debugCommand"
       CMAKE_INSTALL_PREFIX: "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\.."
   -
     kind: "find-v1"
@@ -218,6 +237,12 @@ events:
       - "lld-link"
     candidate_directories:
       - "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/"
+      - "C:/Users/atiqa/miniforge3/"
+      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/"
+      - "C:/Users/atiqa/miniforge3/Library/usr/bin/"
+      - "C:/Users/atiqa/miniforge3/Library/bin/"
+      - "C:/Users/atiqa/miniforge3/Scripts/"
+      - "C:/Users/atiqa/miniforge3/bin/"
       - "C:/Users/atiqa/miniforge3/condabin/"
       - "C:/Windows/System32/"
       - "C:/Windows/"
@@ -225,8 +250,6 @@ events:
       - "C:/Windows/System32/WindowsPowerShell/v1.0/"
       - "C:/Windows/System32/OpenSSH/"
       - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/"
-      - "C:/Users/atiqa/miniforge3/"
-      - "C:/Users/atiqa/miniforge3/Scripts/"
       - "C:/Program Files/CMake/bin/"
       - "C:/Program Files/HP/HP One Agent/"
       - "C:/Program Files/RyzenAI/1.4.1/utils/"
@@ -234,15 +257,32 @@ events:
       - "C:/Program Files/RyzenAI/1.5.0/utils/"
       - "C:/Program Files/Tailscale/"
       - "C:/Program Files/Git/cmd/"
-      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/"
-      - "C:/Users/atiqa/miniforge3/Library/usr/bin/"
-      - "C:/Users/atiqa/miniforge3/Library/bin/"
       - "C:/Users/atiqa/AppData/Local/Microsoft/WindowsApps/"
       - "C:/Users/atiqa/AppData/Local/Programs/Microsoft VS Code Insiders/bin/"
+      - "C:/Users/atiqa/.vscode-insiders/extensions/ms-python.debugpy-2025.10.0-win32-x64/bundled/scripts/noConfigScripts/"
+      - "C:/Users/atiqa/AppData/Roaming/Code - Insiders/User/globalStorage/github.copilot-chat/debugCommand/"
     searched_directories:
       - "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/lld-link.com"
       - "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/lld-link.exe"
       - "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/lld-link"
+      - "C:/Users/atiqa/miniforge3/lld-link.com"
+      - "C:/Users/atiqa/miniforge3/lld-link.exe"
+      - "C:/Users/atiqa/miniforge3/lld-link"
+      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/lld-link.com"
+      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/lld-link.exe"
+      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/lld-link"
+      - "C:/Users/atiqa/miniforge3/Library/usr/bin/lld-link.com"
+      - "C:/Users/atiqa/miniforge3/Library/usr/bin/lld-link.exe"
+      - "C:/Users/atiqa/miniforge3/Library/usr/bin/lld-link"
+      - "C:/Users/atiqa/miniforge3/Library/bin/lld-link.com"
+      - "C:/Users/atiqa/miniforge3/Library/bin/lld-link.exe"
+      - "C:/Users/atiqa/miniforge3/Library/bin/lld-link"
+      - "C:/Users/atiqa/miniforge3/Scripts/lld-link.com"
+      - "C:/Users/atiqa/miniforge3/Scripts/lld-link.exe"
+      - "C:/Users/atiqa/miniforge3/Scripts/lld-link"
+      - "C:/Users/atiqa/miniforge3/bin/lld-link.com"
+      - "C:/Users/atiqa/miniforge3/bin/lld-link.exe"
+      - "C:/Users/atiqa/miniforge3/bin/lld-link"
       - "C:/Users/atiqa/miniforge3/condabin/lld-link.com"
       - "C:/Users/atiqa/miniforge3/condabin/lld-link.exe"
       - "C:/Users/atiqa/miniforge3/condabin/lld-link"
@@ -264,12 +304,6 @@ events:
       - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/lld-link.com"
       - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/lld-link.exe"
       - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/lld-link"
-      - "C:/Users/atiqa/miniforge3/lld-link.com"
-      - "C:/Users/atiqa/miniforge3/lld-link.exe"
-      - "C:/Users/atiqa/miniforge3/lld-link"
-      - "C:/Users/atiqa/miniforge3/Scripts/lld-link.com"
-      - "C:/Users/atiqa/miniforge3/Scripts/lld-link.exe"
-      - "C:/Users/atiqa/miniforge3/Scripts/lld-link"
       - "C:/Program Files/CMake/bin/lld-link.com"
       - "C:/Program Files/CMake/bin/lld-link.exe"
       - "C:/Program Files/CMake/bin/lld-link"
@@ -291,21 +325,18 @@ events:
       - "C:/Program Files/Git/cmd/lld-link.com"
       - "C:/Program Files/Git/cmd/lld-link.exe"
       - "C:/Program Files/Git/cmd/lld-link"
-      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/lld-link.com"
-      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/lld-link.exe"
-      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/lld-link"
-      - "C:/Users/atiqa/miniforge3/Library/usr/bin/lld-link.com"
-      - "C:/Users/atiqa/miniforge3/Library/usr/bin/lld-link.exe"
-      - "C:/Users/atiqa/miniforge3/Library/usr/bin/lld-link"
-      - "C:/Users/atiqa/miniforge3/Library/bin/lld-link.com"
-      - "C:/Users/atiqa/miniforge3/Library/bin/lld-link.exe"
-      - "C:/Users/atiqa/miniforge3/Library/bin/lld-link"
       - "C:/Users/atiqa/AppData/Local/Microsoft/WindowsApps/lld-link.com"
       - "C:/Users/atiqa/AppData/Local/Microsoft/WindowsApps/lld-link.exe"
       - "C:/Users/atiqa/AppData/Local/Microsoft/WindowsApps/lld-link"
       - "C:/Users/atiqa/AppData/Local/Programs/Microsoft VS Code Insiders/bin/lld-link.com"
       - "C:/Users/atiqa/AppData/Local/Programs/Microsoft VS Code Insiders/bin/lld-link.exe"
       - "C:/Users/atiqa/AppData/Local/Programs/Microsoft VS Code Insiders/bin/lld-link"
+      - "C:/Users/atiqa/.vscode-insiders/extensions/ms-python.debugpy-2025.10.0-win32-x64/bundled/scripts/noConfigScripts/lld-link.com"
+      - "C:/Users/atiqa/.vscode-insiders/extensions/ms-python.debugpy-2025.10.0-win32-x64/bundled/scripts/noConfigScripts/lld-link.exe"
+      - "C:/Users/atiqa/.vscode-insiders/extensions/ms-python.debugpy-2025.10.0-win32-x64/bundled/scripts/noConfigScripts/lld-link"
+      - "C:/Users/atiqa/AppData/Roaming/Code - Insiders/User/globalStorage/github.copilot-chat/debugCommand/lld-link.com"
+      - "C:/Users/atiqa/AppData/Roaming/Code - Insiders/User/globalStorage/github.copilot-chat/debugCommand/lld-link.exe"
+      - "C:/Users/atiqa/AppData/Roaming/Code - Insiders/User/globalStorage/github.copilot-chat/debugCommand/lld-link"
     found: false
     search_context:
       CMAKE_PREFIX_PATH:
@@ -313,21 +344,27 @@ events:
       ENV{CMAKE_PREFIX_PATH}:
         - "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\.."
       ENV{PATH}:
+        - "C:\\Users\\atiqa\\miniforge3"
+        - "C:\\Users\\atiqa\\miniforge3\\Library\\mingw-w64\\bin"
+        - "C:\\Users\\atiqa\\miniforge3\\Library\\usr\\bin"
+        - "C:\\Users\\atiqa\\miniforge3\\Library\\bin"
+        - "C:\\Users\\atiqa\\miniforge3\\Scripts"
+        - "C:\\Users\\atiqa\\miniforge3\\bin"
         - "C:\\Users\\atiqa\\miniforge3\\condabin"
         - "C:\\WINDOWS\\system32"
         - "C:\\WINDOWS"
         - "C:\\WINDOWS\\System32\\Wbem"
-        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
-        - "C:\\WINDOWS\\System32\\OpenSSH\\"
-        - "C:\\Program Files (x86)\\Windows Kits\\10\\Windows Performance Toolkit\\"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0"
+        - "C:\\WINDOWS\\System32\\OpenSSH"
+        - "C:\\Program Files (x86)\\Windows Kits\\10\\Windows Performance Toolkit"
         - "C:\\Users\\atiqa\\miniforge3"
         - "C:\\Users\\atiqa\\miniforge3\\Scripts"
         - "C:\\Program Files\\CMake\\bin"
         - "C:\\Program Files\\HP\\HP One Agent"
-        - "C:\\Program Files\\RyzenAI\\1.4.1\\utils\\"
+        - "C:\\Program Files\\RyzenAI\\1.4.1\\utils"
         - "\\VC\\Auxiliary\\Build"
-        - "C:\\Program Files\\RyzenAI\\1.5.0\\utils\\"
-        - "C:\\Program Files\\Tailscale\\"
+        - "C:\\Program Files\\RyzenAI\\1.5.0\\utils"
+        - "C:\\Program Files\\Tailscale"
         - "C:\\Program Files\\Git\\cmd"
         - "C:\\Users\\atiqa\\miniforge3"
         - "C:\\Users\\atiqa\\miniforge3\\Library\\mingw-w64\\bin"
@@ -336,6 +373,8 @@ events:
         - "C:\\Users\\atiqa\\miniforge3\\Scripts"
         - "C:\\Users\\atiqa\\AppData\\Local\\Microsoft\\WindowsApps"
         - "C:\\Users\\atiqa\\AppData\\Local\\Programs\\Microsoft VS Code Insiders\\bin"
+        - "c:\\Users\\atiqa\\.vscode-insiders\\extensions\\ms-python.debugpy-2025.10.0-win32-x64\\bundled\\scripts\\noConfigScripts"
+        - "c:\\Users\\atiqa\\AppData\\Roaming\\Code - Insiders\\User\\globalStorage\\github.copilot-chat\\debugCommand"
       CMAKE_INSTALL_PREFIX: "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\.."
   -
     kind: "find-v1"
@@ -358,6 +397,12 @@ events:
       - "link"
     candidate_directories:
       - "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/"
+      - "C:/Users/atiqa/miniforge3/"
+      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/"
+      - "C:/Users/atiqa/miniforge3/Library/usr/bin/"
+      - "C:/Users/atiqa/miniforge3/Library/bin/"
+      - "C:/Users/atiqa/miniforge3/Scripts/"
+      - "C:/Users/atiqa/miniforge3/bin/"
       - "C:/Users/atiqa/miniforge3/condabin/"
       - "C:/Windows/System32/"
       - "C:/Windows/"
@@ -365,8 +410,6 @@ events:
       - "C:/Windows/System32/WindowsPowerShell/v1.0/"
       - "C:/Windows/System32/OpenSSH/"
       - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/"
-      - "C:/Users/atiqa/miniforge3/"
-      - "C:/Users/atiqa/miniforge3/Scripts/"
       - "C:/Program Files/CMake/bin/"
       - "C:/Program Files/HP/HP One Agent/"
       - "C:/Program Files/RyzenAI/1.4.1/utils/"
@@ -374,11 +417,10 @@ events:
       - "C:/Program Files/RyzenAI/1.5.0/utils/"
       - "C:/Program Files/Tailscale/"
       - "C:/Program Files/Git/cmd/"
-      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/"
-      - "C:/Users/atiqa/miniforge3/Library/usr/bin/"
-      - "C:/Users/atiqa/miniforge3/Library/bin/"
       - "C:/Users/atiqa/AppData/Local/Microsoft/WindowsApps/"
       - "C:/Users/atiqa/AppData/Local/Programs/Microsoft VS Code Insiders/bin/"
+      - "C:/Users/atiqa/.vscode-insiders/extensions/ms-python.debugpy-2025.10.0-win32-x64/bundled/scripts/noConfigScripts/"
+      - "C:/Users/atiqa/AppData/Roaming/Code - Insiders/User/globalStorage/github.copilot-chat/debugCommand/"
     searched_directories:
       - "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/link.com"
     found: "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/link.exe"
@@ -388,21 +430,27 @@ events:
       ENV{CMAKE_PREFIX_PATH}:
         - "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\.."
       ENV{PATH}:
+        - "C:\\Users\\atiqa\\miniforge3"
+        - "C:\\Users\\atiqa\\miniforge3\\Library\\mingw-w64\\bin"
+        - "C:\\Users\\atiqa\\miniforge3\\Library\\usr\\bin"
+        - "C:\\Users\\atiqa\\miniforge3\\Library\\bin"
+        - "C:\\Users\\atiqa\\miniforge3\\Scripts"
+        - "C:\\Users\\atiqa\\miniforge3\\bin"
         - "C:\\Users\\atiqa\\miniforge3\\condabin"
         - "C:\\WINDOWS\\system32"
         - "C:\\WINDOWS"
         - "C:\\WINDOWS\\System32\\Wbem"
-        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
-        - "C:\\WINDOWS\\System32\\OpenSSH\\"
-        - "C:\\Program Files (x86)\\Windows Kits\\10\\Windows Performance Toolkit\\"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0"
+        - "C:\\WINDOWS\\System32\\OpenSSH"
+        - "C:\\Program Files (x86)\\Windows Kits\\10\\Windows Performance Toolkit"
         - "C:\\Users\\atiqa\\miniforge3"
         - "C:\\Users\\atiqa\\miniforge3\\Scripts"
         - "C:\\Program Files\\CMake\\bin"
         - "C:\\Program Files\\HP\\HP One Agent"
-        - "C:\\Program Files\\RyzenAI\\1.4.1\\utils\\"
+        - "C:\\Program Files\\RyzenAI\\1.4.1\\utils"
         - "\\VC\\Auxiliary\\Build"
-        - "C:\\Program Files\\RyzenAI\\1.5.0\\utils\\"
-        - "C:\\Program Files\\Tailscale\\"
+        - "C:\\Program Files\\RyzenAI\\1.5.0\\utils"
+        - "C:\\Program Files\\Tailscale"
         - "C:\\Program Files\\Git\\cmd"
         - "C:\\Users\\atiqa\\miniforge3"
         - "C:\\Users\\atiqa\\miniforge3\\Library\\mingw-w64\\bin"
@@ -411,6 +459,8 @@ events:
         - "C:\\Users\\atiqa\\miniforge3\\Scripts"
         - "C:\\Users\\atiqa\\AppData\\Local\\Microsoft\\WindowsApps"
         - "C:\\Users\\atiqa\\AppData\\Local\\Programs\\Microsoft VS Code Insiders\\bin"
+        - "c:\\Users\\atiqa\\.vscode-insiders\\extensions\\ms-python.debugpy-2025.10.0-win32-x64\\bundled\\scripts\\noConfigScripts"
+        - "c:\\Users\\atiqa\\AppData\\Roaming\\Code - Insiders\\User\\globalStorage\\github.copilot-chat\\debugCommand"
       CMAKE_INSTALL_PREFIX: "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\.."
   -
     kind: "find-v1"
@@ -433,6 +483,12 @@ events:
       - "mt"
     candidate_directories:
       - "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/"
+      - "C:/Users/atiqa/miniforge3/"
+      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/"
+      - "C:/Users/atiqa/miniforge3/Library/usr/bin/"
+      - "C:/Users/atiqa/miniforge3/Library/bin/"
+      - "C:/Users/atiqa/miniforge3/Scripts/"
+      - "C:/Users/atiqa/miniforge3/bin/"
       - "C:/Users/atiqa/miniforge3/condabin/"
       - "C:/Windows/System32/"
       - "C:/Windows/"
@@ -440,8 +496,6 @@ events:
       - "C:/Windows/System32/WindowsPowerShell/v1.0/"
       - "C:/Windows/System32/OpenSSH/"
       - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/"
-      - "C:/Users/atiqa/miniforge3/"
-      - "C:/Users/atiqa/miniforge3/Scripts/"
       - "C:/Program Files/CMake/bin/"
       - "C:/Program Files/HP/HP One Agent/"
       - "C:/Program Files/RyzenAI/1.4.1/utils/"
@@ -449,15 +503,32 @@ events:
       - "C:/Program Files/RyzenAI/1.5.0/utils/"
       - "C:/Program Files/Tailscale/"
       - "C:/Program Files/Git/cmd/"
-      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/"
-      - "C:/Users/atiqa/miniforge3/Library/usr/bin/"
-      - "C:/Users/atiqa/miniforge3/Library/bin/"
       - "C:/Users/atiqa/AppData/Local/Microsoft/WindowsApps/"
       - "C:/Users/atiqa/AppData/Local/Programs/Microsoft VS Code Insiders/bin/"
+      - "C:/Users/atiqa/.vscode-insiders/extensions/ms-python.debugpy-2025.10.0-win32-x64/bundled/scripts/noConfigScripts/"
+      - "C:/Users/atiqa/AppData/Roaming/Code - Insiders/User/globalStorage/github.copilot-chat/debugCommand/"
     searched_directories:
       - "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/mt.com"
       - "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/mt.exe"
       - "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/mt"
+      - "C:/Users/atiqa/miniforge3/mt.com"
+      - "C:/Users/atiqa/miniforge3/mt.exe"
+      - "C:/Users/atiqa/miniforge3/mt"
+      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/mt.com"
+      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/mt.exe"
+      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/mt"
+      - "C:/Users/atiqa/miniforge3/Library/usr/bin/mt.com"
+      - "C:/Users/atiqa/miniforge3/Library/usr/bin/mt.exe"
+      - "C:/Users/atiqa/miniforge3/Library/usr/bin/mt"
+      - "C:/Users/atiqa/miniforge3/Library/bin/mt.com"
+      - "C:/Users/atiqa/miniforge3/Library/bin/mt.exe"
+      - "C:/Users/atiqa/miniforge3/Library/bin/mt"
+      - "C:/Users/atiqa/miniforge3/Scripts/mt.com"
+      - "C:/Users/atiqa/miniforge3/Scripts/mt.exe"
+      - "C:/Users/atiqa/miniforge3/Scripts/mt"
+      - "C:/Users/atiqa/miniforge3/bin/mt.com"
+      - "C:/Users/atiqa/miniforge3/bin/mt.exe"
+      - "C:/Users/atiqa/miniforge3/bin/mt"
       - "C:/Users/atiqa/miniforge3/condabin/mt.com"
       - "C:/Users/atiqa/miniforge3/condabin/mt.exe"
       - "C:/Users/atiqa/miniforge3/condabin/mt"
@@ -479,12 +550,6 @@ events:
       - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/mt.com"
       - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/mt.exe"
       - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/mt"
-      - "C:/Users/atiqa/miniforge3/mt.com"
-      - "C:/Users/atiqa/miniforge3/mt.exe"
-      - "C:/Users/atiqa/miniforge3/mt"
-      - "C:/Users/atiqa/miniforge3/Scripts/mt.com"
-      - "C:/Users/atiqa/miniforge3/Scripts/mt.exe"
-      - "C:/Users/atiqa/miniforge3/Scripts/mt"
       - "C:/Program Files/CMake/bin/mt.com"
       - "C:/Program Files/CMake/bin/mt.exe"
       - "C:/Program Files/CMake/bin/mt"
@@ -506,21 +571,18 @@ events:
       - "C:/Program Files/Git/cmd/mt.com"
       - "C:/Program Files/Git/cmd/mt.exe"
       - "C:/Program Files/Git/cmd/mt"
-      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/mt.com"
-      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/mt.exe"
-      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/mt"
-      - "C:/Users/atiqa/miniforge3/Library/usr/bin/mt.com"
-      - "C:/Users/atiqa/miniforge3/Library/usr/bin/mt.exe"
-      - "C:/Users/atiqa/miniforge3/Library/usr/bin/mt"
-      - "C:/Users/atiqa/miniforge3/Library/bin/mt.com"
-      - "C:/Users/atiqa/miniforge3/Library/bin/mt.exe"
-      - "C:/Users/atiqa/miniforge3/Library/bin/mt"
       - "C:/Users/atiqa/AppData/Local/Microsoft/WindowsApps/mt.com"
       - "C:/Users/atiqa/AppData/Local/Microsoft/WindowsApps/mt.exe"
       - "C:/Users/atiqa/AppData/Local/Microsoft/WindowsApps/mt"
       - "C:/Users/atiqa/AppData/Local/Programs/Microsoft VS Code Insiders/bin/mt.com"
       - "C:/Users/atiqa/AppData/Local/Programs/Microsoft VS Code Insiders/bin/mt.exe"
       - "C:/Users/atiqa/AppData/Local/Programs/Microsoft VS Code Insiders/bin/mt"
+      - "C:/Users/atiqa/.vscode-insiders/extensions/ms-python.debugpy-2025.10.0-win32-x64/bundled/scripts/noConfigScripts/mt.com"
+      - "C:/Users/atiqa/.vscode-insiders/extensions/ms-python.debugpy-2025.10.0-win32-x64/bundled/scripts/noConfigScripts/mt.exe"
+      - "C:/Users/atiqa/.vscode-insiders/extensions/ms-python.debugpy-2025.10.0-win32-x64/bundled/scripts/noConfigScripts/mt"
+      - "C:/Users/atiqa/AppData/Roaming/Code - Insiders/User/globalStorage/github.copilot-chat/debugCommand/mt.com"
+      - "C:/Users/atiqa/AppData/Roaming/Code - Insiders/User/globalStorage/github.copilot-chat/debugCommand/mt.exe"
+      - "C:/Users/atiqa/AppData/Roaming/Code - Insiders/User/globalStorage/github.copilot-chat/debugCommand/mt"
     found: false
     search_context:
       CMAKE_PREFIX_PATH:
@@ -528,21 +590,27 @@ events:
       ENV{CMAKE_PREFIX_PATH}:
         - "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\.."
       ENV{PATH}:
+        - "C:\\Users\\atiqa\\miniforge3"
+        - "C:\\Users\\atiqa\\miniforge3\\Library\\mingw-w64\\bin"
+        - "C:\\Users\\atiqa\\miniforge3\\Library\\usr\\bin"
+        - "C:\\Users\\atiqa\\miniforge3\\Library\\bin"
+        - "C:\\Users\\atiqa\\miniforge3\\Scripts"
+        - "C:\\Users\\atiqa\\miniforge3\\bin"
         - "C:\\Users\\atiqa\\miniforge3\\condabin"
         - "C:\\WINDOWS\\system32"
         - "C:\\WINDOWS"
         - "C:\\WINDOWS\\System32\\Wbem"
-        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
-        - "C:\\WINDOWS\\System32\\OpenSSH\\"
-        - "C:\\Program Files (x86)\\Windows Kits\\10\\Windows Performance Toolkit\\"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0"
+        - "C:\\WINDOWS\\System32\\OpenSSH"
+        - "C:\\Program Files (x86)\\Windows Kits\\10\\Windows Performance Toolkit"
         - "C:\\Users\\atiqa\\miniforge3"
         - "C:\\Users\\atiqa\\miniforge3\\Scripts"
         - "C:\\Program Files\\CMake\\bin"
         - "C:\\Program Files\\HP\\HP One Agent"
-        - "C:\\Program Files\\RyzenAI\\1.4.1\\utils\\"
+        - "C:\\Program Files\\RyzenAI\\1.4.1\\utils"
         - "\\VC\\Auxiliary\\Build"
-        - "C:\\Program Files\\RyzenAI\\1.5.0\\utils\\"
-        - "C:\\Program Files\\Tailscale\\"
+        - "C:\\Program Files\\RyzenAI\\1.5.0\\utils"
+        - "C:\\Program Files\\Tailscale"
         - "C:\\Program Files\\Git\\cmd"
         - "C:\\Users\\atiqa\\miniforge3"
         - "C:\\Users\\atiqa\\miniforge3\\Library\\mingw-w64\\bin"
@@ -551,6 +619,8 @@ events:
         - "C:\\Users\\atiqa\\miniforge3\\Scripts"
         - "C:\\Users\\atiqa\\AppData\\Local\\Microsoft\\WindowsApps"
         - "C:\\Users\\atiqa\\AppData\\Local\\Programs\\Microsoft VS Code Insiders\\bin"
+        - "c:\\Users\\atiqa\\.vscode-insiders\\extensions\\ms-python.debugpy-2025.10.0-win32-x64\\bundled\\scripts\\noConfigScripts"
+        - "c:\\Users\\atiqa\\AppData\\Roaming\\Code - Insiders\\User\\globalStorage\\github.copilot-chat\\debugCommand"
       CMAKE_INSTALL_PREFIX: "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\.."
   -
     kind: "find-v1"
@@ -573,6 +643,12 @@ events:
       - "lib"
     candidate_directories:
       - "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/"
+      - "C:/Users/atiqa/miniforge3/"
+      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/"
+      - "C:/Users/atiqa/miniforge3/Library/usr/bin/"
+      - "C:/Users/atiqa/miniforge3/Library/bin/"
+      - "C:/Users/atiqa/miniforge3/Scripts/"
+      - "C:/Users/atiqa/miniforge3/bin/"
       - "C:/Users/atiqa/miniforge3/condabin/"
       - "C:/Windows/System32/"
       - "C:/Windows/"
@@ -580,8 +656,6 @@ events:
       - "C:/Windows/System32/WindowsPowerShell/v1.0/"
       - "C:/Windows/System32/OpenSSH/"
       - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/"
-      - "C:/Users/atiqa/miniforge3/"
-      - "C:/Users/atiqa/miniforge3/Scripts/"
       - "C:/Program Files/CMake/bin/"
       - "C:/Program Files/HP/HP One Agent/"
       - "C:/Program Files/RyzenAI/1.4.1/utils/"
@@ -589,11 +663,10 @@ events:
       - "C:/Program Files/RyzenAI/1.5.0/utils/"
       - "C:/Program Files/Tailscale/"
       - "C:/Program Files/Git/cmd/"
-      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/"
-      - "C:/Users/atiqa/miniforge3/Library/usr/bin/"
-      - "C:/Users/atiqa/miniforge3/Library/bin/"
       - "C:/Users/atiqa/AppData/Local/Microsoft/WindowsApps/"
       - "C:/Users/atiqa/AppData/Local/Programs/Microsoft VS Code Insiders/bin/"
+      - "C:/Users/atiqa/.vscode-insiders/extensions/ms-python.debugpy-2025.10.0-win32-x64/bundled/scripts/noConfigScripts/"
+      - "C:/Users/atiqa/AppData/Roaming/Code - Insiders/User/globalStorage/github.copilot-chat/debugCommand/"
     searched_directories:
       - "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/lib.com"
     found: "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/lib.exe"
@@ -603,21 +676,27 @@ events:
       ENV{CMAKE_PREFIX_PATH}:
         - "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\.."
       ENV{PATH}:
+        - "C:\\Users\\atiqa\\miniforge3"
+        - "C:\\Users\\atiqa\\miniforge3\\Library\\mingw-w64\\bin"
+        - "C:\\Users\\atiqa\\miniforge3\\Library\\usr\\bin"
+        - "C:\\Users\\atiqa\\miniforge3\\Library\\bin"
+        - "C:\\Users\\atiqa\\miniforge3\\Scripts"
+        - "C:\\Users\\atiqa\\miniforge3\\bin"
         - "C:\\Users\\atiqa\\miniforge3\\condabin"
         - "C:\\WINDOWS\\system32"
         - "C:\\WINDOWS"
         - "C:\\WINDOWS\\System32\\Wbem"
-        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
-        - "C:\\WINDOWS\\System32\\OpenSSH\\"
-        - "C:\\Program Files (x86)\\Windows Kits\\10\\Windows Performance Toolkit\\"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0"
+        - "C:\\WINDOWS\\System32\\OpenSSH"
+        - "C:\\Program Files (x86)\\Windows Kits\\10\\Windows Performance Toolkit"
         - "C:\\Users\\atiqa\\miniforge3"
         - "C:\\Users\\atiqa\\miniforge3\\Scripts"
         - "C:\\Program Files\\CMake\\bin"
         - "C:\\Program Files\\HP\\HP One Agent"
-        - "C:\\Program Files\\RyzenAI\\1.4.1\\utils\\"
+        - "C:\\Program Files\\RyzenAI\\1.4.1\\utils"
         - "\\VC\\Auxiliary\\Build"
-        - "C:\\Program Files\\RyzenAI\\1.5.0\\utils\\"
-        - "C:\\Program Files\\Tailscale\\"
+        - "C:\\Program Files\\RyzenAI\\1.5.0\\utils"
+        - "C:\\Program Files\\Tailscale"
         - "C:\\Program Files\\Git\\cmd"
         - "C:\\Users\\atiqa\\miniforge3"
         - "C:\\Users\\atiqa\\miniforge3\\Library\\mingw-w64\\bin"
@@ -626,6 +705,8 @@ events:
         - "C:\\Users\\atiqa\\miniforge3\\Scripts"
         - "C:\\Users\\atiqa\\AppData\\Local\\Microsoft\\WindowsApps"
         - "C:\\Users\\atiqa\\AppData\\Local\\Programs\\Microsoft VS Code Insiders\\bin"
+        - "c:\\Users\\atiqa\\.vscode-insiders\\extensions\\ms-python.debugpy-2025.10.0-win32-x64\\bundled\\scripts\\noConfigScripts"
+        - "c:\\Users\\atiqa\\AppData\\Roaming\\Code - Insiders\\User\\globalStorage\\github.copilot-chat\\debugCommand"
       CMAKE_INSTALL_PREFIX: "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\.."
   -
     kind: "find-v1"
@@ -658,21 +739,27 @@ events:
       ENV{CMAKE_PREFIX_PATH}:
         - "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\.."
       ENV{PATH}:
+        - "C:\\Users\\atiqa\\miniforge3"
+        - "C:\\Users\\atiqa\\miniforge3\\Library\\mingw-w64\\bin"
+        - "C:\\Users\\atiqa\\miniforge3\\Library\\usr\\bin"
+        - "C:\\Users\\atiqa\\miniforge3\\Library\\bin"
+        - "C:\\Users\\atiqa\\miniforge3\\Scripts"
+        - "C:\\Users\\atiqa\\miniforge3\\bin"
         - "C:\\Users\\atiqa\\miniforge3\\condabin"
         - "C:\\WINDOWS\\system32"
         - "C:\\WINDOWS"
         - "C:\\WINDOWS\\System32\\Wbem"
-        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
-        - "C:\\WINDOWS\\System32\\OpenSSH\\"
-        - "C:\\Program Files (x86)\\Windows Kits\\10\\Windows Performance Toolkit\\"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0"
+        - "C:\\WINDOWS\\System32\\OpenSSH"
+        - "C:\\Program Files (x86)\\Windows Kits\\10\\Windows Performance Toolkit"
         - "C:\\Users\\atiqa\\miniforge3"
         - "C:\\Users\\atiqa\\miniforge3\\Scripts"
         - "C:\\Program Files\\CMake\\bin"
         - "C:\\Program Files\\HP\\HP One Agent"
-        - "C:\\Program Files\\RyzenAI\\1.4.1\\utils\\"
+        - "C:\\Program Files\\RyzenAI\\1.4.1\\utils"
         - "\\VC\\Auxiliary\\Build"
-        - "C:\\Program Files\\RyzenAI\\1.5.0\\utils\\"
-        - "C:\\Program Files\\Tailscale\\"
+        - "C:\\Program Files\\RyzenAI\\1.5.0\\utils"
+        - "C:\\Program Files\\Tailscale"
         - "C:\\Program Files\\Git\\cmd"
         - "C:\\Users\\atiqa\\miniforge3"
         - "C:\\Users\\atiqa\\miniforge3\\Library\\mingw-w64\\bin"
@@ -681,6 +768,8 @@ events:
         - "C:\\Users\\atiqa\\miniforge3\\Scripts"
         - "C:\\Users\\atiqa\\AppData\\Local\\Microsoft\\WindowsApps"
         - "C:\\Users\\atiqa\\AppData\\Local\\Programs\\Microsoft VS Code Insiders\\bin"
+        - "c:\\Users\\atiqa\\.vscode-insiders\\extensions\\ms-python.debugpy-2025.10.0-win32-x64\\bundled\\scripts\\noConfigScripts"
+        - "c:\\Users\\atiqa\\AppData\\Roaming\\Code - Insiders\\User\\globalStorage\\github.copilot-chat\\debugCommand"
       CMAKE_INSTALL_PREFIX: "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\.."
   -
     kind: "message-v1"
@@ -698,7 +787,7 @@ events:
       The output was:
       0
       MSBuild version 17.14.14+a129329f1 for .NET Framework
-      Build started 7/22/2025 4:24:30 PM.
+      Build started 7/23/2025 10:29:39 AM.
       
       Project "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\4.1.0-rc2\\CompilerIdCXX\\CompilerIdCXX.vcxproj" on node 1 (default targets).
       PrepareForBuild:
@@ -727,7 +816,7 @@ events:
           0 Warning(s)
           0 Error(s)
       
-      Time Elapsed 00:00:00.50
+      Time Elapsed 00:00:00.54
       
       
       Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.exe"
@@ -760,6 +849,12 @@ events:
       - "lld-link"
     candidate_directories:
       - "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/"
+      - "C:/Users/atiqa/miniforge3/"
+      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/"
+      - "C:/Users/atiqa/miniforge3/Library/usr/bin/"
+      - "C:/Users/atiqa/miniforge3/Library/bin/"
+      - "C:/Users/atiqa/miniforge3/Scripts/"
+      - "C:/Users/atiqa/miniforge3/bin/"
       - "C:/Users/atiqa/miniforge3/condabin/"
       - "C:/Windows/System32/"
       - "C:/Windows/"
@@ -767,8 +862,6 @@ events:
       - "C:/Windows/System32/WindowsPowerShell/v1.0/"
       - "C:/Windows/System32/OpenSSH/"
       - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/"
-      - "C:/Users/atiqa/miniforge3/"
-      - "C:/Users/atiqa/miniforge3/Scripts/"
       - "C:/Program Files/CMake/bin/"
       - "C:/Program Files/HP/HP One Agent/"
       - "C:/Program Files/RyzenAI/1.4.1/utils/"
@@ -776,15 +869,32 @@ events:
       - "C:/Program Files/RyzenAI/1.5.0/utils/"
       - "C:/Program Files/Tailscale/"
       - "C:/Program Files/Git/cmd/"
-      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/"
-      - "C:/Users/atiqa/miniforge3/Library/usr/bin/"
-      - "C:/Users/atiqa/miniforge3/Library/bin/"
       - "C:/Users/atiqa/AppData/Local/Microsoft/WindowsApps/"
       - "C:/Users/atiqa/AppData/Local/Programs/Microsoft VS Code Insiders/bin/"
+      - "C:/Users/atiqa/.vscode-insiders/extensions/ms-python.debugpy-2025.10.0-win32-x64/bundled/scripts/noConfigScripts/"
+      - "C:/Users/atiqa/AppData/Roaming/Code - Insiders/User/globalStorage/github.copilot-chat/debugCommand/"
     searched_directories:
       - "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/lld-link.com"
       - "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/lld-link.exe"
       - "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/lld-link"
+      - "C:/Users/atiqa/miniforge3/lld-link.com"
+      - "C:/Users/atiqa/miniforge3/lld-link.exe"
+      - "C:/Users/atiqa/miniforge3/lld-link"
+      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/lld-link.com"
+      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/lld-link.exe"
+      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/lld-link"
+      - "C:/Users/atiqa/miniforge3/Library/usr/bin/lld-link.com"
+      - "C:/Users/atiqa/miniforge3/Library/usr/bin/lld-link.exe"
+      - "C:/Users/atiqa/miniforge3/Library/usr/bin/lld-link"
+      - "C:/Users/atiqa/miniforge3/Library/bin/lld-link.com"
+      - "C:/Users/atiqa/miniforge3/Library/bin/lld-link.exe"
+      - "C:/Users/atiqa/miniforge3/Library/bin/lld-link"
+      - "C:/Users/atiqa/miniforge3/Scripts/lld-link.com"
+      - "C:/Users/atiqa/miniforge3/Scripts/lld-link.exe"
+      - "C:/Users/atiqa/miniforge3/Scripts/lld-link"
+      - "C:/Users/atiqa/miniforge3/bin/lld-link.com"
+      - "C:/Users/atiqa/miniforge3/bin/lld-link.exe"
+      - "C:/Users/atiqa/miniforge3/bin/lld-link"
       - "C:/Users/atiqa/miniforge3/condabin/lld-link.com"
       - "C:/Users/atiqa/miniforge3/condabin/lld-link.exe"
       - "C:/Users/atiqa/miniforge3/condabin/lld-link"
@@ -806,12 +916,6 @@ events:
       - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/lld-link.com"
       - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/lld-link.exe"
       - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/lld-link"
-      - "C:/Users/atiqa/miniforge3/lld-link.com"
-      - "C:/Users/atiqa/miniforge3/lld-link.exe"
-      - "C:/Users/atiqa/miniforge3/lld-link"
-      - "C:/Users/atiqa/miniforge3/Scripts/lld-link.com"
-      - "C:/Users/atiqa/miniforge3/Scripts/lld-link.exe"
-      - "C:/Users/atiqa/miniforge3/Scripts/lld-link"
       - "C:/Program Files/CMake/bin/lld-link.com"
       - "C:/Program Files/CMake/bin/lld-link.exe"
       - "C:/Program Files/CMake/bin/lld-link"
@@ -833,21 +937,18 @@ events:
       - "C:/Program Files/Git/cmd/lld-link.com"
       - "C:/Program Files/Git/cmd/lld-link.exe"
       - "C:/Program Files/Git/cmd/lld-link"
-      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/lld-link.com"
-      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/lld-link.exe"
-      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/lld-link"
-      - "C:/Users/atiqa/miniforge3/Library/usr/bin/lld-link.com"
-      - "C:/Users/atiqa/miniforge3/Library/usr/bin/lld-link.exe"
-      - "C:/Users/atiqa/miniforge3/Library/usr/bin/lld-link"
-      - "C:/Users/atiqa/miniforge3/Library/bin/lld-link.com"
-      - "C:/Users/atiqa/miniforge3/Library/bin/lld-link.exe"
-      - "C:/Users/atiqa/miniforge3/Library/bin/lld-link"
       - "C:/Users/atiqa/AppData/Local/Microsoft/WindowsApps/lld-link.com"
       - "C:/Users/atiqa/AppData/Local/Microsoft/WindowsApps/lld-link.exe"
       - "C:/Users/atiqa/AppData/Local/Microsoft/WindowsApps/lld-link"
       - "C:/Users/atiqa/AppData/Local/Programs/Microsoft VS Code Insiders/bin/lld-link.com"
       - "C:/Users/atiqa/AppData/Local/Programs/Microsoft VS Code Insiders/bin/lld-link.exe"
       - "C:/Users/atiqa/AppData/Local/Programs/Microsoft VS Code Insiders/bin/lld-link"
+      - "C:/Users/atiqa/.vscode-insiders/extensions/ms-python.debugpy-2025.10.0-win32-x64/bundled/scripts/noConfigScripts/lld-link.com"
+      - "C:/Users/atiqa/.vscode-insiders/extensions/ms-python.debugpy-2025.10.0-win32-x64/bundled/scripts/noConfigScripts/lld-link.exe"
+      - "C:/Users/atiqa/.vscode-insiders/extensions/ms-python.debugpy-2025.10.0-win32-x64/bundled/scripts/noConfigScripts/lld-link"
+      - "C:/Users/atiqa/AppData/Roaming/Code - Insiders/User/globalStorage/github.copilot-chat/debugCommand/lld-link.com"
+      - "C:/Users/atiqa/AppData/Roaming/Code - Insiders/User/globalStorage/github.copilot-chat/debugCommand/lld-link.exe"
+      - "C:/Users/atiqa/AppData/Roaming/Code - Insiders/User/globalStorage/github.copilot-chat/debugCommand/lld-link"
     found: false
     search_context:
       CMAKE_PREFIX_PATH:
@@ -855,21 +956,27 @@ events:
       ENV{CMAKE_PREFIX_PATH}:
         - "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\.."
       ENV{PATH}:
+        - "C:\\Users\\atiqa\\miniforge3"
+        - "C:\\Users\\atiqa\\miniforge3\\Library\\mingw-w64\\bin"
+        - "C:\\Users\\atiqa\\miniforge3\\Library\\usr\\bin"
+        - "C:\\Users\\atiqa\\miniforge3\\Library\\bin"
+        - "C:\\Users\\atiqa\\miniforge3\\Scripts"
+        - "C:\\Users\\atiqa\\miniforge3\\bin"
         - "C:\\Users\\atiqa\\miniforge3\\condabin"
         - "C:\\WINDOWS\\system32"
         - "C:\\WINDOWS"
         - "C:\\WINDOWS\\System32\\Wbem"
-        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
-        - "C:\\WINDOWS\\System32\\OpenSSH\\"
-        - "C:\\Program Files (x86)\\Windows Kits\\10\\Windows Performance Toolkit\\"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0"
+        - "C:\\WINDOWS\\System32\\OpenSSH"
+        - "C:\\Program Files (x86)\\Windows Kits\\10\\Windows Performance Toolkit"
         - "C:\\Users\\atiqa\\miniforge3"
         - "C:\\Users\\atiqa\\miniforge3\\Scripts"
         - "C:\\Program Files\\CMake\\bin"
         - "C:\\Program Files\\HP\\HP One Agent"
-        - "C:\\Program Files\\RyzenAI\\1.4.1\\utils\\"
+        - "C:\\Program Files\\RyzenAI\\1.4.1\\utils"
         - "\\VC\\Auxiliary\\Build"
-        - "C:\\Program Files\\RyzenAI\\1.5.0\\utils\\"
-        - "C:\\Program Files\\Tailscale\\"
+        - "C:\\Program Files\\RyzenAI\\1.5.0\\utils"
+        - "C:\\Program Files\\Tailscale"
         - "C:\\Program Files\\Git\\cmd"
         - "C:\\Users\\atiqa\\miniforge3"
         - "C:\\Users\\atiqa\\miniforge3\\Library\\mingw-w64\\bin"
@@ -878,6 +985,8 @@ events:
         - "C:\\Users\\atiqa\\miniforge3\\Scripts"
         - "C:\\Users\\atiqa\\AppData\\Local\\Microsoft\\WindowsApps"
         - "C:\\Users\\atiqa\\AppData\\Local\\Programs\\Microsoft VS Code Insiders\\bin"
+        - "c:\\Users\\atiqa\\.vscode-insiders\\extensions\\ms-python.debugpy-2025.10.0-win32-x64\\bundled\\scripts\\noConfigScripts"
+        - "c:\\Users\\atiqa\\AppData\\Roaming\\Code - Insiders\\User\\globalStorage\\github.copilot-chat\\debugCommand"
       CMAKE_INSTALL_PREFIX: "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\.."
   -
     kind: "find-v1"
@@ -905,6 +1014,12 @@ events:
       - "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/bin/"
       - "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/sbin/"
       - "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/"
+      - "C:/Users/atiqa/miniforge3/"
+      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/"
+      - "C:/Users/atiqa/miniforge3/Library/usr/bin/"
+      - "C:/Users/atiqa/miniforge3/Library/bin/"
+      - "C:/Users/atiqa/miniforge3/Scripts/"
+      - "C:/Users/atiqa/miniforge3/bin/"
       - "C:/Users/atiqa/miniforge3/condabin/"
       - "C:/Windows/System32/"
       - "C:/Windows/"
@@ -912,8 +1027,6 @@ events:
       - "C:/Windows/System32/WindowsPowerShell/v1.0/"
       - "C:/Windows/System32/OpenSSH/"
       - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/"
-      - "C:/Users/atiqa/miniforge3/"
-      - "C:/Users/atiqa/miniforge3/Scripts/"
       - "C:/Program Files/CMake/bin/"
       - "C:/Program Files/HP/HP One Agent/"
       - "C:/Program Files/RyzenAI/1.4.1/utils/"
@@ -921,11 +1034,10 @@ events:
       - "C:/Program Files/RyzenAI/1.5.0/utils/"
       - "C:/Program Files/Tailscale/"
       - "C:/Program Files/Git/cmd/"
-      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/"
-      - "C:/Users/atiqa/miniforge3/Library/usr/bin/"
-      - "C:/Users/atiqa/miniforge3/Library/bin/"
       - "C:/Users/atiqa/AppData/Local/Microsoft/WindowsApps/"
       - "C:/Users/atiqa/AppData/Local/Programs/Microsoft VS Code Insiders/bin/"
+      - "C:/Users/atiqa/.vscode-insiders/extensions/ms-python.debugpy-2025.10.0-win32-x64/bundled/scripts/noConfigScripts/"
+      - "C:/Users/atiqa/AppData/Roaming/Code - Insiders/User/globalStorage/github.copilot-chat/debugCommand/"
       - "C:/Program Files/bin/"
       - "C:/Program Files/sbin/"
       - "C:/Program Files/"
@@ -945,6 +1057,24 @@ events:
       - "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/rc.com"
       - "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/rc.exe"
       - "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/rc"
+      - "C:/Users/atiqa/miniforge3/rc.com"
+      - "C:/Users/atiqa/miniforge3/rc.exe"
+      - "C:/Users/atiqa/miniforge3/rc"
+      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/rc.com"
+      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/rc.exe"
+      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/rc"
+      - "C:/Users/atiqa/miniforge3/Library/usr/bin/rc.com"
+      - "C:/Users/atiqa/miniforge3/Library/usr/bin/rc.exe"
+      - "C:/Users/atiqa/miniforge3/Library/usr/bin/rc"
+      - "C:/Users/atiqa/miniforge3/Library/bin/rc.com"
+      - "C:/Users/atiqa/miniforge3/Library/bin/rc.exe"
+      - "C:/Users/atiqa/miniforge3/Library/bin/rc"
+      - "C:/Users/atiqa/miniforge3/Scripts/rc.com"
+      - "C:/Users/atiqa/miniforge3/Scripts/rc.exe"
+      - "C:/Users/atiqa/miniforge3/Scripts/rc"
+      - "C:/Users/atiqa/miniforge3/bin/rc.com"
+      - "C:/Users/atiqa/miniforge3/bin/rc.exe"
+      - "C:/Users/atiqa/miniforge3/bin/rc"
       - "C:/Users/atiqa/miniforge3/condabin/rc.com"
       - "C:/Users/atiqa/miniforge3/condabin/rc.exe"
       - "C:/Users/atiqa/miniforge3/condabin/rc"
@@ -966,12 +1096,6 @@ events:
       - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/rc.com"
       - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/rc.exe"
       - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/rc"
-      - "C:/Users/atiqa/miniforge3/rc.com"
-      - "C:/Users/atiqa/miniforge3/rc.exe"
-      - "C:/Users/atiqa/miniforge3/rc"
-      - "C:/Users/atiqa/miniforge3/Scripts/rc.com"
-      - "C:/Users/atiqa/miniforge3/Scripts/rc.exe"
-      - "C:/Users/atiqa/miniforge3/Scripts/rc"
       - "C:/Program Files/CMake/bin/rc.com"
       - "C:/Program Files/CMake/bin/rc.exe"
       - "C:/Program Files/CMake/bin/rc"
@@ -993,21 +1117,18 @@ events:
       - "C:/Program Files/Git/cmd/rc.com"
       - "C:/Program Files/Git/cmd/rc.exe"
       - "C:/Program Files/Git/cmd/rc"
-      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/rc.com"
-      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/rc.exe"
-      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/rc"
-      - "C:/Users/atiqa/miniforge3/Library/usr/bin/rc.com"
-      - "C:/Users/atiqa/miniforge3/Library/usr/bin/rc.exe"
-      - "C:/Users/atiqa/miniforge3/Library/usr/bin/rc"
-      - "C:/Users/atiqa/miniforge3/Library/bin/rc.com"
-      - "C:/Users/atiqa/miniforge3/Library/bin/rc.exe"
-      - "C:/Users/atiqa/miniforge3/Library/bin/rc"
       - "C:/Users/atiqa/AppData/Local/Microsoft/WindowsApps/rc.com"
       - "C:/Users/atiqa/AppData/Local/Microsoft/WindowsApps/rc.exe"
       - "C:/Users/atiqa/AppData/Local/Microsoft/WindowsApps/rc"
       - "C:/Users/atiqa/AppData/Local/Programs/Microsoft VS Code Insiders/bin/rc.com"
       - "C:/Users/atiqa/AppData/Local/Programs/Microsoft VS Code Insiders/bin/rc.exe"
       - "C:/Users/atiqa/AppData/Local/Programs/Microsoft VS Code Insiders/bin/rc"
+      - "C:/Users/atiqa/.vscode-insiders/extensions/ms-python.debugpy-2025.10.0-win32-x64/bundled/scripts/noConfigScripts/rc.com"
+      - "C:/Users/atiqa/.vscode-insiders/extensions/ms-python.debugpy-2025.10.0-win32-x64/bundled/scripts/noConfigScripts/rc.exe"
+      - "C:/Users/atiqa/.vscode-insiders/extensions/ms-python.debugpy-2025.10.0-win32-x64/bundled/scripts/noConfigScripts/rc"
+      - "C:/Users/atiqa/AppData/Roaming/Code - Insiders/User/globalStorage/github.copilot-chat/debugCommand/rc.com"
+      - "C:/Users/atiqa/AppData/Roaming/Code - Insiders/User/globalStorage/github.copilot-chat/debugCommand/rc.exe"
+      - "C:/Users/atiqa/AppData/Roaming/Code - Insiders/User/globalStorage/github.copilot-chat/debugCommand/rc"
       - "C:/Program Files/bin/rc.com"
       - "C:/Program Files/bin/rc.exe"
       - "C:/Program Files/bin/rc"
@@ -1042,21 +1163,27 @@ events:
       ENV{CMAKE_PREFIX_PATH}:
         - "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\.."
       ENV{PATH}:
+        - "C:\\Users\\atiqa\\miniforge3"
+        - "C:\\Users\\atiqa\\miniforge3\\Library\\mingw-w64\\bin"
+        - "C:\\Users\\atiqa\\miniforge3\\Library\\usr\\bin"
+        - "C:\\Users\\atiqa\\miniforge3\\Library\\bin"
+        - "C:\\Users\\atiqa\\miniforge3\\Scripts"
+        - "C:\\Users\\atiqa\\miniforge3\\bin"
         - "C:\\Users\\atiqa\\miniforge3\\condabin"
         - "C:\\WINDOWS\\system32"
         - "C:\\WINDOWS"
         - "C:\\WINDOWS\\System32\\Wbem"
-        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
-        - "C:\\WINDOWS\\System32\\OpenSSH\\"
-        - "C:\\Program Files (x86)\\Windows Kits\\10\\Windows Performance Toolkit\\"
+        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0"
+        - "C:\\WINDOWS\\System32\\OpenSSH"
+        - "C:\\Program Files (x86)\\Windows Kits\\10\\Windows Performance Toolkit"
         - "C:\\Users\\atiqa\\miniforge3"
         - "C:\\Users\\atiqa\\miniforge3\\Scripts"
         - "C:\\Program Files\\CMake\\bin"
         - "C:\\Program Files\\HP\\HP One Agent"
-        - "C:\\Program Files\\RyzenAI\\1.4.1\\utils\\"
+        - "C:\\Program Files\\RyzenAI\\1.4.1\\utils"
         - "\\VC\\Auxiliary\\Build"
-        - "C:\\Program Files\\RyzenAI\\1.5.0\\utils\\"
-        - "C:\\Program Files\\Tailscale\\"
+        - "C:\\Program Files\\RyzenAI\\1.5.0\\utils"
+        - "C:\\Program Files\\Tailscale"
         - "C:\\Program Files\\Git\\cmd"
         - "C:\\Users\\atiqa\\miniforge3"
         - "C:\\Users\\atiqa\\miniforge3\\Library\\mingw-w64\\bin"
@@ -1065,6 +1192,8 @@ events:
         - "C:\\Users\\atiqa\\miniforge3\\Scripts"
         - "C:\\Users\\atiqa\\AppData\\Local\\Microsoft\\WindowsApps"
         - "C:\\Users\\atiqa\\AppData\\Local\\Programs\\Microsoft VS Code Insiders\\bin"
+        - "c:\\Users\\atiqa\\.vscode-insiders\\extensions\\ms-python.debugpy-2025.10.0-win32-x64\\bundled\\scripts\\noConfigScripts"
+        - "c:\\Users\\atiqa\\AppData\\Roaming\\Code - Insiders\\User\\globalStorage\\github.copilot-chat\\debugCommand"
       CMAKE_INSTALL_PREFIX: "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "C:/Program Files"
@@ -1080,8 +1209,8 @@ events:
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-mwx62h"
-      binary: "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-mwx62h"
+      source: "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-981oz3"
+      binary: "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-981oz3"
     cmakeVariables:
       CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /W3"
       CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
@@ -1090,40 +1219,40 @@ events:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: 'C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-mwx62h'
+        Change Dir: 'C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-981oz3'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_494c8.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_c39c8.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         MSBuild version 17.14.14+a129329f1 for .NET Framework
-        Build started 7/22/2025 4:24:31 PM.
+        Build started 7/23/2025 10:29:40 AM.
         
-        Project "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-mwx62h\\cmTC_494c8.vcxproj" on node 1 (default targets).
+        Project "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-981oz3\\cmTC_c39c8.vcxproj" on node 1 (default targets).
         PrepareForBuild:
-          Creating directory "cmTC_494c8.dir\\Debug\\".
+          Creating directory "cmTC_c39c8.dir\\Debug\\".
           Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
-          Creating directory "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-mwx62h\\Debug\\".
-          Creating directory "cmTC_494c8.dir\\Debug\\cmTC_494c8.tlog\\".
+          Creating directory "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-981oz3\\Debug\\".
+          Creating directory "cmTC_c39c8.dir\\Debug\\cmTC_c39c8.tlog\\".
         InitializeBuildStatus:
-          Creating "cmTC_494c8.dir\\Debug\\cmTC_494c8.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
-          Touching "cmTC_494c8.dir\\Debug\\cmTC_494c8.tlog\\unsuccessfulbuild".
+          Creating "cmTC_c39c8.dir\\Debug\\cmTC_c39c8.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_c39c8.dir\\Debug\\cmTC_c39c8.tlog\\unsuccessfulbuild".
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Fo"cmTC_494c8.dir\\Debug\\\\" /Fd"cmTC_494c8.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.1\\Modules\\CMakeCCompilerABI.c"
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Fo"cmTC_c39c8.dir\\Debug\\\\" /Fd"cmTC_c39c8.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.1\\Modules\\CMakeCCompilerABI.c"
           Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35213 for x64
           Copyright (C) Microsoft Corporation.  All rights reserved.
-          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Fo"cmTC_494c8.dir\\Debug\\\\" /Fd"cmTC_494c8.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.1\\Modules\\CMakeCCompilerABI.c"
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Fo"cmTC_c39c8.dir\\Debug\\\\" /Fd"cmTC_c39c8.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.1\\Modules\\CMakeCCompilerABI.c"
           CMakeCCompilerABI.c
         Link:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /OUT:"C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-mwx62h\\Debug\\cmTC_494c8.exe" /INCREMENTAL /ILK:"cmTC_494c8.dir\\Debug\\cmTC_494c8.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-mwx62h/Debug/cmTC_494c8.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /IMPLIB:"C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-mwx62h/Debug/cmTC_494c8.lib" /MACHINE:X64  /machine:x64 cmTC_494c8.dir\\Debug\\CMakeCCompilerABI.obj
-          cmTC_494c8.vcxproj -> C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-mwx62h\\Debug\\cmTC_494c8.exe
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /OUT:"C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-981oz3\\Debug\\cmTC_c39c8.exe" /INCREMENTAL /ILK:"cmTC_c39c8.dir\\Debug\\cmTC_c39c8.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-981oz3/Debug/cmTC_c39c8.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /IMPLIB:"C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-981oz3/Debug/cmTC_c39c8.lib" /MACHINE:X64  /machine:x64 cmTC_c39c8.dir\\Debug\\CMakeCCompilerABI.obj
+          cmTC_c39c8.vcxproj -> C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-981oz3\\Debug\\cmTC_c39c8.exe
         FinalizeBuildStatus:
-          Deleting file "cmTC_494c8.dir\\Debug\\cmTC_494c8.tlog\\unsuccessfulbuild".
-          Touching "cmTC_494c8.dir\\Debug\\cmTC_494c8.tlog\\cmTC_494c8.lastbuildstate".
-        Done Building Project "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-mwx62h\\cmTC_494c8.vcxproj" (default targets).
+          Deleting file "cmTC_c39c8.dir\\Debug\\cmTC_c39c8.tlog\\unsuccessfulbuild".
+          Touching "cmTC_c39c8.dir\\Debug\\cmTC_c39c8.tlog\\cmTC_c39c8.lastbuildstate".
+        Done Building Project "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-981oz3\\cmTC_c39c8.vcxproj" (default targets).
         
         Build succeeded.
             0 Warning(s)
             0 Error(s)
         
-        Time Elapsed 00:00:00.46
+        Time Elapsed 00:00:00.55
         
       exitCode: 0
   -
@@ -1163,8 +1292,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-snxsya"
-      binary: "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-snxsya"
+      source: "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-tnz39h"
+      binary: "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-tnz39h"
     cmakeVariables:
       CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /W3 /GR /EHsc"
       CMAKE_CXX_SCAN_FOR_MODULES: "OFF"
@@ -1174,40 +1303,40 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: 'C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-snxsya'
+        Change Dir: 'C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-tnz39h'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_5e627.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_8a5b9.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         MSBuild version 17.14.14+a129329f1 for .NET Framework
-        Build started 7/22/2025 4:24:32 PM.
+        Build started 7/23/2025 10:29:41 AM.
         
-        Project "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-snxsya\\cmTC_5e627.vcxproj" on node 1 (default targets).
+        Project "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-tnz39h\\cmTC_8a5b9.vcxproj" on node 1 (default targets).
         PrepareForBuild:
-          Creating directory "cmTC_5e627.dir\\Debug\\".
+          Creating directory "cmTC_8a5b9.dir\\Debug\\".
           Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
-          Creating directory "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-snxsya\\Debug\\".
-          Creating directory "cmTC_5e627.dir\\Debug\\cmTC_5e627.tlog\\".
+          Creating directory "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-tnz39h\\Debug\\".
+          Creating directory "cmTC_8a5b9.dir\\Debug\\cmTC_8a5b9.tlog\\".
         InitializeBuildStatus:
-          Creating "cmTC_5e627.dir\\Debug\\cmTC_5e627.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
-          Touching "cmTC_5e627.dir\\Debug\\cmTC_5e627.tlog\\unsuccessfulbuild".
+          Creating "cmTC_8a5b9.dir\\Debug\\cmTC_8a5b9.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_8a5b9.dir\\Debug\\cmTC_8a5b9.tlog\\unsuccessfulbuild".
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /GR /Fo"cmTC_5e627.dir\\Debug\\\\" /Fd"cmTC_5e627.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.1\\Modules\\CMakeCXXCompilerABI.cpp"
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /GR /Fo"cmTC_8a5b9.dir\\Debug\\\\" /Fd"cmTC_8a5b9.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.1\\Modules\\CMakeCXXCompilerABI.cpp"
           Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35213 for x64
           Copyright (C) Microsoft Corporation.  All rights reserved.
-          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /GR /Fo"cmTC_5e627.dir\\Debug\\\\" /Fd"cmTC_5e627.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.1\\Modules\\CMakeCXXCompilerABI.cpp"
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /GR /Fo"cmTC_8a5b9.dir\\Debug\\\\" /Fd"cmTC_8a5b9.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.1\\Modules\\CMakeCXXCompilerABI.cpp"
           CMakeCXXCompilerABI.cpp
         Link:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /OUT:"C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-snxsya\\Debug\\cmTC_5e627.exe" /INCREMENTAL /ILK:"cmTC_5e627.dir\\Debug\\cmTC_5e627.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-snxsya/Debug/cmTC_5e627.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /IMPLIB:"C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-snxsya/Debug/cmTC_5e627.lib" /MACHINE:X64  /machine:x64 cmTC_5e627.dir\\Debug\\CMakeCXXCompilerABI.obj
-          cmTC_5e627.vcxproj -> C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-snxsya\\Debug\\cmTC_5e627.exe
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /OUT:"C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-tnz39h\\Debug\\cmTC_8a5b9.exe" /INCREMENTAL /ILK:"cmTC_8a5b9.dir\\Debug\\cmTC_8a5b9.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-tnz39h/Debug/cmTC_8a5b9.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /IMPLIB:"C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-tnz39h/Debug/cmTC_8a5b9.lib" /MACHINE:X64  /machine:x64 cmTC_8a5b9.dir\\Debug\\CMakeCXXCompilerABI.obj
+          cmTC_8a5b9.vcxproj -> C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-tnz39h\\Debug\\cmTC_8a5b9.exe
         FinalizeBuildStatus:
-          Deleting file "cmTC_5e627.dir\\Debug\\cmTC_5e627.tlog\\unsuccessfulbuild".
-          Touching "cmTC_5e627.dir\\Debug\\cmTC_5e627.tlog\\cmTC_5e627.lastbuildstate".
-        Done Building Project "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-snxsya\\cmTC_5e627.vcxproj" (default targets).
+          Deleting file "cmTC_8a5b9.dir\\Debug\\cmTC_8a5b9.tlog\\unsuccessfulbuild".
+          Touching "cmTC_8a5b9.dir\\Debug\\cmTC_8a5b9.tlog\\cmTC_8a5b9.lastbuildstate".
+        Done Building Project "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-tnz39h\\cmTC_8a5b9.vcxproj" (default targets).
         
         Build succeeded.
             0 Warning(s)
             0 Error(s)
         
-        Time Elapsed 00:00:00.57
+        Time Elapsed 00:00:00.54
         
       exitCode: 0
   -
@@ -1259,6 +1388,12 @@ events:
       - "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/lib/"
       - "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/"
       - "C:/Program Files/RyzenAI/1.5.0/voe-4.0-win_amd64/voe/lib/"
+      - "C:/Users/atiqa/miniforge3/"
+      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/"
+      - "C:/Users/atiqa/miniforge3/Library/usr/bin/"
+      - "C:/Users/atiqa/miniforge3/Library/bin/"
+      - "C:/Users/atiqa/miniforge3/Scripts/"
+      - "C:/Users/atiqa/miniforge3/bin/"
       - "C:/Users/atiqa/miniforge3/condabin/"
       - "C:/Windows/System32/"
       - "C:/Windows/"
@@ -1266,8 +1401,6 @@ events:
       - "C:/Windows/System32/WindowsPowerShell/v1.0/"
       - "C:/Windows/System32/OpenSSH/"
       - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/"
-      - "C:/Users/atiqa/miniforge3/"
-      - "C:/Users/atiqa/miniforge3/Scripts/"
       - "C:/Program Files/CMake/bin/"
       - "C:/Program Files/HP/HP One Agent/"
       - "C:/Program Files/RyzenAI/1.4.1/utils/"
@@ -1275,11 +1408,10 @@ events:
       - "C:/Program Files/RyzenAI/1.5.0/utils/"
       - "C:/Program Files/Tailscale/"
       - "C:/Program Files/Git/cmd/"
-      - "C:/Users/atiqa/miniforge3/Library/mingw-w64/bin/"
-      - "C:/Users/atiqa/miniforge3/Library/usr/bin/"
-      - "C:/Users/atiqa/miniforge3/Library/bin/"
       - "C:/Users/atiqa/AppData/Local/Microsoft/WindowsApps/"
       - "C:/Users/atiqa/AppData/Local/Programs/Microsoft VS Code Insiders/bin/"
+      - "C:/Users/atiqa/.vscode-insiders/extensions/ms-python.debugpy-2025.10.0-win32-x64/bundled/scripts/noConfigScripts/"
+      - "C:/Users/atiqa/AppData/Roaming/Code - Insiders/User/globalStorage/github.copilot-chat/debugCommand/"
       - "C:/Program Files/lib/"
       - "C:/Program Files/"
       - "C:/Program Files (x86)/lib/"
@@ -1292,236 +1424,6 @@ events:
       - "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/lib/"
       - "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/"
     found: "C:/Program Files/RyzenAI/1.5.0/voe-4.0-win_amd64/voe/lib/onnxruntime.lib"
-    search_context:
-      CMAKE_PREFIX_PATH:
-        - "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\.."
-      ENV{CMAKE_PREFIX_PATH}:
-        - "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\.."
-      ENV{PATH}:
-        - "C:\\Users\\atiqa\\miniforge3\\condabin"
-        - "C:\\WINDOWS\\system32"
-        - "C:\\WINDOWS"
-        - "C:\\WINDOWS\\System32\\Wbem"
-        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
-        - "C:\\WINDOWS\\System32\\OpenSSH\\"
-        - "C:\\Program Files (x86)\\Windows Kits\\10\\Windows Performance Toolkit\\"
-        - "C:\\Users\\atiqa\\miniforge3"
-        - "C:\\Users\\atiqa\\miniforge3\\Scripts"
-        - "C:\\Program Files\\CMake\\bin"
-        - "C:\\Program Files\\HP\\HP One Agent"
-        - "C:\\Program Files\\RyzenAI\\1.4.1\\utils\\"
-        - "\\VC\\Auxiliary\\Build"
-        - "C:\\Program Files\\RyzenAI\\1.5.0\\utils\\"
-        - "C:\\Program Files\\Tailscale\\"
-        - "C:\\Program Files\\Git\\cmd"
-        - "C:\\Users\\atiqa\\miniforge3"
-        - "C:\\Users\\atiqa\\miniforge3\\Library\\mingw-w64\\bin"
-        - "C:\\Users\\atiqa\\miniforge3\\Library\\usr\\bin"
-        - "C:\\Users\\atiqa\\miniforge3\\Library\\bin"
-        - "C:\\Users\\atiqa\\miniforge3\\Scripts"
-        - "C:\\Users\\atiqa\\AppData\\Local\\Microsoft\\WindowsApps"
-        - "C:\\Users\\atiqa\\AppData\\Local\\Programs\\Microsoft VS Code Insiders\\bin"
-      CMAKE_INSTALL_PREFIX: "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp"
-      CMAKE_SYSTEM_PREFIX_PATH:
-        - "C:/Program Files"
-        - "C:/Program Files (x86)"
-        - "C:/Program Files/CMake"
-        - "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp"
-      CMAKE_SYSTEM_LIBRARY_PATH:
-        - "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/bin"
-        - "C:/Program Files/CMake/bin"
-        - "/bin"
-  -
-    kind: "find_package-v1"
-    backtrace:
-      - "CMakeLists.txt:51 (find_package)"
-    name: "OpenCV"
-    components:
-      -
-        name: "core"
-        required: true
-        found: true
-      -
-        name: "highgui"
-        required: true
-        found: true
-      -
-        name: "imgproc"
-        required: true
-        found: true
-    configs:
-      -
-        filename: "OpenCVConfig.cmake"
-        kind: "cmake"
-      -
-        filename: "opencv-config.cmake"
-        kind: "cmake"
-    version_request:
-      exact: false
-    settings:
-      required: "required_explicit"
-      quiet: false
-      global: false
-      policy_scope: true
-      bypass_provider: false
-      names:
-        - "OpenCV"
-      path_suffixes:
-        - ""
-      paths:
-        CMAKE_FIND_USE_CMAKE_PATH: true
-        CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
-        CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
-        CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
-        CMAKE_FIND_USE_INSTALL_PREFIX: true
-        CMAKE_FIND_USE_PACKAGE_ROOT_PATH: true
-        CMAKE_FIND_USE_CMAKE_PACKAGE_REGISTRY: true
-        CMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY: true
-        CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
-    candidates:
-      -
-        path: "C:/opencv/mybuild/build/install/bin/OpenCVConfig.cmake"
-        mode: "none?"
-        reason: "no_exist"
-      -
-        path: "C:/opencv/mybuild/build/install/bin/opencv-config.cmake"
-        mode: "none?"
-        reason: "no_exist"
-      -
-        path: "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/pkgRedirects/OpenCVConfig.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/pkgRedirects/opencv-config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/OpenCVConfig.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/opencv-config.cmake"
-        mode: "config"
-        reason: "no_exist"
-    found:
-      path: "C:/opencv/mybuild/build/OpenCVConfig.cmake"
-      mode: "config"
-      version: "4.11.0"
-    search_context:
-      CMAKE_PREFIX_PATH:
-        - "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\.."
-      ENV{CMAKE_PREFIX_PATH}:
-        - "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\.."
-      ENV{PATH}:
-        - "C:\\Users\\atiqa\\miniforge3\\condabin"
-        - "C:\\WINDOWS\\system32"
-        - "C:\\WINDOWS"
-        - "C:\\WINDOWS\\System32\\Wbem"
-        - "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\"
-        - "C:\\WINDOWS\\System32\\OpenSSH\\"
-        - "C:\\Program Files (x86)\\Windows Kits\\10\\Windows Performance Toolkit\\"
-        - "C:\\Users\\atiqa\\miniforge3"
-        - "C:\\Users\\atiqa\\miniforge3\\Scripts"
-        - "C:\\Program Files\\CMake\\bin"
-        - "C:\\Program Files\\HP\\HP One Agent"
-        - "C:\\Program Files\\RyzenAI\\1.4.1\\utils\\"
-        - "\\VC\\Auxiliary\\Build"
-        - "C:\\Program Files\\RyzenAI\\1.5.0\\utils\\"
-        - "C:\\Program Files\\Tailscale\\"
-        - "C:\\Program Files\\Git\\cmd"
-        - "C:\\Users\\atiqa\\miniforge3"
-        - "C:\\Users\\atiqa\\miniforge3\\Library\\mingw-w64\\bin"
-        - "C:\\Users\\atiqa\\miniforge3\\Library\\usr\\bin"
-        - "C:\\Users\\atiqa\\miniforge3\\Library\\bin"
-        - "C:\\Users\\atiqa\\miniforge3\\Scripts"
-        - "C:\\Users\\atiqa\\AppData\\Local\\Microsoft\\WindowsApps"
-        - "C:\\Users\\atiqa\\AppData\\Local\\Programs\\Microsoft VS Code Insiders\\bin"
-      CMAKE_INSTALL_PREFIX: "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp"
-      CMAKE_SYSTEM_PREFIX_PATH:
-        - "C:/Program Files"
-        - "C:/Program Files (x86)"
-        - "C:/Program Files/CMake"
-        - "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp"
-...
-
----
-events:
-  -
-    kind: "find_package-v1"
-    backtrace:
-      - "CMakeLists.txt:51 (find_package)"
-    name: "OpenCV"
-    components:
-      -
-        name: "core"
-        required: true
-        found: true
-      -
-        name: "highgui"
-        required: true
-        found: true
-      -
-        name: "imgproc"
-        required: true
-        found: true
-    configs:
-      -
-        filename: "OpenCVConfig.cmake"
-        kind: "cmake"
-      -
-        filename: "opencv-config.cmake"
-        kind: "cmake"
-    version_request:
-      exact: false
-    settings:
-      required: "required_explicit"
-      quiet: false
-      global: false
-      policy_scope: true
-      bypass_provider: false
-      names:
-        - "OpenCV"
-      path_suffixes:
-        - ""
-      paths:
-        CMAKE_FIND_USE_CMAKE_PATH: true
-        CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
-        CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
-        CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
-        CMAKE_FIND_USE_INSTALL_PREFIX: true
-        CMAKE_FIND_USE_PACKAGE_ROOT_PATH: true
-        CMAKE_FIND_USE_CMAKE_PACKAGE_REGISTRY: true
-        CMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY: true
-        CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
-    candidates:
-      -
-        path: "C:/opencv/mybuild/build/install/bin/OpenCVConfig.cmake"
-        mode: "none?"
-        reason: "no_exist"
-      -
-        path: "C:/opencv/mybuild/build/install/bin/opencv-config.cmake"
-        mode: "none?"
-        reason: "no_exist"
-      -
-        path: "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/pkgRedirects/OpenCVConfig.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/pkgRedirects/opencv-config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/OpenCVConfig.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/opencv-config.cmake"
-        mode: "config"
-        reason: "no_exist"
-    found:
-      path: "C:/opencv/mybuild/build/OpenCVConfig.cmake"
-      mode: "config"
-      version: "4.11.0"
     search_context:
       CMAKE_PREFIX_PATH:
         - "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\.."
@@ -1565,14 +1467,14 @@ events:
         - "C:/Program Files (x86)"
         - "C:/Program Files/CMake"
         - "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp"
-...
-
----
-events:
+      CMAKE_SYSTEM_LIBRARY_PATH:
+        - "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/bin"
+        - "C:/Program Files/CMake/bin"
+        - "/bin"
   -
     kind: "find_package-v1"
     backtrace:
-      - "CMakeLists.txt:51 (find_package)"
+      - "CMakeLists.txt:48 (find_package)"
     name: "OpenCV"
     components:
       -
