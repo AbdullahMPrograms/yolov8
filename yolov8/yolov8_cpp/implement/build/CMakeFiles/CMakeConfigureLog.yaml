@@ -77,7 +77,7 @@ events:
       The output was:
       0
       MSBuild version 17.14.14+a129329f1 for .NET Framework
-      Build started 7/23/2025 11:33:56 AM.
+      Build started 7/23/2025 11:52:20 AM.
       
       Project "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\4.1.0-rc2\\CompilerIdC\\CompilerIdC.vcxproj" on node 1 (default targets).
       PrepareForBuild:
@@ -106,7 +106,7 @@ events:
           0 Warning(s)
           0 Error(s)
       
-      Time Elapsed 00:00:00.49
+      Time Elapsed 00:00:00.70
       
       
       Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.exe"
@@ -662,7 +662,7 @@ events:
       The output was:
       0
       MSBuild version 17.14.14+a129329f1 for .NET Framework
-      Build started 7/23/2025 11:33:57 AM.
+      Build started 7/23/2025 11:52:21 AM.
       
       Project "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\4.1.0-rc2\\CompilerIdCXX\\CompilerIdCXX.vcxproj" on node 1 (default targets).
       PrepareForBuild:
@@ -691,7 +691,7 @@ events:
           0 Warning(s)
           0 Error(s)
       
-      Time Elapsed 00:00:00.49
+      Time Elapsed 00:00:00.50
       
       
       Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.exe"
@@ -1024,8 +1024,8 @@ events:
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-apc30m"
-      binary: "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-apc30m"
+      source: "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-g3rn5i"
+      binary: "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-g3rn5i"
     cmakeVariables:
       CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /W3"
       CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
@@ -1034,40 +1034,40 @@ events:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: 'C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-apc30m'
+        Change Dir: 'C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-g3rn5i'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_b42d8.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_1e345.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         MSBuild version 17.14.14+a129329f1 for .NET Framework
-        Build started 7/23/2025 11:33:57 AM.
+        Build started 7/23/2025 11:52:22 AM.
         
-        Project "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-apc30m\\cmTC_b42d8.vcxproj" on node 1 (default targets).
+        Project "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-g3rn5i\\cmTC_1e345.vcxproj" on node 1 (default targets).
         PrepareForBuild:
-          Creating directory "cmTC_b42d8.dir\\Debug\\".
+          Creating directory "cmTC_1e345.dir\\Debug\\".
           Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
-          Creating directory "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-apc30m\\Debug\\".
-          Creating directory "cmTC_b42d8.dir\\Debug\\cmTC_b42d8.tlog\\".
+          Creating directory "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-g3rn5i\\Debug\\".
+          Creating directory "cmTC_1e345.dir\\Debug\\cmTC_1e345.tlog\\".
         InitializeBuildStatus:
-          Creating "cmTC_b42d8.dir\\Debug\\cmTC_b42d8.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
-          Touching "cmTC_b42d8.dir\\Debug\\cmTC_b42d8.tlog\\unsuccessfulbuild".
+          Creating "cmTC_1e345.dir\\Debug\\cmTC_1e345.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_1e345.dir\\Debug\\cmTC_1e345.tlog\\unsuccessfulbuild".
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Fo"cmTC_b42d8.dir\\Debug\\\\" /Fd"cmTC_b42d8.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.1\\Modules\\CMakeCCompilerABI.c"
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Fo"cmTC_1e345.dir\\Debug\\\\" /Fd"cmTC_1e345.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.1\\Modules\\CMakeCCompilerABI.c"
           Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35213 for x64
           Copyright (C) Microsoft Corporation.  All rights reserved.
-          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Fo"cmTC_b42d8.dir\\Debug\\\\" /Fd"cmTC_b42d8.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.1\\Modules\\CMakeCCompilerABI.c"
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Fo"cmTC_1e345.dir\\Debug\\\\" /Fd"cmTC_1e345.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.1\\Modules\\CMakeCCompilerABI.c"
           CMakeCCompilerABI.c
         Link:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /OUT:"C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-apc30m\\Debug\\cmTC_b42d8.exe" /INCREMENTAL /ILK:"cmTC_b42d8.dir\\Debug\\cmTC_b42d8.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-apc30m/Debug/cmTC_b42d8.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /IMPLIB:"C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-apc30m/Debug/cmTC_b42d8.lib" /MACHINE:X64  /machine:x64 cmTC_b42d8.dir\\Debug\\CMakeCCompilerABI.obj
-          cmTC_b42d8.vcxproj -> C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-apc30m\\Debug\\cmTC_b42d8.exe
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /OUT:"C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-g3rn5i\\Debug\\cmTC_1e345.exe" /INCREMENTAL /ILK:"cmTC_1e345.dir\\Debug\\cmTC_1e345.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-g3rn5i/Debug/cmTC_1e345.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /IMPLIB:"C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-g3rn5i/Debug/cmTC_1e345.lib" /MACHINE:X64  /machine:x64 cmTC_1e345.dir\\Debug\\CMakeCCompilerABI.obj
+          cmTC_1e345.vcxproj -> C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-g3rn5i\\Debug\\cmTC_1e345.exe
         FinalizeBuildStatus:
-          Deleting file "cmTC_b42d8.dir\\Debug\\cmTC_b42d8.tlog\\unsuccessfulbuild".
-          Touching "cmTC_b42d8.dir\\Debug\\cmTC_b42d8.tlog\\cmTC_b42d8.lastbuildstate".
-        Done Building Project "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-apc30m\\cmTC_b42d8.vcxproj" (default targets).
+          Deleting file "cmTC_1e345.dir\\Debug\\cmTC_1e345.tlog\\unsuccessfulbuild".
+          Touching "cmTC_1e345.dir\\Debug\\cmTC_1e345.tlog\\cmTC_1e345.lastbuildstate".
+        Done Building Project "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-g3rn5i\\cmTC_1e345.vcxproj" (default targets).
         
         Build succeeded.
             0 Warning(s)
             0 Error(s)
         
-        Time Elapsed 00:00:00.48
+        Time Elapsed 00:00:00.57
         
       exitCode: 0
   -
@@ -1107,8 +1107,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-1mxe4k"
-      binary: "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-1mxe4k"
+      source: "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-nt1cip"
+      binary: "C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-nt1cip"
     cmakeVariables:
       CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /W3 /GR /EHsc"
       CMAKE_CXX_SCAN_FOR_MODULES: "OFF"
@@ -1118,40 +1118,40 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: 'C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-1mxe4k'
+        Change Dir: 'C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-nt1cip'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_85def.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_02b01.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         MSBuild version 17.14.14+a129329f1 for .NET Framework
-        Build started 7/23/2025 11:33:58 AM.
+        Build started 7/23/2025 11:52:23 AM.
         
-        Project "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-1mxe4k\\cmTC_85def.vcxproj" on node 1 (default targets).
+        Project "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-nt1cip\\cmTC_02b01.vcxproj" on node 1 (default targets).
         PrepareForBuild:
-          Creating directory "cmTC_85def.dir\\Debug\\".
+          Creating directory "cmTC_02b01.dir\\Debug\\".
           Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
-          Creating directory "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-1mxe4k\\Debug\\".
-          Creating directory "cmTC_85def.dir\\Debug\\cmTC_85def.tlog\\".
+          Creating directory "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-nt1cip\\Debug\\".
+          Creating directory "cmTC_02b01.dir\\Debug\\cmTC_02b01.tlog\\".
         InitializeBuildStatus:
-          Creating "cmTC_85def.dir\\Debug\\cmTC_85def.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
-          Touching "cmTC_85def.dir\\Debug\\cmTC_85def.tlog\\unsuccessfulbuild".
+          Creating "cmTC_02b01.dir\\Debug\\cmTC_02b01.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_02b01.dir\\Debug\\cmTC_02b01.tlog\\unsuccessfulbuild".
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /GR /Fo"cmTC_85def.dir\\Debug\\\\" /Fd"cmTC_85def.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.1\\Modules\\CMakeCXXCompilerABI.cpp"
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /GR /Fo"cmTC_02b01.dir\\Debug\\\\" /Fd"cmTC_02b01.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.1\\Modules\\CMakeCXXCompilerABI.cpp"
           Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35213 for x64
           Copyright (C) Microsoft Corporation.  All rights reserved.
-          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /GR /Fo"cmTC_85def.dir\\Debug\\\\" /Fd"cmTC_85def.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.1\\Modules\\CMakeCXXCompilerABI.cpp"
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /GR /Fo"cmTC_02b01.dir\\Debug\\\\" /Fd"cmTC_02b01.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.1\\Modules\\CMakeCXXCompilerABI.cpp"
           CMakeCXXCompilerABI.cpp
         Link:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /OUT:"C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-1mxe4k\\Debug\\cmTC_85def.exe" /INCREMENTAL /ILK:"cmTC_85def.dir\\Debug\\cmTC_85def.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-1mxe4k/Debug/cmTC_85def.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /IMPLIB:"C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-1mxe4k/Debug/cmTC_85def.lib" /MACHINE:X64  /machine:x64 cmTC_85def.dir\\Debug\\CMakeCXXCompilerABI.obj
-          cmTC_85def.vcxproj -> C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-1mxe4k\\Debug\\cmTC_85def.exe
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /OUT:"C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-nt1cip\\Debug\\cmTC_02b01.exe" /INCREMENTAL /ILK:"cmTC_02b01.dir\\Debug\\cmTC_02b01.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-nt1cip/Debug/cmTC_02b01.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /IMPLIB:"C:/RyzenAI-SW/tutorial/yolov8/yolov8/yolov8/yolov8_cpp/implement/build/CMakeFiles/CMakeScratch/TryCompile-nt1cip/Debug/cmTC_02b01.lib" /MACHINE:X64  /machine:x64 cmTC_02b01.dir\\Debug\\CMakeCXXCompilerABI.obj
+          cmTC_02b01.vcxproj -> C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-nt1cip\\Debug\\cmTC_02b01.exe
         FinalizeBuildStatus:
-          Deleting file "cmTC_85def.dir\\Debug\\cmTC_85def.tlog\\unsuccessfulbuild".
-          Touching "cmTC_85def.dir\\Debug\\cmTC_85def.tlog\\cmTC_85def.lastbuildstate".
-        Done Building Project "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-1mxe4k\\cmTC_85def.vcxproj" (default targets).
+          Deleting file "cmTC_02b01.dir\\Debug\\cmTC_02b01.tlog\\unsuccessfulbuild".
+          Touching "cmTC_02b01.dir\\Debug\\cmTC_02b01.tlog\\cmTC_02b01.lastbuildstate".
+        Done Building Project "C:\\RyzenAI-SW\\tutorial\\yolov8\\yolov8\\yolov8\\yolov8_cpp\\implement\\build\\CMakeFiles\\CMakeScratch\\TryCompile-nt1cip\\cmTC_02b01.vcxproj" (default targets).
         
         Build succeeded.
             0 Warning(s)
             0 Error(s)
         
-        Time Elapsed 00:00:00.46
+        Time Elapsed 00:00:00.55
         
       exitCode: 0
   -
