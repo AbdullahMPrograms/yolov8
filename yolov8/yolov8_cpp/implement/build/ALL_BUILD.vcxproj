@@ -39,7 +39,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Midl>
-      <AdditionalIncludeDirectories>C:\Program Files\RyzenAI\1.5.0\voe-4.0-win_amd64\voe\include;C:\Program Files\RyzenAI\1.5.0\voe-4.0-win_amd64\voe\include\onnxruntime;C:\RyzenAI-SW\tutorial\yolov8\yolov8\yolov8\yolov8_cpp\implement\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files\RyzenAI\1.5.0\onnxruntime\include;C:\Program Files\RyzenAI\1.5.0\onnxruntime\include\onnxruntime;C:\Program Files\RyzenAI\1.5.0\onnxruntime\include\onnxruntime\core\session;C:\RyzenAI-SW\tutorial\yolov8\yolov8\yolov8\yolov8_cpp\implement\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>

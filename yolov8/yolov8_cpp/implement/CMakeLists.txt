@@ -28,22 +28,25 @@ set (RYZEN_AI_INSTALLATION_PATH $ENV{RYZEN_AI_INSTALLATION_PATH})
 
 if(NOT ONNXRUNTIME_ROOTDIR)
   if(WIN32)
-    set(ONNXRUNTIME_ROOTDIR "${RYZEN_AI_INSTALLATION_PATH}/voe-4.0-win_amd64/voe")
+    set(ONNXRUNTIME_ROOTDIR "${RYZEN_AI_INSTALLATION_PATH}/onnxruntime")
 else()
     set(ONNXRUNTIME_ROOTDIR "/usr/local")
   endif()
 endif()
 
-include_directories("${ONNXRUNTIME_ROOTDIR}/include"                           
-                    "${ONNXRUNTIME_ROOTDIR}/include/onnxruntime"               
+include_directories("${ONNXRUNTIME_ROOTDIR}/include"                           # Pre-built package
+                    "${ONNXRUNTIME_ROOTDIR}/include/onnxruntime"               # Linux local install to /usr/local
+                    "${ONNXRUNTIME_ROOTDIR}/include/onnxruntime/core/session"  # Windows local install
                     "${CMAKE_PREFIX_PATH}/include")
-
+					
 link_directories("${ONNXRUNTIME_ROOTDIR}/lib"
                  "${CMAKE_PREFIX_PATH}/lib")
 
 find_library(ORT_LIBRARY onnxruntime HINTS "${ONNXRUNTIME_ROOTDIR}/lib"
                                            REQUIRED)
-
+SET(GFLAGS_INCLUDE_DIR "C:/dell/vcpkg/packages/gflags_x64-windows")
+SET(gflags_DIR "C:/dell/vcpkg/packages/gflags_x64-windows/share/gflags")
+SET(GFLAGS_USE_TARGET_NAMESPACE ON)
 SET(OpenCV_DIR "C:/opencv/mybuild/build/install/bin")
 find_package(
   OpenCV

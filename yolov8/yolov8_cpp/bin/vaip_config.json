@@ -34,6 +34,192 @@
                         "disabled": false,
                         "passFusionParam": {
                             "pattern": {
+                                "pattern_name": "m_iconv_3",
+                                "input_names": [
+                                    "input_0",
+                                    "constant_4"
+                                ],
+                                "output_names": "ms_QuantizeLinear_15"
+                            },
+                            "op_name": "IConv",
+                            "extractor": {
+                                "explicit_attributes": [
+                                    {
+                                        "attribute_name": "design_param",
+                                        "attribute_value": "8x4"
+                                    },
+                                    {
+                                        "attribute_name": "input_format",
+                                        "attribute_value": "NCHW"
+                                    },
+                                    {
+                                        "attribute_name": "is_bias",
+                                        "attribute_value": "true"
+                                    }
+                                ],
+                                "initializers": [
+                                    "constant_5",
+                                    "constant_6",
+                                    "constant_1",
+                                    "constant_2",
+                                    "constant_13",
+                                    "constant_14",
+                                    "constant_8",
+                                    "constant_9",
+                                    "constant_10"
+                                ],
+                                "modifiers": [
+                                    "add_stride_inp_zp_attr"
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        "name": "vaip_pass_dd_merge_top_fuse",
+                        "plugin": "vaip-pass_dd_merge_top_fuse",
+                        "enable_gc": true,
+                        "disabled": false,
+                        "passFusionParam": {
+                            "pattern": {
+                                "pattern_name": "m_iconv_3",
+                                "input_names": [
+                                    "input_0",
+                                    "constant_4"
+                                ],
+                                "output_names": "ms_QuantizeLinear_15"
+                            },
+                            "op_name": "QConv2MatMul",
+                            "extractor": {
+                                "explicit_attributes": [
+                                    {
+                                        "attribute_name": "design_param",
+                                        "attribute_value": "8x4"
+                                    },
+                                    {
+                                        "attribute_name": "input_format",
+                                        "attribute_value": "NCHW"
+                                    },
+                                    {
+                                        "attribute_name": "is_bias",
+                                        "attribute_value": "true"
+                                    },
+                                    {
+                                        "attribute_name": "from_conv2matmul",
+                                        "attribute_value": "true"
+                                    }
+                                ],
+                                "initializers": [
+                                    "constant_5",
+                                    "constant_6",
+                                    "constant_1",
+                                    "constant_2",
+                                    "constant_13",
+                                    "constant_14",
+                                    "constant_8",
+                                    "constant_9",
+                                    "constant_10"
+                                ],
+                                "modifiers": [
+                                    "check_kernel_conv2matmul"
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        "name": "vaip_pass_dd_merge_top_fuse",
+                        "plugin": "vaip-pass_dd_merge_top_fuse",
+                        "enable_gc": true,
+                        "disabled": true,
+                        "passFusionParam": {
+                            "pattern": {
+                                "pattern_name": "m_iconv_4",
+                                "input_names": [
+                                    "input_0",
+                                    "constant_4"
+                                ],
+                                "output_names": "ms_QuantizeLinear_15"
+                            },
+                            "op_name": "IConv",
+                            "extractor": {
+                                "explicit_attributes": [
+                                    {
+                                        "attribute_name": "design_param",
+                                        "attribute_value": "8x4"
+                                    },
+                                    {
+                                        "attribute_name": "input_format",
+                                        "attribute_value": "NCHW"
+                                    }
+                                ],
+                                "initializers": [
+                                    "constant_5",
+                                    "constant_6",
+                                    "constant_1",
+                                    "constant_2",
+                                    "constant_13",
+                                    "constant_14"
+                                ],
+                                "modifiers": [
+                                    "add_stride_inp_zp_attr"
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        "name": "vaip_pass_dd_merge_top_fuse",
+                        "plugin": "vaip-pass_dd_merge_top_fuse",
+                        "enable_gc": true,
+                        "disabled": false,
+                        "passFusionParam": {
+                            "pattern": {
+                                "pattern_name": "m_qmatmul_add_gelu_0",
+                                "input_names": [
+                                    "a",
+                                    "w",
+                                    "b"
+                                ],
+                                "output_names": "q3"
+                            },
+                            "op_name": "QMatMulAddGelu",
+                            "extractor": {
+                                "explicit_attributes": [
+                                    {
+                                        "attribute_name": "design_param",
+                                        "attribute_value": "8x4"
+                                    },
+                                    {
+                                        "attribute_name": "bias",
+                                        "attribute_value": "true"
+                                    },
+                                    {
+                                        "attribute_name": "gelu",
+                                        "attribute_value": "true"
+                                    }
+                                ],
+                                "initializers": [
+                                    "a_s",
+                                    "a_z",
+                                    "w_s",
+                                    "w_z",
+                                    "b_s",
+                                    "b_z",
+                                    "q1_s",
+                                    "q1_z",
+                                    "q2_s",
+                                    "q2_z",
+                                    "q3_s",
+                                    "q3_z"
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        "name": "vaip_pass_dd_merge_top_fuse",
+                        "plugin": "vaip-pass_dd_merge_top_fuse",
+                        "enable_gc": true,
+                        "disabled": false,
+                        "passFusionParam": {
+                            "pattern": {
                                 "pattern_name": "m_qgemm_quickgelu",
                                 "input_names": [
                                     "a",
@@ -252,7 +438,8 @@
                                     "q1_z"
                                 ],
                                 "modifiers": [
-                                    "transpose_weight_gemm"
+                                    "transpose_weight_gemm",
+                                    "wcr_prefix"
                                 ]
                             }
                         }
@@ -923,6 +1110,56 @@
                         "disabled": false,
                         "passFusionParam": {
                             "pattern": {
+                                "pattern_name": "m_qsqueeze",
+                                "input_names": [
+                                    "input_0"
+                                ],
+                                "output_names": "q"
+                            },
+                            "op_name": "NoOp",
+                            "extractor": {
+                                "explicit_attributes": [
+                                    {
+                                        "attribute_name": "design_param",
+                                        "attribute_value": "8x4"
+                                    }
+                                ],
+                                "initializers": []
+                            }
+                        }
+                    },
+                    {
+                        "name": "vaip_pass_dd_merge_top_fuse",
+                        "plugin": "vaip-pass_dd_merge_top_fuse",
+                        "enable_gc": true,
+                        "disabled": false,
+                        "passFusionParam": {
+                            "pattern": {
+                                "pattern_name": "m_qunsqueeze",
+                                "input_names": [
+                                    "input_0"
+                                ],
+                                "output_names": "q"
+                            },
+                            "op_name": "NoOp",
+                            "extractor": {
+                                "explicit_attributes": [
+                                    {
+                                        "attribute_name": "design_param",
+                                        "attribute_value": "8x4"
+                                    }
+                                ],
+                                "initializers": []
+                            }
+                        }
+                    },
+                    {
+                        "name": "vaip_pass_dd_merge_top_fuse",
+                        "plugin": "vaip-pass_dd_merge_top_fuse",
+                        "enable_gc": true,
+                        "disabled": false,
+                        "passFusionParam": {
+                            "pattern": {
                                 "pattern_name": "m_qelwediv",
                                 "input_names": [
                                     "input_0"
@@ -1133,6 +1370,440 @@
             }
         },
         {
+            "name": "fuse_dynamic_dispatch_psp1",
+            "plugin": "vaip-pass_level1_dd_cxx",
+            "passDpuParam": {
+                "subPass": [
+                    {
+                        "name": "vaip_pass_dd_merge_top_fuse",
+                        "plugin": "vaip-pass_dd_merge_top_fuse",
+                        "enable_gc": true,
+                        "disabled": false,
+                        "passFusionParam": {
+                            "pattern": {
+                                "pattern_name": "m_qmatmul_add_gelu_0",
+                                "input_names": [
+                                    "a",
+                                    "w",
+                                    "b"
+                                ],
+                                "output_names": "q3"
+                            },
+                            "op_name": "QMatMulAddGelu",
+                            "extractor": {
+                                "explicit_attributes": [
+                                    {
+                                        "attribute_name": "design_param",
+                                        "attribute_value": "8x4"
+                                    },
+                                    {
+                                        "attribute_name": "bias",
+                                        "attribute_value": "true"
+                                    },
+                                    {
+                                        "attribute_name": "gelu",
+                                        "attribute_value": "true"
+                                    }
+                                ],
+                                "initializers": [
+                                    "a_s",
+                                    "a_z",
+                                    "w_s",
+                                    "w_z",
+                                    "b_s",
+                                    "b_z",
+                                    "q1_s",
+                                    "q1_z",
+                                    "q2_s",
+                                    "q2_z",
+                                    "q3_s",
+                                    "q3_z"
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        "name": "vaip_pass_dd_merge_top_fuse",
+                        "plugin": "vaip-pass_dd_merge_top_fuse",
+                        "enable_gc": true,
+                        "disabled": false,
+                        "passFusionParam": {
+                            "pattern": {
+                                "pattern_name": "m_qgemm_quickgelu",
+                                "input_names": [
+                                    "a",
+                                    "w",
+                                    "b"
+                                ],
+                                "output_names": "q3"
+                            },
+                            "op_name": "QMatMulAddGelu",
+                            "extractor": {
+                                "explicit_attributes": [
+                                    {
+                                        "attribute_name": "design_param",
+                                        "attribute_value": "8x4"
+                                    },
+                                    {
+                                        "attribute_name": "bias",
+                                        "attribute_value": "true"
+                                    },
+                                    {
+                                        "attribute_name": "gelu",
+                                        "attribute_value": "true"
+                                    }
+                                ],
+                                "initializers": [
+                                    "a_s",
+                                    "a_z",
+                                    "w_s",
+                                    "w_z",
+                                    "b_s",
+                                    "b_z",
+                                    "q1_s",
+                                    "q1_z",
+                                    "q2_s",
+                                    "q2_z",
+                                    "q3_s",
+                                    "q3_z"
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        "name": "vaip_pass_dd_merge_top_fuse",
+                        "plugin": "vaip-pass_dd_merge_top_fuse",
+                        "enable_gc": true,
+                        "disabled": false,
+                        "passFusionParam": {
+                            "pattern": {
+                                "pattern_name": "m_qgemm_gelu_microsoft",
+                                "input_names": [
+                                    "a",
+                                    "w",
+                                    "b"
+                                ],
+                                "output_names": "q3"
+                            },
+                            "op_name": "QMatMulAddGelu",
+                            "extractor": {
+                                "explicit_attributes": [
+                                    {
+                                        "attribute_name": "design_param",
+                                        "attribute_value": "8x4"
+                                    },
+                                    {
+                                        "attribute_name": "bias",
+                                        "attribute_value": "true"
+                                    },
+                                    {
+                                        "attribute_name": "gelu",
+                                        "attribute_value": "true"
+                                    }
+                                ],
+                                "initializers": [
+                                    "a_s",
+                                    "a_z",
+                                    "w_s",
+                                    "w_z",
+                                    "b_s",
+                                    "b_z",
+                                    "q1_s",
+                                    "q1_z",
+                                    "q2_s",
+                                    "q2_z",
+                                    "q3_s",
+                                    "q3_z"
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        "name": "vaip_pass_dd_merge_top_fuse",
+                        "plugin": "vaip-pass_dd_merge_top_fuse",
+                        "enable_gc": true,
+                        "disabled": false,
+                        "passFusionParam": {
+                            "pattern": {
+                                "pattern_name": "m_qmatmul_add_0",
+                                "input_names": [
+                                    "a",
+                                    "w",
+                                    "b"
+                                ],
+                                "output_names": "q2"
+                            },
+                            "op_name": "QMatMulAdd",
+                            "extractor": {
+                                "explicit_attributes": [
+                                    {
+                                        "attribute_name": "design_param",
+                                        "attribute_value": "8x4"
+                                    },
+                                    {
+                                        "attribute_name": "bias",
+                                        "attribute_value": "true"
+                                    }
+                                ],
+                                "initializers": [
+                                    "a_s",
+                                    "a_z",
+                                    "w_s",
+                                    "w_z",
+                                    "q1_s",
+                                    "q1_z",
+                                    "dq3_s",
+                                    "dq3_z",
+                                    "b_s",
+                                    "b_z",
+                                    "q2_s",
+                                    "q2_z"
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        "name": "vaip_pass_dd_merge_top_fuse",
+                        "plugin": "vaip-pass_dd_merge_top_fuse",
+                        "enable_gc": true,
+                        "disabled": false,
+                        "passFusionParam": {
+                            "pattern": {
+                                "pattern_name": "m_qgemm_2",
+                                "input_names": [
+                                    "a",
+                                    "w",
+                                    "b"
+                                ],
+                                "output_names": "q1"
+                            },
+                            "op_name": "QMatMulAdd",
+                            "extractor": {
+                                "explicit_attributes": [
+                                    {
+                                        "attribute_name": "design_param",
+                                        "attribute_value": "8x4"
+                                    },
+                                    {
+                                        "attribute_name": "bias",
+                                        "attribute_value": "true"
+                                    }
+                                ],
+                                "initializers": [
+                                    "a_s",
+                                    "a_z",
+                                    "w_s",
+                                    "w_z",
+                                    "a_s",
+                                    "a_z",
+                                    "w_s",
+                                    "w_z",
+                                    "b_s",
+                                    "b_z",
+                                    "q1_s",
+                                    "q1_z"
+                                ],
+                                "modifiers": [
+                                    "transpose_weight_gemm"
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        "name": "vaip_pass_dd_merge_top_fuse",
+                        "plugin": "vaip-pass_dd_merge_top_fuse",
+                        "enable_gc": true,
+                        "disabled": false,
+                        "passFusionParam": {
+                            "pattern": {
+                                "pattern_name": "m_qmatmul_0",
+                                "input_names": [
+                                    "a",
+                                    "w"
+                                ],
+                                "output_names": "q"
+                            },
+                            "op_name": "QMatMul",
+                            "extractor": {
+                                "explicit_attributes": [
+                                    {
+                                        "attribute_name": "design_param",
+                                        "attribute_value": "8x4"
+                                    }
+                                ],
+                                "initializers": [
+                                    "a_s",
+                                    "a_z",
+                                    "w_s",
+                                    "w_z",
+                                    "q_s",
+                                    "q_z"
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        "name": "vaip_pass_dd_merge_top_fuse",
+                        "plugin": "vaip-pass_dd_merge_top_fuse",
+                        "enable_gc": true,
+                        "disabled": false,
+                        "passFusionParam": {
+                            "pattern": {
+                                "pattern_name": "m_qlayernorm_1",
+                                "input_names": [
+                                    "a"
+                                ],
+                                "output_names": "q"
+                            },
+                            "op_name": "QLayerNorm",
+                            "extractor": {
+                                "accessor_attributes": [
+                                    {
+                                        "node_binder_name": "ln",
+                                        "attribute_name": "axis",
+                                        "dtype": "int"
+                                    },
+                                    {
+                                        "node_binder_name": "ln",
+                                        "attribute_name": "epsilon",
+                                        "dtype": "float"
+                                    },
+                                    {
+                                        "node_binder_name": "ln",
+                                        "attribute_name": "stash_type",
+                                        "dtype": "int"
+                                    }
+                                ],
+                                "explicit_attributes": [
+                                    {
+                                        "attribute_name": "design_param",
+                                        "attribute_value": "8x4"
+                                    }
+                                ],
+                                "initializers": [
+                                    "b",
+                                    "c",
+                                    "a_s",
+                                    "a_z",
+                                    "b_s",
+                                    "b_z",
+                                    "c_s",
+                                    "c_z",
+                                    "y_s",
+                                    "y_z"
+                                ],
+                                "input_q_params": [
+                                    "a_s",
+                                    "a_z"
+                                ],
+                                "output_q_params": [
+                                    "y_s",
+                                    "y_z"
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        "name": "vaip_pass_dd_merge_top_fuse",
+                        "plugin": "vaip-pass_dd_merge_top_fuse",
+                        "enable_gc": true,
+                        "disabled": false,
+                        "passFusionParam": {
+                            "pattern": {
+                                "pattern_name": "m_qlayernorm_0",
+                                "input_names": [
+                                    "a"
+                                ],
+                                "output_names": "q"
+                            },
+                            "op_name": "QLayerNorm",
+                            "extractor": {
+                                "accessor_attributes": [
+                                    {
+                                        "node_binder_name": "ln",
+                                        "attribute_name": "axis",
+                                        "dtype": "int"
+                                    },
+                                    {
+                                        "node_binder_name": "ln",
+                                        "attribute_name": "epsilon",
+                                        "dtype": "float"
+                                    },
+                                    {
+                                        "node_binder_name": "ln",
+                                        "attribute_name": "stash_type",
+                                        "dtype": "int"
+                                    }
+                                ],
+                                "explicit_attributes": [
+                                    {
+                                        "attribute_name": "design_param",
+                                        "attribute_value": "8x4"
+                                    }
+                                ],
+                                "initializers": [
+                                    "b",
+                                    "c",
+                                    "a_s",
+                                    "a_z",
+                                    "b_s",
+                                    "b_z",
+                                    "c_s",
+                                    "c_z",
+                                    "y_s",
+                                    "y_z"
+                                ],
+                                "input_q_params": [
+                                    "a_s",
+                                    "a_z"
+                                ],
+                                "output_q_params": [
+                                    "y_s",
+                                    "y_z"
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        "name": "vaip_pass_dd_merge_top_fuse",
+                        "plugin": "vaip-pass_dd_merge_top_fuse",
+                        "enable_gc": true,
+                        "disabled": false,
+                        "passFusionParam": {
+                            "pattern": {
+                                "pattern_name": "m_qeltwise_add_0",
+                                "input_names": [
+                                    "a",
+                                    "b"
+                                ],
+                                "output_names": "q"
+                            },
+                            "op_name": "QEltWiseAdd",
+                            "extractor": {
+                                "explicit_attributes": [
+                                    {
+                                        "attribute_name": "design_param",
+                                        "attribute_value": "8x4"
+                                    }
+                                ],
+                                "initializers": [
+                                    "a_s",
+                                    "a_z",
+                                    "b_s",
+                                    "b_z",
+                                    "y_s",
+                                    "y_z"
+                                ],
+                                "modifiers": [
+                                    "QEltWiseAdd_predicate"
+                                ]
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
             "name": "fuse_dynamic_dispatch_wcr_llm",
             "plugin": "vaip-pass_level1_dd_cxx",
             "passDpuParam": {
@@ -1150,16 +1821,176 @@
                         "disabled": false
                     },
                     {
+                        "name": "vaip_pass_dd_merge_top_fuse",
+                        "plugin": "vaip-pass_dd_merge_top_fuse",
+                        "enable_gc": true,
+                        "disabled": true,
+                        "passFusionParam": {
+                            "pattern": {
+                                "pattern_name": "m_qmatmul_silu",
+                                "input_names": [
+                                    "a",
+                                    "w"
+                                ],
+                                "output_names": "com_microsoft_QuantizeLinear_3"
+                            },
+                            "op_name": "QMatMulAddSilu",
+                            "extractor": {
+                                "explicit_attributes": [
+                                    {
+                                        "attribute_name": "design_param",
+                                        "attribute_value": "8x4"
+                                    },
+                                    {
+                                        "attribute_name": "channelwise",
+                                        "attribute_value": "true"
+                                    },
+                                    {
+                                        "attribute_name": "input_format",
+                                        "attribute_value": "NHWC"
+                                    }
+                                ],
+                                "initializers": [
+                                    "a_s",
+                                    "a_z",
+                                    "w_s",
+                                    "w_z",
+                                    "q_s",
+                                    "q_z",
+                                    "constant_19",
+                                    "constant_20"
+                                ],
+                                "input_q_params": [
+                                    "a_s",
+                                    "a_z"
+                                ],
+                                "output_q_params": [
+                                    "constant_19",
+                                    "constant_20"
+                                ],
+                                "modifiers": [
+                                    "out_dtype_modifier",
+                                    "bfloat16"
+                                ]
+                            }
+                        }
+                    },
+                    {
                         "name": "merge_matmul_channelwise_biasadd",
                         "plugin": "vaip-pass_dd_merge_qmatmul_int4_bias",
                         "enable_gc": true,
                         "disabled": false
                     },
                     {
+                        "name": "vaip_pass_dd_merge_top_fuse",
+                        "plugin": "vaip-pass_dd_merge_top_fuse",
+                        "enable_gc": true,
+                        "disabled": true,
+                        "passFusionParam": {
+                            "pattern": {
+                                "pattern_name": "m_qmatmul_int4_bias",
+                                "input_names": [
+                                    "a",
+                                    "w",
+                                    "b"
+                                ],
+                                "output_names": "q2"
+                            },
+                            "op_name": "QMatMulAdd",
+                            "extractor": {
+                                "explicit_attributes": [
+                                    {
+                                        "attribute_name": "design_param",
+                                        "attribute_value": "8x4"
+                                    },
+                                    {
+                                        "attribute_name": "channelwise",
+                                        "attribute_value": "true"
+                                    },
+                                    {
+                                        "attribute_name": "bias",
+                                        "attribute_value": "true"
+                                    },
+                                    {
+                                        "attribute_name": "input_format",
+                                        "attribute_value": "NHWC"
+                                    }
+                                ],
+                                "initializers": [
+                                    "a_s",
+                                    "a_z",
+                                    "w_s",
+                                    "w_z",
+                                    "b_s",
+                                    "b_z",
+                                    "q2_s",
+                                    "q2_z"
+                                ],
+                                "input_q_params": [
+                                    "a_s",
+                                    "a_z"
+                                ],
+                                "output_q_params": [
+                                    "q2_s",
+                                    "q2_z"
+                                ]
+                            }
+                        }
+                    },
+                    {
                         "name": "merge_matmul_channelwise",
                         "plugin": "vaip-pass_dd_merge_qmatmul2",
                         "enable_gc": true,
                         "disabled": false
+                    },
+                    {
+                        "name": "vaip_pass_dd_merge_top_fuse",
+                        "plugin": "vaip-pass_dd_merge_top_fuse",
+                        "enable_gc": true,
+                        "disabled": true,
+                        "passFusionParam": {
+                            "pattern": {
+                                "pattern_name": "m_qmatmul_2",
+                                "input_names": [
+                                    "a",
+                                    "w"
+                                ],
+                                "output_names": "q"
+                            },
+                            "op_name": "QMatMulAdd",
+                            "extractor": {
+                                "explicit_attributes": [
+                                    {
+                                        "attribute_name": "design_param",
+                                        "attribute_value": "8x4"
+                                    },
+                                    {
+                                        "attribute_name": "channelwise",
+                                        "attribute_value": "true"
+                                    },
+                                    {
+                                        "attribute_name": "input_format",
+                                        "attribute_value": "NHWC"
+                                    }
+                                ],
+                                "initializers": [
+                                    "a_s",
+                                    "a_z",
+                                    "w_s",
+                                    "w_z",
+                                    "q_s",
+                                    "q_z"
+                                ],
+                                "input_q_params": [
+                                    "a_s",
+                                    "a_z"
+                                ],
+                                "output_q_params": [
+                                    "q_s",
+                                    "q_z"
+                                ]
+                            }
+                        }
                     },
                     {
                         "name": "vaip_pass_dd_merge_qlpnorm_3",
@@ -1172,19 +2003,58 @@
                         ]
                     },
                     {
+                        "name": "vaip_pass_dd_merge_top_fuse",
+                        "plugin": "vaip-pass_dd_merge_top_fuse",
+                        "enable_gc": true,
+                        "disabled": true,
+                        "passFusionParam": {
+                            "pattern": {
+                                "pattern_name": "m_lpnorm_3",
+                                "input_names": [
+                                    "a"
+                                ],
+                                "output_names": "q2"
+                            },
+                            "op_name": "L2_Norm",
+                            "extractor": {
+                                "explicit_attributes": [
+                                    {
+                                        "attribute_name": "design_param",
+                                        "attribute_value": "8x4"
+                                    },
+                                    {
+                                        "attribute_name": "fuse_mul",
+                                        "attribute_value": "true"
+                                    }
+                                ],
+                                "initializers": [
+                                    "a_s",
+                                    "a_z",
+                                    "q2_s",
+                                    "q2_z",
+                                    "dq3_s",
+                                    "b"
+                                ],
+                                "input_q_params": [
+                                    "a_s",
+                                    "a_z"
+                                ],
+                                "output_q_params": [
+                                    "q2_s",
+                                    "q2_z"
+                                ],
+                                "modifiers": [
+                                    "in_dtype_modifier",
+                                    "bfloat16"
+                                ]
+                            }
+                        }
+                    },
+                    {
                         "name": "vaip_pass_dd_merge_qeltwise_add",
                         "plugin": "vaip-pass_dd_merge_qeltwise_add",
                         "enable_gc": true,
-                        "disabled": false,
-                        "args": [
-                            "4x4PSU"
-                        ]
-                    },
-                    {
-                        "name": "vaip_pass_dd_merge_qelwemul",
-                        "plugin": "vaip-pass_dd_merge_qelwemul",
-                        "enable_gc": true,
-                        "disabled": false,
+                        "disabled": true,
                         "args": [
                             "4x4PSU"
                         ]
@@ -1193,7 +2063,65 @@
                         "name": "vaip_pass_dd_merge_top_fuse",
                         "plugin": "vaip-pass_dd_merge_top_fuse",
                         "enable_gc": true,
+                        "disabled": false,
+                        "passFusionParam": {
+                            "pattern": {
+                                "pattern_name": "m_qeltwise_add_0",
+                                "input_names": [
+                                    "a",
+                                    "b"
+                                ],
+                                "output_names": "q"
+                            },
+                            "op_name": "QEltWiseAdd",
+                            "extractor": {
+                                "explicit_attributes": [
+                                    {
+                                        "attribute_name": "design_param",
+                                        "attribute_value": "8x4"
+                                    }
+                                ],
+                                "initializers": [
+                                    "a_s",
+                                    "a_z",
+                                    "b_s",
+                                    "b_z",
+                                    "y_s",
+                                    "y_z"
+                                ],
+                                "input_q_params": [
+                                    "a_s",
+                                    "a_z"
+                                ],
+                                "output_q_params": [
+                                    "y_s",
+                                    "y_z"
+                                ],
+                                "modifiers": [
+                                    "QEltWiseAdd_predicate",
+                                    "in_dtype_modifier",
+                                    "bfloat16",
+                                    "out_dtype_modifier",
+                                    "bfloat16",
+                                    "set_xclbin_name"
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        "name": "vaip_pass_dd_merge_qelwemul",
+                        "plugin": "vaip-pass_dd_merge_qelwemul",
+                        "enable_gc": true,
                         "disabled": true,
+                        "args": [
+                            "4x4PSU"
+                        ]
+                    },
+                    {
+                        "name": "vaip_pass_dd_merge_top_fuse",
+                        "plugin": "vaip-pass_dd_merge_top_fuse",
+                        "enable_gc": true,
+                        "disabled": false,
                         "passFusionParam": {
                             "pattern": {
                                 "pattern_name": "m_qelwemul",
@@ -1209,10 +2137,6 @@
                                     {
                                         "attribute_name": "design_param",
                                         "attribute_value": "8x4"
-                                    },
-                                    {
-                                        "attribute_name": "generic_fusion",
-                                        "attribute_value": "true"
                                     }
                                 ],
                                 "initializers": [
@@ -1223,10 +2147,19 @@
                                     "constant_4",
                                     "constant_5"
                                 ],
+                                "input_q_params": [
+                                    "constant_0",
+                                    "constant_1"
+                                ],
+                                "output_q_params": [
+                                    "constant_4",
+                                    "constant_5"
+                                ],
                                 "modifiers": [
                                     "in_dtype_modifier",
                                     "bfloat16",
-                                    "qelwemul_reorder_inputs"
+                                    "QELWEMUL_qdq_predicate",
+                                    "set_xclbin_name"
                                 ]
                             }
                         }
@@ -1375,7 +2308,7 @@
                         "name": "merge_qglobalavgpool",
                         "plugin": "vaip-pass_dd_merge_qglobalavgpool",
                         "enable_gc": true,
-                        "disabled": true
+                        "disabled": false
                     },
                     {
                         "name": "merge_qreshape_transpose",
@@ -1435,7 +2368,7 @@
                         "name": "vaip_pass_dd_merge_qglobalavgpool",
                         "plugin": "vaip-pass_dd_merge_qglobalavgpool",
                         "enable_gc": true,
-                        "disabled": true
+                        "disabled": false
                     },
                     {
                         "name": "vaip_pass_dd_merge_qreshape_transpose",
@@ -1796,7 +2729,7 @@
                         "name": "vaip_pass_dd_merge_qglobalavgpool",
                         "plugin": "vaip-pass_dd_merge_qglobalavgpool",
                         "enable_gc": true,
-                        "disabled": true
+                        "disabled": false
                     },
                     {
                         "name": "vaip_pass_dd_merge_qreshape_transpose",
@@ -2157,6 +3090,12 @@
                         "disabled": false
                     },
                     {
+                        "name": "vaip_pass_dd_merge_attentionprepro_psh",
+                        "plugin": "vaip-pass_dd_merge_attentionprepro_psh",
+                        "enable_gc": true,
+                        "disabled": false
+                    },
+                    {
                         "name": "merge_reduce_sum",
                         "plugin": "vaip-pass_dd_merge_reduce_sum",
                         "enable_gc": true,
@@ -2165,6 +3104,12 @@
                     {
                         "name": "merge_expand",
                         "plugin": "vaip-pass_dd_merge_expand",
+                        "enable_gc": true,
+                        "disabled": false
+                    },
+                    {
+                        "name": "merge_expand_psh",
+                        "plugin": "vaip-pass_dd_merge_expand_psh",
                         "enable_gc": true,
                         "disabled": false
                     },
@@ -2493,6 +3438,18 @@
                         "disabled": false
                     },
                     {
+                        "name": "vaip_pass_dd_merge_mha_batch",
+                        "plugin": "vaip-pass_dd_merge_combined_mhamask",
+                        "enable_gc": true,
+                        "disabled": false
+                    },
+                    {
+                        "name": "vaip_pass_dd_merge_mha_batch_1",
+                        "plugin": "vaip-pass_dd_merge_combined_mhamask_1",
+                        "enable_gc": true,
+                        "disabled": false
+                    },
+                    {
                         "name": "vaip_pass_dd_merge_dqop",
                         "plugin": "vaip-pass_dd_merge_dqop",
                         "enable_gc": true,
@@ -2503,6 +3460,40 @@
                         "plugin": "vaip-pass_dd_merge_EndPass_ds",
                         "enable_gc": true,
                         "disabled": false
+                    },
+                    {
+                        "name": "vaip_pass_dd_merge_top_fuse",
+                        "plugin": "vaip-pass_dd_merge_top_fuse",
+                        "enable_gc": true,
+                        "disabled": false,
+                        "passFusionParam": {
+                            "pattern": {
+                                "pattern_name": "m_qmatmul_qrope_const",
+                                "input_names": [
+                                    "input"
+                                ],
+                                "output_names": "output"
+                            },
+                            "op_name": "QMatMul_QRopeConst",
+                            "extractor": {
+                                "explicit_attributes": [
+                                    {
+                                        "attribute_name": "design_param",
+                                        "attribute_value": "8x4"
+                                    }
+                                ],
+                                "initializers": [
+                                    "const_1",
+                                    "const_2",
+                                    "const_3",
+                                    "const_4",
+                                    "const_5",
+                                    "const_8",
+                                    "const_7",
+                                    "const_6"
+                                ]
+                            }
+                        }
                     }
                 ]
             }
@@ -2546,31 +3537,46 @@
                         "name": "merge_qgemm_gelu",
                         "plugin": "vaip-pass_dd_merge_qgemm_gelu",
                         "enable_gc": true,
-                        "disabled": false
+                        "disabled": false,
+                        "args": [
+                            "per_subv"
+                        ]
                     },
                     {
                         "name": "merge_qgemm_1",
                         "plugin": "vaip-pass_dd_merge_qgemm_1",
                         "enable_gc": true,
-                        "disabled": false
+                        "disabled": false,
+                        "args": [
+                            "per_subv"
+                        ]
                     },
                     {
                         "name": "merge_qgemm",
                         "plugin": "vaip-pass_dd_merge_qgemm",
                         "enable_gc": true,
-                        "disabled": false
+                        "disabled": false,
+                        "args": [
+                            "per_subv"
+                        ]
                     },
                     {
                         "name": "merge_qmatmul_add",
                         "plugin": "vaip-pass_dd_merge_qmatmul_add",
                         "enable_gc": true,
-                        "disabled": false
+                        "disabled": false,
+                        "args": [
+                            "per_subv"
+                        ]
                     },
                     {
                         "name": "merge_qmatmul_add2",
                         "plugin": "vaip-pass_dd_merge_qmatmul_add2",
                         "enable_gc": true,
-                        "disabled": false
+                        "disabled": false,
+                        "args": [
+                            "per_subv"
+                        ]
                     },
                     {
                         "name": "merge_qmatmul",
@@ -2578,7 +3584,7 @@
                         "enable_gc": true,
                         "disabled": false,
                         "args": [
-                            "concat"
+                            "per_subv"
                         ]
                     },
                     {
@@ -2656,8 +3662,72 @@
                         "disabled": false
                     },
                     {
+                        "name": "vaip_pass_dd_merge_mha_batch",
+                        "plugin": "vaip-pass_dd_merge_combined_mhamask",
+                        "enable_gc": true,
+                        "disabled": false
+                    },
+                    {
+                        "name": "vaip_pass_dd_merge_mha_batch_1",
+                        "plugin": "vaip-pass_dd_merge_combined_mhamask_1",
+                        "enable_gc": true,
+                        "disabled": false
+                    },
+                    {
                         "name": "vaip_pass_dd_merge_dqop",
                         "plugin": "vaip-pass_dd_merge_dqop",
+                        "enable_gc": true,
+                        "disabled": false
+                    },
+                    {
+                        "name": "vaip_pass_dd_merge_top_fuse",
+                        "plugin": "vaip-pass_dd_merge_top_fuse",
+                        "enable_gc": true,
+                        "disabled": false,
+                        "passFusionParam": {
+                            "pattern": {
+                                "pattern_name": "m_qmatmul_qrope_input",
+                                "input_names": [
+                                    "input",
+                                    "const_6",
+                                    "const_7"
+                                ],
+                                "output_names": "output"
+                            },
+                            "op_name": "QMatMul_QRopeInput",
+                            "extractor": {
+                                "explicit_attributes": [
+                                    {
+                                        "attribute_name": "design_param",
+                                        "attribute_value": "8x4"
+                                    }
+                                ],
+                                "initializers": [
+                                    "const_1",
+                                    "const_2",
+                                    "const_3",
+                                    "const_4",
+                                    "const_5",
+                                    "const_8"
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        "name": "pass_dd_batch_matmul_v",
+                        "plugin": "vaip-pass_dd_batch_matmul_v",
+                        "enable_gc": true,
+                        "disabled": false
+                    },
+                    {
+                        "name": "vaip_pass_dd_merge_combined_matmul_psmu",
+                        "plugin": "vaip-pass_dd_merge_combined_matmul_psmu",
+                        "enable_gc": true,
+                        "disabled": false
+                    },
+                    {
+                        "name": "vaip_pass_dd_merge_combined_MatmulRope_psmu",
+                        "plugin": "vaip-pass_dd_merge_combined_MatmulRope_psmu",
                         "enable_gc": true,
                         "disabled": false
                     },
@@ -3163,6 +4233,10 @@
                         "plugin": "vaip-pass_convert_split_to_xir_op"
                     },
                     {
+                        "name": "convert_topk_to_xir",
+                        "plugin": "vaip-pass_convert_topk_to_xir_op"
+                    },
+                    {
                         "name": "to_xir",
                         "plugin": "vaip-pass_to_xir_ops"
                     },
@@ -3310,6 +4384,10 @@
                         "plugin": "vaip-pass_convert_split_to_xir_op"
                     },
                     {
+                        "name": "convert_topk_to_xir",
+                        "plugin": "vaip-pass_convert_topk_to_xir_op"
+                    },
+                    {
                         "name": "to_xir",
                         "plugin": "vaip-pass_to_xir_ops"
                     },
@@ -3423,7 +4501,7 @@
                     "debug_mode": {
                         "stringValue": "function"
                     },
-                    "enable_mladf_compile": {
+                    "enable_vaiml_flow_compile": {
                         "boolValue": true
                     },
                     "enable_cost_model_tiling": {
@@ -3479,6 +4557,10 @@
                         "plugin": "vaip-pass_convert_split_to_xir_op"
                     },
                     {
+                        "name": "convert_topk_to_xir",
+                        "plugin": "vaip-pass_convert_topk_to_xir_op"
+                    },
+                    {
                         "name": "to_xir",
                         "plugin": "vaip-pass_to_xir_ops"
                     },
@@ -3592,7 +4674,7 @@
                     "debug_mode": {
                         "stringValue": "function"
                     },
-                    "enable_mladf_compile": {
+                    "enable_vaiml_flow_compile": {
                         "boolValue": true
                     },
                     "enable_cost_model_tiling": {
@@ -3618,6 +4700,56 @@
         {
             "name": "fuse_dynamic_dispatch_vaiml_llm",
             "plugin": "vaip-pass_level1_dd_cxx",
+            "passDpuParam": {
+                "subPass": [
+                    {
+                        "name": "vaip_pass_dd_merge_onnx_qdq",
+                        "plugin": "vaip-pass_dd_merge_onnx_qdq",
+                        "enable_gc": true,
+                        "disabled": false
+                    },
+                    {
+                        "name": "merge_qrmsnorm",
+                        "plugin": "vaip-pass_dd_merge_qlpnorm_4",
+                        "enable_gc": true,
+                        "disabled": false
+                    },
+                    {
+                        "name": "merge_qsilu",
+                        "plugin": "vaip-pass_dd_merge_qsilu_2",
+                        "enable_gc": true,
+                        "disabled": false
+                    },
+                    {
+                        "name": "merge_qmatmulbias",
+                        "plugin": "vaip-pass_dd_merge_qmatmul_add4",
+                        "enable_gc": true,
+                        "disabled": false
+                    },
+                    {
+                        "name": "merge_qmatmul",
+                        "plugin": "vaip-pass_dd_merge_vaimlqmatmul",
+                        "enable_gc": true,
+                        "disabled": false
+                    },
+                    {
+                        "name": "merge_qadd",
+                        "plugin": "vaip-pass_dd_merge_qeltwise_add_2",
+                        "enable_gc": true,
+                        "disabled": false
+                    },
+                    {
+                        "name": "merge_qmul",
+                        "plugin": "vaip-pass_dd_merge_vaimlqelwemul",
+                        "enable_gc": true,
+                        "disabled": false
+                    }
+                ]
+            }
+        },
+        {
+            "name": "fuse_dynamic_dispatch_vaiml_llm_gen_txn",
+            "plugin": "vaip-pass_level1_dd_cxx_gen_txn",
             "passDpuParam": {
                 "subPass": [
                     {
@@ -3814,7 +4946,7 @@
                     }
                 },
                 "minimum_num_of_conv": 2,
-                "xclbin": "AMD_AIE2P_4x4_Overlay_CFG2_2678.xclbin"
+                "xclbin": "AMD_AIE2P_4x4_Overlay_CFG2_2925.xclbin"
             }
         },
         {
@@ -3863,7 +4995,7 @@
             "vaiml_config": {
                 "device": "stx",
                 "optimize_level": 2,
-                "preferred_data_storage": "unvectorized",
+                "preferred_data_storage": "auto",
                 "fe_experiment": "enable-outer-garbage-propagation-through-reshape=1",
                 "aiecompiler_args": " -Xelfgen=-j16 "
             }
@@ -3875,6 +5007,13 @@
             "md5sumOnDisk": "356f009d5cb141881fe4c27d09b1f43b",
             "md5sumInMemory": "ca42121518cca903f07262b8f2751a42",
             "target": "RyzenAI_shell_config_1"
+        },
+        {
+            "modelName": "PSA_v2_66.0",
+            "md5sumOnDisk": "73c0f0683f9faaf9c2710272066ba0af",
+            "md5sumInMemory": "5cbfd77efbcb1f6ba299bc4ffdff8aac",
+            "md5sumInMemoryWithIo": "8030f6b91feeccf39855b104111a6143",
+            "target": "PSAV2"
         },
         {
             "modelName": "PSO0_A",
@@ -4011,6 +5150,7 @@
             "md5sumInMemoryWithIo": "5c07dc0856549dabc4d092763e1ce5cf",
             "xclbin": "4x2_psf_model_a8w8_qdq_00.xclbin",
             "target": "RyzenAI_transformer_cxx_psf",
+            "perf_pref": "1",
             "modelCategory": "PSF"
         },
         {
@@ -4020,7 +5160,11 @@
             "md5sumInMemoryWithIo": "037fca5fd1b0c7b195ef410c3e9b88df",
             "xclbin": "4x2_psf_v1.1_model_a8w8_qdq_00.xclbin",
             "target": "RyzenAI_transformer_cxx_psf",
-            "modelCategory": "PSF"
+            "modelCategory": "PSF",
+            "perf_pref": "1",
+            "qosGenericParams": {
+                "batch_time_ms": "55"
+            }
         },
         {
             "modelName": "PSHv1.2",
@@ -4030,7 +5174,10 @@
             "xclbin": "4x2_psh_v1.2_model_a16w8_qdq_00.xclbin",
             "target": "RyzenAI_transformer_cxx_psh",
             "perf_pref": "1",
-            "modelCategory": "PSH"
+            "modelCategory": "PSH",
+            "qosGenericParams": {
+                "batch_time_ms": "55"
+            }
         },
         {
             "modelName": "PSJ",
@@ -4039,6 +5186,7 @@
             "md5sumInMemoryWithIo": "9f9d91808166382b325459dfb88494c0",
             "xclbin": "4x2_psj_model_a16w8_qdq_00.xclbin",
             "target": "RyzenAI_transformer_cxx_psj",
+            "perf_pref": "1",
             "modelCategory": "PSJ"
         },
         {
@@ -4048,6 +5196,7 @@
             "md5sumInMemoryWithIo": "9f9d91808166382b325459dfb88494c0",
             "xclbin": "4x2_psj_model_a16w8_qdq_00.xclbin",
             "target": "RyzenAI_transformer_cxx_psj",
+            "perf_pref": "1",
             "modelCategory": "PSJ"
         },
         {
@@ -4073,18 +5222,36 @@
             "md5sumOnDisk": "74b5d0dff744baecb9bf55660e166b77",
             "md5sumInMemory": "13d5d50818ca009b00cbc73c86d2487a",
             "md5sumInMemoryWithIo": "3e9e7b7cf4e7ac34f8fb116c2d958a2b",
-            "xclbin": "8x4_psmu_st_v3.2_model_a16w8_qdq_00.xclbin",
+            "xclbin": "8x4_psmu_st0_v3.2_model_a16w8_qdq_00.xclbin",
             "target": "RyzenAI_transformer_cxx_mu0_8x4",
-            "modelCategory": "PSU"
+            "modelCategory": "PSMUST"
         },
         {
             "modelName": "PSMU_ST1",
             "md5sumOnDisk": "aaf6f0a2ed85d133dfa48e75b0af3700",
             "md5sumInMemory": "382a9bf1181f24fcd3db77238e596ef1",
             "md5sumInMemoryWithIo": "f67f5434de44edb87b6e98deaee5609b",
-            "xclbin": "8x4_psmu_st_v3.2_model_a16w8_qdq_00.xclbin",
+            "xclbin": "8x4_psmu_st1_v3.2_model_a16w8_qdq_00.xclbin",
             "target": "RyzenAI_transformer_cxx_mu1_8x4",
-            "modelCategory": "PSU"
+            "modelCategory": "PSMUST"
+        },
+        {
+            "modelName": "PSMU_ST0_v3.8",
+            "md5sumOnDisk": "bbc426034771275f67935de0b8164995",
+            "md5sumInMemory": "ce3a4dd7df0e07bb9a90634d33a5b167",
+            "md5sumInMemoryWithIo": "3e9e7b7cf4e7ac34f8fb116c2d958a2b",
+            "xclbin": "8x4_psmu_st0_v3.2_model_a16w8_qdq_00.xclbin",
+            "target": "RyzenAI_transformer_cxx_mu0_8x4",
+            "modelCategory": "PSMUST"
+        },
+        {
+            "modelName": "PSMU_ST1_v3.8",
+            "md5sumOnDisk": "0ec19e24264ca46247ac3047c6abd389",
+            "md5sumInMemory": "6a5eed0ee0b8fba217fe16df5b713101",
+            "md5sumInMemoryWithIo": "f67f5434de44edb87b6e98deaee5609b",
+            "xclbin": "8x4_psmu_st1_v3.2_model_a16w8_qdq_00.xclbin",
+            "target": "RyzenAI_transformer_cxx_mu1_8x4",
+            "modelCategory": "PSMUST"
         },
         {
             "modelName": "PSU0-v1.2",
@@ -4092,7 +5259,12 @@
             "md5sumInMemory": "db82ec8222e7f515b55415e3e707befb",
             "md5sumInMemoryWithIo": "351879f8282407b5f6524de2993f34ab",
             "target": "RyzenAI_transformer_cxx_psu_8x4",
-            "modelCategory": "PSU"
+            "modelCategory": "PSU",
+            "qosGenericParams": {
+                "frame_execution_time": "0",
+                "group_id": "1",
+                "batch_time_ms": "125"
+            }
         },
         {
             "modelName": "PSU1-v1.2",
@@ -4100,7 +5272,12 @@
             "md5sumInMemory": "a557620781ac029b8ef198e9c7d95f92",
             "md5sumInMemoryWithIo": "cde769adfa0ee62a9cd128928f73b43b",
             "target": "RyzenAI_transformer_cxx_psu_8x4",
-            "modelCategory": "PSU"
+            "modelCategory": "PSU",
+            "qosGenericParams": {
+                "frame_execution_time": "0",
+                "group_id": "1",
+                "batch_time_ms": "125"
+            }
         },
         {
             "modelName": "PSU0-v1.2-Opt",
@@ -4108,7 +5285,12 @@
             "md5sumInMemory": "947860ce26ac9b0a445e19cea2cc86dc",
             "md5sumInMemoryWithIo": "351879f8282407b5f6524de2993f34ab",
             "target": "RyzenAI_transformer_cxx_psu_8x4_opt",
-            "modelCategory": "PSU"
+            "modelCategory": "PSU",
+            "qosGenericParams": {
+                "frame_execution_time": "0",
+                "group_id": "1",
+                "batch_time_ms": "125"
+            }
         },
         {
             "modelName": "PSU1-v1.2-Opt",
@@ -4116,7 +5298,12 @@
             "md5sumInMemory": "e8eebc04612ab31b904545cb45ea291c",
             "md5sumInMemoryWithIo": "cde769adfa0ee62a9cd128928f73b43b",
             "target": "RyzenAI_transformer_cxx_psu_8x4_opt",
-            "modelCategory": "PSU"
+            "modelCategory": "PSU",
+            "qosGenericParams": {
+                "frame_execution_time": "0",
+                "group_id": "1",
+                "batch_time_ms": "125"
+            }
         },
         {
             "modelName": "PSU0",
@@ -4124,7 +5311,12 @@
             "md5sumInMemory": "929b05d96fc8a61b4d1131a7722732e9",
             "md5sumInMemoryWithIo": "351879f8282407b5f6524de2993f34ab",
             "xclbin": "llama2_mladf_2x4x4_v1_gemmbfp16_silu_mul_mha_rms_rope_00.xclbin",
-            "target": "RyzenAI_transformer_cxx_psu0"
+            "target": "RyzenAI_transformer_cxx_psu0",
+            "qosGenericParams": {
+                "frame_execution_time": "0",
+                "group_id": "1",
+                "batch_time_ms": "125"
+            }
         },
         {
             "modelName": "PSU1",
@@ -4132,7 +5324,12 @@
             "md5sumInMemory": "0ec91f16621a932d2016784c05f5b703",
             "md5sumInMemoryWithIo": "cde769adfa0ee62a9cd128928f73b43b",
             "xclbin": "llama2_mladf_2x4x4_v1_gemmbfp16_silu_mul_mha_rms_rope_00.xclbin",
-            "target": "RyzenAI_transformer_cxx_psu1"
+            "target": "RyzenAI_transformer_cxx_psu1",
+            "qosGenericParams": {
+                "frame_execution_time": "0",
+                "group_id": "1",
+                "batch_time_ms": "125"
+            }
         },
         {
             "modelName": "PSIv1.1",
@@ -4181,16 +5378,23 @@
             "xclbin": "4x2_psi_integrated_model_a16w8_qdq_00.xclbin",
             "target": "RyzenAI_transformer_cxx_psi",
             "perf_pref": "1",
-            "modelCategory": "PSI"
+            "modelCategory": "PSI",
+            "qosGenericParams": {
+                "batch_time_ms": "55"
+            }
         },
         {
             "modelName": "PSQ1",
             "md5sumOnDisk": "4e17c61308b9170dda55586dee6c0751",
             "md5sumInMemory": "58eb51eccd44a084b185159b67e2c1b6",
             "md5sumInMemoryWithIo": "50c2fb23e40a0617f58ebcedbbfac359",
-            "xclbin": "4x2_psq_model_a8w8_qdq_00.xclbin",
+            "xclbin": "2x4x2_pss_pst_4x2_psq_model_qdq_04.xclbin",
             "target": "RyzenAI_transformer_cxx_psq1",
-            "modelCategory": "PSQ1"
+            "modelCategory": "PSQ1",
+            "qosGenericParams": {
+                "group_id": "2",
+                "batch_time_ms": "2"
+            }
         },
         {
             "modelName": "PSQ2",
@@ -4199,7 +5403,11 @@
             "md5sumInMemoryWithIo": "3223d1f84b9dd740f3a829ad9680469f",
             "xclbin": "4x2_psq2_model_a16w8_qdq_00.xclbin",
             "target": "RyzenAI_transformer_cxx_psq2",
-            "modelCategory": "PSQ2"
+            "modelCategory": "PSQ2",
+            "qosGenericParams": {
+                "group_id": "2",
+                "batch_time_ms": "493"
+            }
         },
         {
             "modelName": "PSO2-320",
@@ -4296,7 +5504,7 @@
             "md5sumOnDisk": "74f8fe8dd431826e20ddcfb383887b5a",
             "md5sumInMemory": "cb1ace27775a8acde55d93ed9c831fb0",
             "md5sumInMemoryWithIo": "567b9a0181a5147629e58d4e11b5414d",
-            "xclbin": "4x2_pso2_integrated_model_a16w16_qdq_00.xclbin",
+            "xclbin": "4x2_pso2_model_a16w16_qdq_2_00.xclbin",
             "target": "RyzenAI_transformer_cxx_pso2_02",
             "perf_pref": "1",
             "model_variant": "02_640",
@@ -4307,7 +5515,7 @@
             "md5sumOnDisk": "43aa65d66d619191dfb6711164cb7ef2",
             "md5sumInMemory": "b7873ef2c883221592f9a427681f7aa7",
             "md5sumInMemoryWithIo": "33defb20f9050140c2a5dfd84e0f07d2",
-            "xclbin": "4x2_pso2_integrated_model_a16w16_qdq_00.xclbin",
+            "xclbin": "4x2_pso2_model_a16w16_qdq_2_00.xclbin",
             "target": "RyzenAI_transformer_cxx_pso2_02",
             "perf_pref": "1",
             "model_variant": "02_2560",
@@ -4318,7 +5526,7 @@
             "md5sumOnDisk": "903da8e472bbdbf3a5181e318abd7de1",
             "md5sumInMemory": "b68933a5037b7ddf440e7672d1121793",
             "md5sumInMemoryWithIo": "ff1755a022b574525b1a78f748825149",
-            "xclbin": "4x2_pso2_integrated_model_a16w16_qdq_00.xclbin",
+            "xclbin": "4x2_pso2_model_a16w16_qdq_2_00.xclbin",
             "target": "RyzenAI_transformer_cxx_pso2_02",
             "perf_pref": "1",
             "model_variant": "02_5120",
@@ -4329,7 +5537,7 @@
             "md5sumOnDisk": "9e8b510eb05c4c4b4666aa3eb1b258fa",
             "md5sumInMemory": "61440810010d2fee2127b9ecb3418b20",
             "md5sumInMemoryWithIo": "855a4d8521d118fd1e02c7d3ea24ecd6",
-            "xclbin": "4x2_pso2_integrated_model_a16w16_qdq_00.xclbin",
+            "xclbin": "4x2_pso2_model_a16w16_qdq_2_00.xclbin",
             "target": "RyzenAI_transformer_cxx_pso2_02",
             "perf_pref": "1",
             "model_variant": "02_8000",
@@ -4340,7 +5548,7 @@
             "md5sumOnDisk": "5c56c9a5148418914e2a74c1fcc4e5dc",
             "md5sumInMemory": "c5704b01ae136320462d84e5ef6f68e8",
             "md5sumInMemoryWithIo": "8d4c665ddccc2b3eb71e160dd882b5cb",
-            "xclbin": "4x2_pso2_integrated_model_a16w16_qdq_00.xclbin",
+            "xclbin": "4x2_pso2_model_a16w16_qdq_1_00.xclbin",
             "target": "RyzenAI_transformer_cxx_pso2",
             "perf_pref": "1",
             "model_variant": "06_1280",
@@ -4351,7 +5559,7 @@
             "md5sumOnDisk": "5d45bef760e086ae9dd13d90ed4bfd86",
             "md5sumInMemory": "dc96e4f1d1fe4ed6631d0d13f49ebb8f",
             "md5sumInMemoryWithIo": "de3ab6b289cf54f83c962aea6266f218",
-            "xclbin": "4x2_pso2_integrated_model_a16w16_qdq_00.xclbin",
+            "xclbin": "4x2_pso2_model_a16w16_qdq_1_00.xclbin",
             "target": "RyzenAI_transformer_cxx_pso2",
             "perf_pref": "1",
             "model_variant": "06_8000",
@@ -4362,88 +5570,112 @@
             "md5sumOnDisk": "f112b5e15b705d02c354cc6d0b75bf3f",
             "md5sumInMemory": "4b470d88553037774d4305760e679bf2",
             "md5sumInMemoryWithIo": "ab93d75b985f5084c35f736c4c02855d",
-            "xclbin": "4x2_pso2_integrated_model_a16w16_qdq_00.xclbin",
+            "xclbin": "4x2_pso2_model_a16w16_qdq_3.xclbin",
             "target": "RyzenAI_transformer_cxx_pso2",
             "perf_pref": "1",
             "model_variant": "08_80",
-            "modelCategory": "PSO2_08_09"
+            "modelCategory": "PSO2_08_09",
+            "qosGenericParams": {
+                "batch_time_ms": "18"
+            }
         },
         {
             "modelName": "PSO2-08_160-v1.1.2",
             "md5sumOnDisk": "4e3c4e6a306bd796b55711791f368b51",
             "md5sumInMemory": "064bfd691e194cd0964cac6e3f8aaed6",
             "md5sumInMemoryWithIo": "ef4e0fc4c7f93426b06a1d32a012235b",
-            "xclbin": "4x2_pso2_integrated_model_a16w16_qdq_00.xclbin",
+            "xclbin": "4x2_pso2_model_a16w16_qdq_3.xclbin",
             "target": "RyzenAI_transformer_cxx_pso2",
             "perf_pref": "1",
             "model_variant": "08_160",
-            "modelCategory": "PSO2_08_09"
+            "modelCategory": "PSO2_08_09",
+            "qosGenericParams": {
+                "batch_time_ms": "18"
+            }
         },
         {
             "modelName": "PSO2-08_320-v1.1.2",
             "md5sumOnDisk": "2ea69a0a0f7ea4de2c69ba5a2d8eb214",
             "md5sumInMemory": "4305970852f28dd46b896a00cf31765e",
             "md5sumInMemoryWithIo": "4dcef3e0c58630449318b77428055539",
-            "xclbin": "4x2_pso2_integrated_model_a16w16_qdq_00.xclbin",
+            "xclbin": "4x2_pso2_model_a16w16_qdq_3.xclbin",
             "target": "RyzenAI_transformer_cxx_pso2",
             "perf_pref": "1",
             "model_variant": "08_320",
-            "modelCategory": "PSO2_08_09"
+            "modelCategory": "PSO2_08_09",
+            "qosGenericParams": {
+                "batch_time_ms": "18"
+            }
         },
         {
             "modelName": "PSO2-08_640-v1.1.2",
             "md5sumOnDisk": "64f8b9d961c33a1e1782b8b6ab1d05fe",
             "md5sumInMemory": "f24cbcd91d0aff2e527a362cffd30fa0",
             "md5sumInMemoryWithIo": "2941fbd78bb79228139c313a4c15955f",
-            "xclbin": "4x2_pso2_integrated_model_a16w16_qdq_00.xclbin",
+            "xclbin": "4x2_pso2_model_a16w16_qdq_3.xclbin",
             "target": "RyzenAI_transformer_cxx_pso2",
             "perf_pref": "1",
             "model_variant": "08_640",
-            "modelCategory": "PSO2_08_09"
+            "modelCategory": "PSO2_08_09",
+            "qosGenericParams": {
+                "batch_time_ms": "18"
+            }
         },
         {
             "modelName": "PSO2-08_1280-v1.1.2",
             "md5sumOnDisk": "cab8f52fce66b1165ccaa7e275e0f461",
             "md5sumInMemory": "85ef437ef0f943dcbc6dfff78daa8d59",
             "md5sumInMemoryWithIo": "e0e03814c630da534e3ca62de6a4be96",
-            "xclbin": "4x2_pso2_integrated_model_a16w16_qdq_00.xclbin",
+            "xclbin": "4x2_pso2_model_a16w16_qdq_00.xclbin",
             "target": "RyzenAI_transformer_cxx_pso2",
             "perf_pref": "1",
             "model_variant": "08_1280",
-            "modelCategory": "PSO2_08_09"
+            "modelCategory": "PSO2_08_09",
+            "qosGenericParams": {
+                "batch_time_ms": "18"
+            }
         },
         {
             "modelName": "PSO2-08_2560-v1.1.2",
             "md5sumOnDisk": "5cb6ffc68e95e5a72777231a4fe45781",
             "md5sumInMemory": "52c43902ae61abc9759d6f91dccf5fff",
             "md5sumInMemoryWithIo": "4942bb5c99591622bdf693d503823439",
-            "xclbin": "4x2_pso2_integrated_model_a16w16_qdq_00.xclbin",
+            "xclbin": "4x2_pso2_model_2k_a16w16_qdq.xclbin",
             "target": "RyzenAI_transformer_cxx_pso2",
             "perf_pref": "1",
             "model_variant": "08_2560",
-            "modelCategory": "PSO2_08_09"
+            "modelCategory": "PSO2_08_09",
+            "qosGenericParams": {
+                "batch_time_ms": "18"
+            }
         },
         {
             "modelName": "PSO2-08_5120-v1.1.2",
             "md5sumOnDisk": "66f978a1eb891e9183187c4f8b39513f",
             "md5sumInMemory": "7000b77b04c5cb833ec0d23ce6811b67",
             "md5sumInMemoryWithIo": "b408a863e4c9d5d5327a8d9b0b9e89e6",
-            "xclbin": "4x2_pso2_integrated_model_a16w16_qdq_00.xclbin",
+            "xclbin": "4x2_pso2_model_5k_a16w16_qdq.xclbin",
             "target": "RyzenAI_transformer_cxx_pso2",
             "perf_pref": "1",
             "model_variant": "08_5120",
-            "modelCategory": "PSO2_08_09"
+            "modelCategory": "PSO2_08_09",
+            "qosGenericParams": {
+                "batch_time_ms": "55"
+            }
         },
         {
             "modelName": "PSO2-08_8000-v1.1.2",
             "md5sumOnDisk": "c331b78262c2de4762605f77602a0982",
             "md5sumInMemory": "c0b6569e081583e377ee67bd40a85fcf",
             "md5sumInMemoryWithIo": "2ca9dde32adfb5322f93bf50bdb8503d",
-            "xclbin": "4x2_pso2_integrated_model_a16w16_qdq_00.xclbin",
+            "xclbin": "4x2_pso2_model_8k_a16w16_qdq.xclbin",
             "target": "RyzenAI_transformer_cxx_pso2",
             "perf_pref": "1",
             "model_variant": "08_8000",
-            "modelCategory": "PSO2_08_09"
+            "modelCategory": "PSO2_08_09",
+            "qosGenericParams": {
+                "batch_time_ms": "55"
+            }
         },
         {
             "modelName": "PSO2-09_1280-v1.1.2",
@@ -4474,7 +5706,11 @@
             "md5sumInMemoryWithIo": "c43cb269c32cb943ec3544b3cca7db4d",
             "xclbin": "4x4_psr_model_a16w8_qdq_00.xclbin",
             "target": "RyzenAI_transformer_cxx_psr",
-            "modelCategory": "PSR"
+            "modelCategory": "PSR",
+            "qosGenericParams": {
+                "group_id": "2",
+                "batch_time_ms": "493"
+            }
         },
         {
             "modelName": "PSR",
@@ -4483,7 +5719,11 @@
             "md5sumInMemoryWithIo": "50fc5db86f2a22cc3c5ece4c28096dbd",
             "xclbin": "4x4_psr_model_a16w8_qdq_00.xclbin",
             "target": "RyzenAI_transformer_cxx_psr",
-            "modelCategory": "PSR"
+            "modelCategory": "PSR",
+            "qosGenericParams": {
+                "group_id": "2",
+                "batch_time_ms": "493"
+            }
         },
         {
             "modelName": "PSW",
@@ -4492,7 +5732,12 @@
             "md5sumInMemoryWithIo": "6920d4a804bff69422a3e2127ed78c51",
             "xclbin": "4x4_psw_v1.0_model_a16w8_qdq_00.xclbin",
             "target": "RyzenAI_transformer_cxx_psw",
-            "modelCategory": "PSW"
+            "modelCategory": "PSW",
+            "qosGenericParams": {
+                "frame_execution_time": "0",
+                "group_id": "1",
+                "batch_time_ms": "8"
+            }
         },
         {
             "modelName": "PSW_v1.1.2",
@@ -4501,7 +5746,11 @@
             "md5sumInMemoryWithIo": "bda3bc15da0aebd40783415a820d3d2d",
             "xclbin": "4x4_psw_v1.0_model_a16w8_qdq_00.xclbin",
             "target": "RyzenAI_transformer_cxx_psw",
-            "modelCategory": "PSW"
+            "modelCategory": "PSW",
+            "qosGenericParams": {
+                "frame_execution_time": "0",
+                "group_id": "1"
+            }
         },
         {
             "modelName": "PSS",
@@ -4585,7 +5834,7 @@
             "md5sumInMemory": "97bcaa432a2c634a707dfc23bf222032",
             "md5sumInMemoryWithIo": "ebe9d9f38f4762972cc71a9d3b906017",
             "target": "VAIML_config_0",
-            "xclbin": "4x4_gt_ht_04.xclbin"
+            "xclbin": "4x4_gt_ht_03.xclbin"
         },
         {
             "modelName": "GTC_v1.0",
@@ -4593,7 +5842,7 @@
             "md5sumInMemory": "426c5dd1cf2fc5d303d4fb1288dca3d7",
             "md5sumInMemoryWithIo": "deb53433fefad8d16b5f42cbcd5c061c",
             "target": "VAIML_config_0",
-            "xclbin": "4x4_gt_ht_04.xclbin"
+            "xclbin": "4x4_gt_ht_03.xclbin"
         },
         {
             "modelName": "HT_v1.2",
@@ -4601,7 +5850,7 @@
             "md5sumInMemory": "6809517bbd0a7b44acc31942d410ca3a",
             "md5sumInMemoryWithIo": "9731a32b64df8abdead6b6f370a293fc",
             "target": "VAIML_config_0",
-            "xclbin": "4x4_gt_ht_04.xclbin"
+            "xclbin": "4x4_gt_ht_03.xclbin"
         },
         {
             "modelName": "PSV",
@@ -4758,237 +6007,6 @@
             "target": "VAIML-x2.0-Procyon"
         },
         {
-            "modelName": "YoloV3",
-            "md5sumOnDisk": "2657be600da90313ca9d32c03bd11835",
-            "md5sumInMemory": "7646f3796c4d98cfa53650482148734a",
-            "md5sumInMemoryWithIo": "14b71beebb0c98f291bdda3e7843cb1a",
-            "target": "VAIML-x2.0-Procyon"
-        },
-        {
-            "modelName": "deepfashion2_yolov8s-seg_nhwc_a8w8",
-            "md5sumOnDisk": "9acca8fca797971b28583d041d91b670",
-            "md5sumInMemory": "67fbcced6ae26b83bfa1d5b90b460f4f",
-            "md5sumInMemoryWithIo": "22e1a6cc4f3688167af81b833df25be2",
-            "target": "VAIML-x2.0-4x4"
-        },
-        {
-            "modelName": "face_yolov8m_nhwc_a8w8",
-            "md5sumOnDisk": "52d4a3b872be5b6bc92da74aebe84376",
-            "md5sumInMemory": "4742a8e9ba2aac316deae2ab5713aff4",
-            "md5sumInMemoryWithIo": "f40aab8103f7f0226810d3748f41972d",
-            "target": "VAIML-x2.0-4x4"
-        },
-        {
-            "modelName": "face_yolov8n_nhwc_a8w8",
-            "md5sumOnDisk": "ef00641123937c9918db24f0bcf7e6dc",
-            "md5sumInMemory": "b49d33f8635f703193aa757db5e65da7",
-            "md5sumInMemoryWithIo": "f40aab8103f7f0226810d3748f41972d",
-            "target": "VAIML-x2.0-4x4"
-        },
-        {
-            "modelName": "face_yolov8n_v2_nhwc_a8w8",
-            "md5sumOnDisk": "593b5bafcac69ce22df6d1cd5738c58f",
-            "md5sumInMemory": "b49d33f8635f703193aa757db5e65da7",
-            "md5sumInMemoryWithIo": "f40aab8103f7f0226810d3748f41972d",
-            "target": "VAIML-x2.0-4x4"
-        },
-        {
-            "modelName": "face_yolov8s_nhwc_a8w8",
-            "md5sumOnDisk": "766ae669b8db133d58e8a8faddf51e9f",
-            "md5sumInMemory": "35ad7617326e8d65c3d551e14e37f4b9",
-            "md5sumInMemoryWithIo": "f40aab8103f7f0226810d3748f41972d",
-            "target": "VAIML-x2.0-4x4"
-        },
-        {
-            "modelName": "face_yolov9c_nhwc_a8w8",
-            "md5sumOnDisk": "f30098870cbbc55efd12e323603a7040",
-            "md5sumInMemory": "7089a17d307fbb6b8df470265765c077",
-            "md5sumInMemoryWithIo": "f40aab8103f7f0226810d3748f41972d",
-            "target": "VAIML-x2.0-4x4"
-        },
-        {
-            "modelName": "hand_yolov8n_nhwc_a8w8",
-            "md5sumOnDisk": "7a542629f51ff8a7a05774268c492464",
-            "md5sumInMemory": "b49d33f8635f703193aa757db5e65da7",
-            "md5sumInMemoryWithIo": "f40aab8103f7f0226810d3748f41972d",
-            "target": "VAIML-x2.0-4x4"
-        },
-        {
-            "modelName": "hand_yolov8s_nhwc_a8w8",
-            "md5sumOnDisk": "4ddb7c2afa117ad514373bbb8c6b7345",
-            "md5sumInMemory": "35ad7617326e8d65c3d551e14e37f4b9",
-            "md5sumInMemoryWithIo": "f40aab8103f7f0226810d3748f41972d",
-            "target": "VAIML-x2.0-4x4"
-        },
-        {
-            "modelName": "hand_yolov9c_nhwc_a8w8",
-            "md5sumOnDisk": "d72394c6de7265f2ef212b40a80b1026",
-            "md5sumInMemory": "7089a17d307fbb6b8df470265765c077",
-            "md5sumInMemoryWithIo": "f40aab8103f7f0226810d3748f41972d",
-            "target": "VAIML-x2.0-4x4"
-        },
-        {
-            "modelName": "person_yolov8m_nhwc_a8w8",
-            "md5sumOnDisk": "53c7da49fc13aa792e1e4ea9a4b8347a",
-            "md5sumInMemory": "2815419379f0d8f0a11bad16b1224fb9",
-            "md5sumInMemoryWithIo": "d6c7a9ee0ebd324e1d678138f919fce2",
-            "target": "VAIML-x2.0-4x4"
-        },
-        {
-            "modelName": "person_yolov8n_nhwc_a8w8",
-            "md5sumOnDisk": "3f9c87e81ec43af59444a3e5cca2df26",
-            "md5sumInMemory": "fd055ae14115f5f29e4cb7489c6bf05b",
-            "md5sumInMemoryWithIo": "d6c7a9ee0ebd324e1d678138f919fce2",
-            "target": "VAIML-x2.0-4x4"
-        },
-        {
-            "modelName": "person_yolov8s_nhwc_a8w8",
-            "md5sumOnDisk": "34dc7674223c809f2cf9c6017e617e82",
-            "md5sumInMemory": "8addb0013129f40808698178d05345c8",
-            "md5sumInMemoryWithIo": "d6c7a9ee0ebd324e1d678138f919fce2",
-            "target": "VAIML-x2.0-4x4"
-        },
-        {
-            "modelName": "yolov8l-worldv2_nhwc_a8w8",
-            "md5sumOnDisk": "3a4cb6d1b24cc15d0efde85dd1596225",
-            "md5sumInMemory": "945535fd88fbd791dfebc0128eb2805c",
-            "md5sumInMemoryWithIo": "3531d3b4eb5c3db617805dd9cb2d2475",
-            "target": "VAIML-x2.0-4x4"
-        },
-        {
-            "modelName": "yolov8m-worldv2_nhwc_a8w8",
-            "md5sumOnDisk": "1d19c3c81e3c7cb7c0b79c4e99f9aed8",
-            "md5sumInMemory": "9a9a8a090913f15deec497a2d3395b2f",
-            "md5sumInMemoryWithIo": "3531d3b4eb5c3db617805dd9cb2d2475",
-            "target": "VAIML-x2.0-4x4"
-        },
-        {
-            "modelName": "yolov8s-worldv2_nhwc_a8w8",
-            "md5sumOnDisk": "87026a56e11b58e218e3a8ae6d369dbd",
-            "md5sumInMemory": "73ebd148d51b5e1ced7616ae414fc91a",
-            "md5sumInMemoryWithIo": "3531d3b4eb5c3db617805dd9cb2d2475",
-            "target": "VAIML-x2.0-4x4"
-        },
-        {
-            "modelName": "yolov8x-worldv2_nhwc_a8w8",
-            "md5sumOnDisk": "907417ad95c24ecd96590f8ee1c88568",
-            "md5sumInMemory": "28e4a9c971a21b8fceab8f3766efb640",
-            "md5sumInMemoryWithIo": "3531d3b4eb5c3db617805dd9cb2d2475",
-            "target": "VAIML-x2.0-4x4"
-        },
-        {
-            "modelName": "deepfashion2_yolov8s-seg_a8w8_nchw",
-            "md5sumOnDisk": "4aa3475a2464319eed7983ca5c291c2a",
-            "md5sumInMemory": "e7ec04f1871b19f33119b31ff24c255e",
-            "md5sumInMemoryWithIo": "869987495aa1023693307e158dbba973",
-            "target": "VAIML-x2.0-4x4"
-        },
-        {
-            "modelName": "face_yolov8m_a8w8_nchw",
-            "md5sumOnDisk": "fd6d7ba89c113a7d0aa82217ad66ab4b",
-            "md5sumInMemory": "f0bbbe5f652fcad9ea370c4b0f347ed3",
-            "md5sumInMemoryWithIo": "7f674fc515545811027f269d68ea4be0",
-            "target": "VAIML-x2.0-4x4"
-        },
-        {
-            "modelName": "face_yolov8n_a8w8_nchw",
-            "md5sumOnDisk": "ac450688e5ccef2f13acfe70a45d5fc1",
-            "md5sumInMemory": "1496f8f0a42533d47bf89ece855bb858",
-            "md5sumInMemoryWithIo": "7f674fc515545811027f269d68ea4be0",
-            "target": "VAIML-x2.0-4x4"
-        },
-        {
-            "modelName": "face_yolov8n_v2_a8w8_nchw",
-            "md5sumOnDisk": "24727a22a84b82b102d96b39d15fcbee",
-            "md5sumInMemory": "1496f8f0a42533d47bf89ece855bb858",
-            "md5sumInMemoryWithIo": "7f674fc515545811027f269d68ea4be0",
-            "target": "VAIML-x2.0-4x4"
-        },
-        {
-            "modelName": "face_yolov8s_a8w8_nchw",
-            "md5sumOnDisk": "e5d4594c68ce8ad6bda9c40c7fd43d79",
-            "md5sumInMemory": "7065a24ef907e0971fa40857acad428e",
-            "md5sumInMemoryWithIo": "7f674fc515545811027f269d68ea4be0",
-            "target": "VAIML-x2.0-4x4"
-        },
-        {
-            "modelName": "face_yolov9c_a8w8_nchw",
-            "md5sumOnDisk": "8fc474bb18b02a0faa4ae3b78d0e4646",
-            "md5sumInMemory": "6522f484552131658b2bf4a655f68a51",
-            "md5sumInMemoryWithIo": "7f674fc515545811027f269d68ea4be0",
-            "target": "VAIML-x2.0-4x4"
-        },
-        {
-            "modelName": "hand_yolov8n_a8w8_nchw",
-            "md5sumOnDisk": "69f83f3ba6d06d9cedd7f6e2e7787429",
-            "md5sumInMemory": "1496f8f0a42533d47bf89ece855bb858",
-            "md5sumInMemoryWithIo": "7f674fc515545811027f269d68ea4be0",
-            "target": "VAIML-x2.0-4x4"
-        },
-        {
-            "modelName": "hand_yolov8s_a8w8_nchw",
-            "md5sumOnDisk": "dcb68c787e596d8979e3bc21c5d62fa0",
-            "md5sumInMemory": "7065a24ef907e0971fa40857acad428e",
-            "md5sumInMemoryWithIo": "7f674fc515545811027f269d68ea4be0",
-            "target": "VAIML-x2.0-4x4"
-        },
-        {
-            "modelName": "hand_yolov9c_a8w8_nchw",
-            "md5sumOnDisk": "37a5223d570e1fc2e18d55a3891157ec",
-            "md5sumInMemory": "6522f484552131658b2bf4a655f68a51",
-            "md5sumInMemoryWithIo": "7f674fc515545811027f269d68ea4be0",
-            "target": "VAIML-x2.0-4x4"
-        },
-        {
-            "modelName": "person_yolov8m_a8w8_nchw",
-            "md5sumOnDisk": "eee97b7fd1683cc73ca26af1169e593a",
-            "md5sumInMemory": "dbb197e5281afbe6d775d70a81104279",
-            "md5sumInMemoryWithIo": "50755bc6f351a6e36d2b2c28e5c068ac",
-            "target": "VAIML-x2.0-4x4"
-        },
-        {
-            "modelName": "person_yolov8n_a8w8_nchw",
-            "md5sumOnDisk": "6a388667c95cd2ddf2881ea8b71dcd94",
-            "md5sumInMemory": "5ed74c980fd605f835c552917402fc32",
-            "md5sumInMemoryWithIo": "50755bc6f351a6e36d2b2c28e5c068ac",
-            "target": "VAIML-x2.0-4x4"
-        },
-        {
-            "modelName": "person_yolov8s_a8w8_nchw",
-            "md5sumOnDisk": "7d3698580da61e6a2734616c9b23f5d0",
-            "md5sumInMemory": "d9c01ef1074bd8640e36b683acd6abfb",
-            "md5sumInMemoryWithIo": "50755bc6f351a6e36d2b2c28e5c068ac",
-            "target": "VAIML-x2.0-4x4"
-        },
-        {
-            "modelName": "yolov8l-worldv2_a8w8_nchw",
-            "md5sumOnDisk": "1d9bdd6018dac18473d2e9c5068d5822",
-            "md5sumInMemory": "071536d113b9c3f38dc5124899d8ae5b",
-            "md5sumInMemoryWithIo": "4be99dc507c315d94a3014462f7fd70a",
-            "target": "VAIML-x2.0-4x4"
-        },
-        {
-            "modelName": "yolov8m-worldv2_a8w8_nchw",
-            "md5sumOnDisk": "2b3c376c232d10d4fdbdc4f66aebc1b2",
-            "md5sumInMemory": "0f1c88a29ae77438b9f4bb65c7c6c5a0",
-            "md5sumInMemoryWithIo": "4be99dc507c315d94a3014462f7fd70a",
-            "target": "VAIML-x2.0-4x4"
-        },
-        {
-            "modelName": "yolov8s-worldv2_a8w8_nchw",
-            "md5sumOnDisk": "f66e0ec68016d550ca018fea94a1560f",
-            "md5sumInMemory": "5e3301b2d6c8a0892656f14d29d3ab93",
-            "md5sumInMemoryWithIo": "4be99dc507c315d94a3014462f7fd70a",
-            "target": "VAIML-x2.0-4x4"
-        },
-        {
-            "modelName": "yolov8x-worldv2_a8w8_nchw",
-            "md5sumOnDisk": "04ea741e03957e2d61ebbd1b2321ab25",
-            "md5sumInMemory": "47199b71519c47b5d851402c49564d72",
-            "md5sumInMemoryWithIo": "4be99dc507c315d94a3014462f7fd70a",
-            "target": "VAIML-x2.0-4x4"
-        },
-        {
             "modelName": "timm_mobilenetv3_small_100.lamb_in1k_a8w8_nchw",
             "md5sumOnDisk": "fcb0bf5a6614042c0859937a24a24185",
             "md5sumInMemory": "ac63b86137383c6b001f12030eeeff3e",
@@ -5057,7 +6075,7 @@
                 "init",
                 "fuse_DPU"
             ],
-            "xclbin": "AMD_AIE2P_4x4_Overlay_CFG1_2677.xclbin",
+            "xclbin": "AMD_AIE2P_4x4_Overlay_2904.xclbin",
             "target_opts": {
                 "xcompilerAttrs": {
                     "debug_mode": {
@@ -5085,7 +6103,12 @@
                 "minimum_num_of_conv": 2,
                 "debug": false
             },
-            "py3_round": true
+            "py3_round": false,
+            "provider_options": {
+                "enable_preemption": "1",
+                "enable_txn_elf": "1",
+                "is_preemptible": "1"
+            }
         },
         {
             "name": "VAIML_config_0",
@@ -5105,7 +6128,7 @@
                 "init",
                 "fuse_DPU"
             ],
-            "xclbin": "AMD_AIE2P_4x4_Overlay_CFG1_2677.xclbin",
+            "xclbin": "AMD_AIE2P_4x4_Overlay_CFG1_2924.xclbin",
             "target_opts": {
                 "xcompilerAttrs": {
                     "opt_level": {
@@ -5116,7 +6139,14 @@
                     }
                 }
             },
-            "py3_round": true
+            "py3_round": true,
+            "old_qdq": false,
+            "provider_options": {
+                "xlnx_enable_old_qdq": "0",
+                "enable_preemption": "1",
+                "enable_txn_elf": "1",
+                "is_preemptible": "1"
+            }
         },
         {
             "name": "old_qdq_py3",
@@ -5124,7 +6154,7 @@
                 "init",
                 "fuse_DPU"
             ],
-            "xclbin": "AMD_AIE2P_4x4_Overlay_CFG1_2677.xclbin",
+            "xclbin": "AMD_AIE2P_4x4_Overlay_CFG1_2924.xclbin",
             "target_opts": {
                 "xcompilerAttrs": {
                     "opt_level": {
@@ -5136,7 +6166,13 @@
                 }
             },
             "old_qdq": true,
-            "py3_round": true
+            "py3_round": true,
+            "provider_options": {
+                "xlnx_enable_old_qdq": "1",
+                "enable_preemption": "1",
+                "enable_txn_elf": "1",
+                "is_preemptible": "1"
+            }
         },
         {
             "name": "m_model",
@@ -5144,7 +6180,7 @@
                 "init",
                 "fuse_DPU"
             ],
-            "xclbin": "AMD_AIE2P_4x4_Overlay_CFG1_2677.xclbin",
+            "xclbin": "AMD_AIE2P_4x4_Overlay_CFG1_2924.xclbin",
             "target_opts": {
                 "xcompilerAttrs": {
                     "opt_level": {
@@ -5154,6 +6190,13 @@
                         "boolValue": true
                     }
                 }
+            },
+            "old_qdq": false,
+            "provider_options": {
+                "xlnx_enable_old_qdq": "0",
+                "enable_preemption": "1",
+                "enable_txn_elf": "1",
+                "is_preemptible": "1"
             }
         },
         {
@@ -5162,7 +6205,7 @@
                 "init",
                 "fuse_DPU"
             ],
-            "xclbin": "AMD_AIE2P_4x4_Overlay_CFG1_2677.xclbin",
+            "xclbin": "AMD_AIE2P_4x4_Overlay_CFG1_2924.xclbin",
             "target_opts": {
                 "xcompilerAttrs": {
                     "opt_level": {
@@ -5178,11 +6221,18 @@
                         "boolValue": true
                     }
                 }
+            },
+            "old_qdq": false,
+            "provider_options": {
+                "xlnx_enable_old_qdq": "0",
+                "enable_preemption": "1",
+                "enable_txn_elf": "1",
+                "is_preemptible": "1"
             }
         },
         {
             "name": "RyzenAI_shell_config_1",
-            "xclbin": "AMD_AIE2P_2x4x1_Overlay_2676.xclbin",
+            "xclbin": "AMD_AIE2P_2x4x1_Overlay_2926.xclbin",
             "share_hw_context": true,
             "pass": [
                 "init",
@@ -5213,7 +6263,14 @@
                     }
                 }
             },
-            "graph_engine_qos_priority": 640
+            "graph_engine_qos_priority": 640,
+            "old_qdq": false,
+            "provider_options": {
+                "xlnx_enable_old_qdq": "0",
+                "enable_preemption": "1",
+                "enable_txn_elf": "1",
+                "is_preemptible": "1"
+            }
         },
         {
             "name": "RyzenAI_vision_config_2",
@@ -5243,11 +6300,16 @@
                         "boolValue": false
                     }
                 }
+            },
+            "provider_options": {
+                "enable_preemption": "1",
+                "enable_txn_elf": "1",
+                "is_preemptible": "1"
             }
         },
         {
             "name": "RyzenAI_vision_config_3",
-            "xclbin": "AMD_AIE2P_4x4_Overlay_CFG2_2678.xclbin",
+            "xclbin": "AMD_AIE2P_4x4_Overlay_CFG2_2925.xclbin",
             "pass": [
                 "init",
                 "fuse_DPU"
@@ -5264,11 +6326,16 @@
                         "uintValue": 65536
                     }
                 }
+            },
+            "provider_options": {
+                "enable_preemption": "1",
+                "enable_txn_elf": "1",
+                "is_preemptible": "1"
             }
         },
         {
             "name": "RyzenAI_vision_config_3_mha",
-            "xclbin": "AMD_AIE2P_4x4_Overlay_CFG2_2678.xclbin",
+            "xclbin": "AMD_AIE2P_4x4_Overlay_CFG2_2925.xclbin",
             "pass": [
                 "init",
                 "fuse_DPU_MHA"
@@ -5291,6 +6358,13 @@
                         "boolValue": true
                     }
                 }
+            },
+            "old_qdq": false,
+            "provider_options": {
+                "xlnx_enable_old_qdq": "0",
+                "enable_preemption": "1",
+                "enable_txn_elf": "1",
+                "is_preemptible": "1"
             }
         },
         {
@@ -5302,7 +6376,7 @@
             ]
         },
         {
-            "name": "RyzenAI_wcr_llm_eager",
+            "name": "RyzenAI_llm_eager",
             "xclbin": "llama2_mladf_2x4x4_v1_gemmbfp16_silu_mul_mha_rms_rope_00.xclbin",
             "pass": [
                 "fuse_MatMulNBits",
@@ -5316,6 +6390,14 @@
             "pass": [
                 "init",
                 "fuse_dynamic_dispatch_wcr"
+            ]
+        },
+        {
+            "name": "RyzenAI_transformers_psp1",
+            "xclbin": "8x4_psp1_a16w8_qdq.xclbin",
+            "pass": [
+                "init",
+                "fuse_dynamic_dispatch_psp1"
             ]
         },
         {
@@ -5514,7 +6596,7 @@
         },
         {
             "name": "RyzenAI_transformer_cxx_pss_pst",
-            "xclbin": "2x4x2_pss_pst_4x2_psq_model_qdq_03.xclbin",
+            "xclbin": "2x4x2_pss_pst_4x2_psq_model_qdq_04.xclbin",
             "share_hw_context": true,
             "pass": [
                 "init",
@@ -5539,6 +6621,9 @@
                         "boolValue": true
                     }
                 }
+            },
+            "provider_options": {
+                "xlnx_enable_old_qdq": "0"
             }
         },
         {
@@ -5559,7 +6644,10 @@
                     }
                 }
             },
-            "old_qdq": false
+            "old_qdq": false,
+            "provider_options": {
+                "xlnx_enable_old_qdq": "0"
+            }
         },
         {
             "name": "VAIML-x2.0-Procyon",
@@ -5588,7 +6676,10 @@
                     }
                 }
             },
-            "old_qdq": false
+            "old_qdq": false,
+            "provider_options": {
+                "xlnx_enable_old_qdq": "0"
+            }
         },
         {
             "name": "VAIML-x2.0-Procyon_resnet50",
@@ -5614,7 +6705,10 @@
                     }
                 }
             },
-            "old_qdq": false
+            "old_qdq": false,
+            "provider_options": {
+                "xlnx_enable_old_qdq": "0"
+            }
         },
         {
             "name": "VAIML-x2.0-4x4",
@@ -5634,14 +6728,49 @@
                     }
                 }
             },
-            "old_qdq": false
+            "old_qdq": false,
+            "provider_options": {
+                "xlnx_enable_old_qdq": "0"
+            }
+        },
+        {
+            "name": "PSAV2",
+            "pass": [
+                "init",
+                "fuse_DPU_VAIML-x2.0_yolo"
+            ],
+            "target_opts": {
+                "xcompilerAttrs": {
+                    "enable_mergesync": {
+                        "boolValue": true
+                    },
+                    "target": {
+                        "stringValues": [
+                            "AMD_AIE2P_4x4_CMC_Overlay"
+                        ]
+                    },
+                    "enable_mul_matmul_fusion": {
+                        "boolValue": true
+                    },
+                    "enable_matmul_add_fusion": {
+                        "boolValue": true
+                    }
+                }
+            },
+            "old_qdq": false,
+            "provider_options": {
+                "xlnx_enable_old_qdq": "0"
+            }
         },
         {
             "name": "VAIML",
             "pass": [
                 "init",
                 "vaiml_partition"
-            ]
+            ],
+            "provider_options": {
+                "enable_cache_file_io_in_mem": "0"
+            }
         }
     ],
     "enable_cache_file_io_in_mem": true

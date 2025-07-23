@@ -214,10 +214,10 @@ CMAKE_STATIC_LINKER_FLAGS_RELWITHDEBINFO:STRING=
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
 //No help, variable specified on the command line.
-ONNXRUNTIME_ROOTDIR:UNINITIALIZED=C:\Program Files\RyzenAI\1.5.0\voe-4.0-win_amd64\voe
+ONNXRUNTIME_ROOTDIR:UNINITIALIZED=C:\Program Files\RyzenAI\1.5.0\onnxruntime
 
 //Path to a library.
-ORT_LIBRARY:FILEPATH=C:/Program Files/RyzenAI/1.5.0/voe-4.0-win_amd64/voe/lib/onnxruntime.lib
+ORT_LIBRARY:FILEPATH=C:/Program Files/RyzenAI/1.5.0/onnxruntime/lib/onnxruntime.lib
 
 //The directory containing a CMake configuration file for OpenCV.
 OpenCV_DIR:PATH=C:/opencv/mybuild/build
