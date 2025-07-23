@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 #pragma once
-#include <glog/logging.h>
+#include <iostream>
 #include <opencv2/imgproc/types_c.h>
 #include <signal.h>
 
@@ -123,8 +123,8 @@ struct MyThread {
     }
   }
   static void start_all() {
-    LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO))
-        << "Thread num " << all_threads().size();
+    if (ENV_PARAM(DEBUG_DEMO))
+        std::cout << "Thread num " << all_threads().size() << std::endl;
     for (auto& th : all_threads()) {
       th->start();
     }
@@ -132,15 +132,15 @@ struct MyThread {
 
   static void main_proxy(MyThread* me) { return me->main(); }
   void main() {
-    LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO))
-        << "thread [" << name() << "] is started";
+    if (ENV_PARAM(DEBUG_DEMO))
+        std::cout << "thread [" << name() << "] is started" << std::endl;
     while (!stop_) {
       auto run_ret = run();
       if (!stop_) {
         stop_ = run_ret != 0;
       }
     }
-    LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO)) << "thread [" << name() << "] is ended";
+    if (ENV_PARAM(DEBUG_DEMO)) std::cout << "thread [" << name() << "] is ended" << std::endl;
   }
 
   virtual int run() = 0;
@@ -227,7 +227,7 @@ struct DecodeThread : public MyThread {
       for (int backend : backends) {
         video_stream_ = std::unique_ptr<cv::VideoCapture>(new cv::VideoCapture(camera_id, backend));
         if (video_stream_->isOpened()) {
-          LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO)) << "Camera opened with backend: " << backend;
+          if (ENV_PARAM(DEBUG_DEMO)) std::cout << "Camera opened with backend: " << backend << std::endl;
           break;
         }
       }
@@ -236,7 +236,7 @@ struct DecodeThread : public MyThread {
     }
     
     if (!video_stream_->isOpened()) {
-      LOG(FATAL) << "Cannot open video stream: " << video_file_;
+      std::cerr << "FATAL: Cannot open video stream: " << video_file_ << std::endl;
       stop();
       return;
     }
@@ -254,7 +254,7 @@ struct DecodeThread : public MyThread {
       
       int actual_width = cap.get(cv::CAP_PROP_FRAME_WIDTH);
       int actual_height = cap.get(cv::CAP_PROP_FRAME_HEIGHT);
-      LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO)) << "Camera resolution set to: " << actual_width << "x" << actual_height;
+      if (ENV_PARAM(DEBUG_DEMO)) std::cout << "Camera resolution set to: " << actual_width << "x" << actual_height << std::endl;
     }
   }
 
@@ -401,7 +401,7 @@ struct DpuThread : public MyThread {
         queue_in_{queue_in},
         queue_out_{queue_out},
         suffix_{suffix} {
-    LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO)) << "INIT DPU";
+    if (ENV_PARAM(DEBUG_DEMO)) std::cout << "INIT DPU" << std::endl;
   }
 
   virtual int run() override {
@@ -592,7 +592,7 @@ int main_for_video_demo(int argc, char* argv[],
     MyThread::start_all();
     MyThread::wait_all();
   }
-  LOG_IF(INFO, ENV_PARAM(DEBUG_DEMO)) << "BYEBYE";
+  if (ENV_PARAM(DEBUG_DEMO)) std::cout << "BYEBYE" << std::endl;
   return 0;
 }
 

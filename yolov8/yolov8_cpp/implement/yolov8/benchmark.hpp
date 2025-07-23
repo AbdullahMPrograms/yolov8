@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 #pragma once
-#include <glog/logging.h>
+#include <iostream>
 #include <signal.h>
 
 #include <cassert>
@@ -163,9 +163,9 @@ inline int main_for_performance(int argc, char* argv[], const T& factory_method)
   auto image_list =
       std::unique_ptr<ImageList>(new ImageList(g_list_name, lazy_load_image));
   if (image_list->empty()) {
-    LOG(FATAL) << "[UNILOG][FATAL][VAILIB_BENCHMARK_LIST_EMPTY][Can not found "
-                  "images. List of images are empty. "
-               << image_list->to_string();
+    std::cerr << "FATAL: Can not found images. List of images are empty. " 
+              << image_list->to_string() << std::endl;
+    std::exit(1);
   }
   auto model = factory_method();
   using model_t = typename decltype(model)::element_type;
@@ -179,12 +179,12 @@ inline int main_for_performance(int argc, char* argv[], const T& factory_method)
   std::ostream* report_fs = &std::cout;
   auto fs = std::unique_ptr<std::ostream>{};
   if (!g_report_file_name.empty()) {
-    LOG(INFO) << "writing report to " << g_report_file_name;
+    std::cout << "Writing report to " << g_report_file_name << std::endl;
     fs = std::unique_ptr<std::ostream>{
         new std::ofstream(g_report_file_name.c_str(), std::ofstream::out)};
     report_fs = fs.get();
   } else {
-    LOG(INFO) << "writing report to <STDOUT>";
+    std::cout << "Writing report to <STDOUT>" << std::endl;
   }
 
   std::vector<decltype(model)> models;
@@ -211,15 +211,15 @@ inline int main_for_performance(int argc, char* argv[], const T& factory_method)
   auto exe_start = std::chrono::system_clock::now();
   lock_main.unlock();
   for (int i = 0; i < g_num_of_seconds; i = i + step) {
-    LOG(INFO) << "waiting for " << i << "/" << g_num_of_seconds << " seconds, "
-              << g_num_of_threads << " threads running";
+    std::cout << "Waiting for " << i << "/" << g_num_of_seconds << " seconds, "
+              << g_num_of_threads << " threads running" << std::endl;
     std::this_thread::sleep_for(std::chrono::milliseconds(step * 1000));
     total_step = _counter;
     _counter = 0;
     if (0) report_step(report_fs);
-    // LOG(INFO) << "FPS : " << (float)(((float)total_5)/(float)step) ;
+    // FPS logging removed (glog dependency eliminated)
   }
-  LOG(INFO) << "waiting for threads terminated";
+  std::cout << "Waiting for threads terminated" << std::endl;
   long total = 0;
 
   StatSamples e2eStatSamples(0);

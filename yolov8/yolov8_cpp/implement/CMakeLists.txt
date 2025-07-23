@@ -34,8 +34,8 @@ else()
   endif()
 endif()
 
-include_directories("${ONNXRUNTIME_ROOTDIR}/include"                           # Pre-built package
-                    "${ONNXRUNTIME_ROOTDIR}/include/onnxruntime"               # RyzenAI 1.5.0 path
+include_directories("${ONNXRUNTIME_ROOTDIR}/include"                           
+                    "${ONNXRUNTIME_ROOTDIR}/include/onnxruntime"               
                     "${CMAKE_PREFIX_PATH}/include")
 
 link_directories("${ONNXRUNTIME_ROOTDIR}/lib"
@@ -44,12 +44,10 @@ link_directories("${ONNXRUNTIME_ROOTDIR}/lib"
 find_library(ORT_LIBRARY onnxruntime HINTS "${ONNXRUNTIME_ROOTDIR}/lib"
                                            REQUIRED)
 
-SET(glog_DIR "C:/Users/atiqa/miniforge3/envs/ryzen-ai-1.5.0/Lib/site-packages/flexml/flexml_extras/lib/cmake/glog")
 SET(GFLAGS_INCLUDE_DIR "C:/dell/vcpkg/packages/gflags_x64-windows")
 SET(gflags_DIR "C:/dell/vcpkg/packages/gflags_x64-windows/share/gflags")
 SET(GFLAGS_USE_TARGET_NAMESPACE ON)
 SET(OpenCV_DIR "C:/opencv/mybuild/build/install/bin")
-find_package(glog REQUIRED)
 find_package(
   OpenCV
   COMPONENTS core highgui imgproc

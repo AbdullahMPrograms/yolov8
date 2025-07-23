@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 #pragma once
-#include <glog/logging.h>
+#include <iostream>
 
 #include <cassert>
 #include <chrono>

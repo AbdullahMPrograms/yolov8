@@ -16,7 +16,7 @@
 #ifndef DEEPHI_PROFILING_HPP_
 #define DEEPHI_PROFILING_HPP_
 
-#include <glog/logging.h>
+#include <iostream>
 #include <chrono>
 #include "./env_config.hpp"
 DEF_ENV_PARAM(DEEPHI_PROFILING, "0");
@@ -35,23 +35,23 @@ using Clock = std::chrono::steady_clock;
   auto __##tag##_end_time = ENV_PARAM(DEEPHI_PROFILING)                        \
                                 ? vitis::ai::Clock::now()                      \
                                 : std::chrono::time_point<vitis::ai::Clock>(); \
-  LOG_IF(INFO, ENV_PARAM(DEEPHI_PROFILING))                                    \
-      << #tag << " : "                                                         \
+  if (ENV_PARAM(DEEPHI_PROFILING))                                             \
+      std::cout << #tag << " : "                                               \
       << std::chrono::duration_cast<std::chrono::microseconds>(                \
              __##tag##_end_time - __##tag##_start_time)                        \
              .count()                                                          \
-      << "us";
+      << "us" << std::endl;
 
 #define __TOC_FLEX__(tag, level, timescale)                                    \
   auto __##tag##_end_time = ENV_PARAM(DEEPHI_PROFILING)                        \
                                 ? vitis::ai::Clock::now()                      \
                                 : std::chrono::time_point<vitis::ai::Clock>(); \
-  LOG_IF(level, ENV_PARAM(DEEPHI_PROFILING))                                   \
-      << #tag << " : "                                                         \
+  if (ENV_PARAM(DEEPHI_PROFILING))                                             \
+      std::cout << #tag << " : "                                               \
       << std::chrono::duration_cast<std::chrono::timescale>(                   \
              __##tag##_end_time - __##tag##_start_time)                        \
              .count()                                                          \
-      << " " << #timescale;
+      << " " << #timescale << std::endl;
 
 #define __TIC_SUM__(tag)                                                       \
   static auto __##tag##_total_time = 0U;                                       \
@@ -64,13 +64,13 @@ using Clock = std::chrono::steady_clock;
   auto __##tag##_end_time = ENV_PARAM(DEEPHI_PROFILING)                        \
                                 ? vitis::ai::Clock::now()                      \
                                 : std::chrono::time_point<vitis::ai::Clock>(); \
-  LOG_IF(INFO, ENV_PARAM(DEEPHI_PROFILING))                                    \
-      << #tag << " : "                                                         \
+  if (ENV_PARAM(DEEPHI_PROFILING))                                             \
+      std::cout << #tag << " : "                                               \
       << (__##tag##_total_time +                                               \
           std::chrono::duration_cast<std::chrono::microseconds>(               \
               __##tag##_end_time - __##tag##_start_time)                       \
               .count())                                                        \
-      << "us";
+      << "us" << std::endl;
 
 }  // namespace ai
 }  // namespace vitis

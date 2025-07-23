@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 #pragma once
-#include <glog/logging.h>
+#include <iostream>
 
+#include <cassert>
 #include <fstream>
 #include <opencv2/opencv.hpp>
 #include <string>
@@ -61,7 +62,7 @@ static std::vector<ImageList::Image> get_list(const std::string &filename,
     if (!lazy_load_image) {
       auto image = cv::imread(line);
       if (image.empty()) {
-        LOG(WARNING) << "cannot read image: " << line;
+        std::cerr << "Warning: cannot read image: " << line << std::endl;
       } else {
         ret.emplace_back(ImageList::Image{line, image});
       }
@@ -107,7 +108,7 @@ inline std::string ImageList::getName(size_t i) const {
 }
 
 inline void ImageList::resize_images(int w, int h) {
-  CHECK(!lazy_load_image_) << "only for eager load mode";
+  assert(!lazy_load_image_ && "only for eager load mode");
   for (auto &image : list_) {
     auto old = cv::Mat(std::move(image.mat));
     cv::resize(old, image.mat, cv::Size{w, h});

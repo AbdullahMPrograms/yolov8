@@ -17,7 +17,7 @@
 
 #pragma once
 
-#include <glog/logging.h>
+#include <iostream>
 
 #include <future>
 #include <memory>
@@ -70,30 +70,31 @@ class PerformanceTest {
     lock_main.unlock();
     auto start = Clock::now();
     auto sleep_ms = ENV_PARAM(SLEEP_MS);
-    LOG(INFO) << "0% ...";
+    std::cout << "0% ..." << std::endl;
     for (auto i = 0; i < 10; ++i) {
       std::this_thread::sleep_for(std::chrono::milliseconds(sleep_ms / 10));
-      LOG(INFO) << (i + 1) * 10 << "% ...";
+      std::cout << (i + 1) * 10 << "% ..." << std::endl;
     }
     stop = 1;
-    LOG(INFO) << "stop and waiting for all threads terminated....";
+    std::cout << "stop and waiting for all threads terminated...." << std::endl;
     auto t1 = Clock::now();
     size_t total = 0;
     auto i = 0;
     for (auto& t : threads) {
       runners[i] = std::move(t.get());
-      LOG(INFO) << "thread-" << i << " processes " << runners[i]->get_result()
-                << " frames";
+      std::cout << "thread-" << i << " processes " << runners[i]->get_result()
+                << " frames" << std::endl;
       total = total + runners[i]->get_result();
       i = i + 1;
     }
     auto t2 = Clock::now();
     auto f = (float)total;
     auto time = (float)time_diff(start, t2).count();
-    LOG(INFO) << "it takes " << time_diff(t1, t2).count() << " us for shutdown";
-    LOG(INFO) << "FPS= " << f / time * 1.0e6 << " number_of_frames= " << f
-              << " time= " << time / 1.0e6 << " seconds.";
-    LOG(INFO) << "BYEBYE";
+    std::cout << "it takes " << time_diff(t1, t2).count() << " us for shutdown" << std::endl;
+    std::cout << "FPS= " << f / time * 1.0e6 << " number_of_frames= " << f
+              << " time= " << time / 1.0e6 << " seconds." << std::endl;
+    result_ = f / time * 1.0e6;
+    std::cout << "BYEBYE" << std::endl;
     return 0;
   }
   template <typename T>
