@@ -1,41 +1,32 @@
 # Usage: pip install -r requirements.txt
 
 # Base ----------------------------------------
-matplotlib
-numpy
-opencv-python
-Pillow
-PyYAML
-requests
-scipy
-torch
-torchvision
-tqdm
+matplotlib>=3.2.2
+numpy<2.0
+opencv-python>=4.6.0
+Pillow>=7.1.2
+PyYAML>=5.3.1
+requests>=2.23.0
+scipy>=1.4.1
+torch>=1.7.0
+torchvision>=0.8.1
+tqdm>=4.64.0
 huggingface_hub
 
 # Logging -------------------------------------
-tensorboard
-clearml
-comet
+tensorboard>=2.4.1
+
 
 # Plotting ------------------------------------
-pandas
-seaborn
+pandas>=1.1.4
+seaborn>=0.11.0
 
 # Export --------------------------------------
-onnxruntime
-coremltools  # CoreML export
-onnx  # ONNX export
-onnx-simplifier  # ONNX simplifier
-scikit-learn  # CoreML quantization
-tensorflow  # TF exports (-cpu, -aarch64, -macos)
-tensorflowjs  # TF.js export
+onnx>=1.12.0  # ONNX export
 
 # Extras --------------------------------------
 ipython  # interactive notebook
 ipykernel #python kernel for notebook
 psutil  # system utilization
-thop  # FLOPs computation
-albumentations
-pycocotools  # COCO mAP
-roboflow
+thop>=0.1.1  # FLOPs computation
+pycocotools>=2.0.6  # COCO mAP
